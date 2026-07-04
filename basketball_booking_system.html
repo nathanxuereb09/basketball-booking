@@ -1858,12 +1858,98 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+
     <script>
+        // ==================== FIREBASE INITIALIZATION ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYUuphUMXLamb_c7iGtCFoBFXbPr_lNtI",
+            authDomain: "basketball-booking-dee44.firebaseapp.com",
+            projectId: "basketball-booking-dee44",
+            storageBucket: "basketball-booking-dee44.firebasestorage.app",
+            messagingSenderId: "679981100572",
+            appId: "1:679981100572:web:e1989d8c6d9dff72a479d9",
+            measurementId: "G-FYK95HY6B4"
+        };
+
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(firebaseApp);
+
         // ==================== LOGIN SYSTEM ====================
         let currentUser = null;
-        let users = JSON.parse(localStorage.getItem('users')) || [
-            { username: 'Admin', password: 'NathZakku0105', role: 'admin', name: 'Administrator' }
+        let users = [];
+        let sessions = [];
+        let bookings = [];
+        let attendance = [];
+        let payments = [];
+        let courts = [
+            { id: 'C001', name: 'Court A - Indoor', location: 'Building 1, Floor 2', capacity: 20, rate: 50, status: 'available' },
+            { id: 'C002', name: 'Court B - Outdoor', location: 'Field Area, Main Campus', capacity: 15, rate: 30, status: 'available' },
+            { id: 'C003', name: 'Court C - Training', location: 'Gym Complex, Wing B', capacity: 12, rate: 40, status: 'available' }
         ];
+
+        // Load current user from localStorage (local only)
+        function loadCurrentUser() {
+            const saved = localStorage.getItem('currentUser');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+            }
+        }
+
+        // Initialize Firestore data
+        async function initializeFirebaseData() {
+            try {
+                // Load users
+                const usersSnap = await db.collection('users').get();
+                users = [];
+                usersSnap.forEach(doc => {
+                    users.push({ ...doc.data(), id: doc.id });
+                });
+
+                // If no users exist, create default admin
+                if (users.length === 0) {
+                    const adminUser = { username: 'Admin', password: 'NathZakku0105', role: 'admin', name: 'Administrator' };
+                    await db.collection('users').add(adminUser);
+                    users.push(adminUser);
+                }
+
+                // Load sessions in real-time
+                db.collection('sessions').onSnapshot(snapshot => {
+                    sessions = [];
+                    snapshot.forEach(doc => {
+                        sessions.push({ ...doc.data(), id: doc.id });
+                    });
+                    // Refresh display if on booking tab
+                    if (currentUser) {
+                        if (currentUser.role === 'parent') {
+                            displayAvailableSessions();
+                        } else if (currentUser.role === 'coach' || currentUser.role === 'admin') {
+                            displayCoachSessions();
+                        }
+                    }
+                });
+
+                // Load bookings in real-time
+                db.collection('bookings').onSnapshot(snapshot => {
+                    bookings = [];
+                    snapshot.forEach(doc => {
+                        bookings.push({ ...doc.data(), id: doc.id });
+                    });
+                    // Refresh if viewing bookings
+                    if (currentUser && document.getElementById('myBookingsTable')) {
+                        updateBookingsDisplay();
+                    }
+                });
+
+                loadCurrentUser();
+            } catch (error) {
+                console.error('Firebase initialization error:', error);
+            }
+        }
 
         function switchLoginTab(tab) {
             document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
@@ -1939,13 +2025,17 @@
                 phone: phone
             };
 
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            showLoginMessage('register', '✓ Account created! You can now login.');
-            setTimeout(() => {
-                switchLoginTab('login');
-            }, 1500);
+            // Save to Firestore
+            db.collection('users').add(newUser).then(() => {
+                users.push(newUser);
+                showLoginMessage('register', '✓ Account created! You can now login.');
+                setTimeout(() => {
+                    switchLoginTab('login');
+                }, 1500);
+            }).catch(error => {
+                console.error('Registration error:', error);
+                showLoginMessage('register', '❌ Error creating account');
+            });
         }
 
         function handleLogout() {
@@ -2159,27 +2249,20 @@
 
         // Check if user is already logged in
         window.addEventListener('load', () => {
-            const savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                showLoginPage(false);
-                initializeApp();
-            } else {
-                showLoginPage(true);
-            }
+            // Initialize Firebase data first
+            initializeFirebaseData().then(() => {
+                const savedUser = localStorage.getItem('currentUser');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    showLoginPage(false);
+                    initializeApp();
+                } else {
+                    showLoginPage(true);
+                }
+            });
         });
 
-        // ==================== DATA STORAGE ====================
-        let courts = JSON.parse(localStorage.getItem('courts')) || [
-            { id: 'C001', name: 'Court A - Indoor', location: 'Building 1, Floor 2', capacity: 20, rate: 50, status: 'available' },
-            { id: 'C002', name: 'Court B - Outdoor', location: 'Field Area, Main Campus', capacity: 15, rate: 30, status: 'available' },
-            { id: 'C003', name: 'Court C - Training', location: 'Gym Complex, Wing B', capacity: 12, rate: 40, status: 'available' }
-        ];
-
-        let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-        let attendance = JSON.parse(localStorage.getItem('attendance')) || [];
-        let payments = JSON.parse(localStorage.getItem('payments')) || [];
-        let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
+        // Calendar and UI Variables
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let selectedDate = null;
@@ -2926,15 +3009,19 @@
             }
 
             if (confirm('Delete this session? Registrations will also be deleted.')) {
-                sessions = sessions.filter(s => s.id !== sessionId);
-                bookings = bookings.filter(b => b.sessionId !== sessionId);
-                localStorage.setItem('sessions', JSON.stringify(sessions));
-                localStorage.setItem('bookings', JSON.stringify(bookings));
-                displayAdminSessions();
-                displayCoachSessions();
-                displayAvailableSessions();
-                updateAdminStats();
-                showAlert('Session deleted', 'info');
+                // Delete from Firestore
+                db.collection('sessions').doc(sessionId).delete().then(() => {
+                    // Also delete associated bookings
+                    db.collection('bookings').where('sessionId', '==', sessionId).get().then(snapshot => {
+                        snapshot.forEach(doc => {
+                            doc.ref.delete();
+                        });
+                    });
+                    showAlert('Session deleted', 'info');
+                }).catch(error => {
+                    console.error('Delete error:', error);
+                    showAlert('Error deleting session', 'error');
+                });
             }
         }
 
@@ -3020,7 +3107,6 @@
             }
 
             const booking = {
-                id: 'BK' + Date.now(),
                 sessionId: sessionId,
                 sessionName: session.name,
                 playerName: document.getElementById('sessionPlayerName').value,
@@ -3038,43 +3124,42 @@
                 bookedBy: currentUser ? currentUser.username : 'Parent'
             };
 
-            bookings.push(booking);
-            localStorage.setItem('bookings', JSON.stringify(bookings));
-
-            // Create payment record
-            const payment = {
-                id: 'PAY' + Date.now(),
-                bookingId: booking.id,
-                playerName: booking.playerName,
-                playerEmail: booking.playerEmail,
-                playerPhone: booking.playerPhone,
-                amount: booking.totalCost,
-                status: 'unpaid',
-                date: booking.date,
-                courtId: booking.courtId
-            };
-            payments.push(payment);
-            localStorage.setItem('payments', JSON.stringify(payments));
-
-            // Create attendance record
-            const attendanceRecord = {
-                id: 'ATT' + Date.now(),
-                bookingId: booking.id,
-                playerName: booking.playerName,
-                date: booking.date,
-                courtId: booking.courtId,
-                timeSlot: booking.timeSlot,
-                status: 'pending',
-                checkInTime: null
-            };
-            attendance.push(attendanceRecord);
-            localStorage.setItem('attendance', JSON.stringify(attendance));
-
-            showAlert(`✓ Registration confirmed! Booking ID: ${booking.id}`, 'success');
-            cancelSessionRegistration();
-            displayAvailableSessions();
-            updateDashboard();
-            updateBookingsDisplay();
+            // Save to Firestore
+            db.collection('bookings').add(booking).then((bookingRef) => {
+                // Create payment record
+                const payment = {
+                    bookingId: bookingRef.id,
+                    playerName: booking.playerName,
+                    playerEmail: booking.playerEmail,
+                    playerPhone: booking.playerPhone,
+                    amount: booking.totalCost,
+                    status: 'unpaid',
+                    date: booking.date,
+                    courtId: booking.courtId
+                };
+                return db.collection('payments').add(payment);
+            }).then(() => {
+                // Create attendance record
+                const attendanceRecord = {
+                    bookingId: null,
+                    playerName: booking.playerName,
+                    date: booking.date,
+                    courtId: booking.courtId,
+                    timeSlot: booking.timeSlot,
+                    status: 'pending',
+                    checkInTime: null
+                };
+                return db.collection('attendance').add(attendanceRecord);
+            }).then(() => {
+                showAlert('✓ Successfully registered for session!', 'success');
+                document.getElementById('sessionRegistrationForm').reset();
+                document.getElementById('sessionRegistrationSection').style.display = 'none';
+                document.getElementById('parentBookingSection').style.display = 'block';
+                displayAvailableSessions();
+            }).catch(error => {
+                console.error('Registration error:', error);
+                showAlert('❌ Error registering for session', 'error');
+            });
         }
 
         // Coach Session Management Functions
@@ -3200,7 +3285,6 @@
             const coachName = currentUser.role === 'admin' ? currentUser.name : currentUser.name;
 
             const newSession = {
-                id: 'SES' + Date.now(),
                 name: sessionName,
                 coach: coachName,
                 courtId: courtId,
@@ -3215,15 +3299,18 @@
                 createdDate: new Date().toISOString()
             };
 
-            sessions.push(newSession);
-            localStorage.setItem('sessions', JSON.stringify(sessions));
-
-            showAlert(`✓ Session "${sessionName}" created successfully!`, 'success');
-            document.getElementById('coachSessionForm').reset();
-            document.getElementById('createCoachSessionSection').style.display = 'none';
-            document.getElementById('coachSessionsSection').style.display = 'block';
-            displayCoachSessions();
-            displayAvailableSessions();
+            // Save to Firestore
+            db.collection('sessions').add(newSession).then(() => {
+                showAlert(`✓ Session "${sessionName}" created successfully!`, 'success');
+                document.getElementById('coachSessionForm').reset();
+                document.getElementById('createCoachSessionSection').style.display = 'none';
+                document.getElementById('coachSessionsSection').style.display = 'block';
+                displayCoachSessions();
+                displayAvailableSessions();
+            }).catch(error => {
+                console.error('Session creation error:', error);
+                showAlert('❌ Error creating session', 'error');
+            });
         }
 
         // Update initialization to load sessions and courts in session dropdown
