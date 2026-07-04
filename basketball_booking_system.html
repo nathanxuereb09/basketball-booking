@@ -1,0 +1,3246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A4B Elite - Basketball Booking System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #1a1f36 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 16px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 32px;
+            background: rgba(255,255,255,0.08);
+            padding: 32px 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        header h1 {
+            font-size: clamp(1.8em, 5vw, 2.8em);
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: clamp(0.95em, 2vw, 1.15em);
+            opacity: 0.85;
+            font-weight: 500;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.08);
+            padding: 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-btn {
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.7);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(0.85em, 2vw, 1em);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-color: #e74c3c;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Booking Panel */
+        .booking-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .booking-form {
+            background: rgba(255,255,255,0.98);
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .booking-form h2 {
+            color: #1a1f36;
+            margin-bottom: 24px;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            width: 100%;
+            margin-top: 12px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
+            min-height: 40px;
+        }
+
+        .btn-secondary:hover {
+            background: #d5dbdb;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            min-height: 36px;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        /* Calendar View */
+        .calendar-view {
+            background: rgba(255,255,255,0.98);
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .calendar-header h2 {
+            color: #1a1f36;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .calendar-header button {
+            padding: 10px 14px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            min-height: 40px;
+            font-size: 0.9em;
+        }
+
+        .calendar-header button:hover {
+            background: #c0392b;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 700;
+            color: #2c3e50;
+            padding: 12px;
+            font-size: 0.9em;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #2c3e50;
+            background: white;
+            font-size: 0.95em;
+            min-height: 48px;
+        }
+
+        .calendar-day:hover:not(.empty) {
+            background: #fff3e0;
+            border-color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .calendar-day.empty {
+            background: #f8f9fa;
+            cursor: default;
+        }
+
+        .calendar-day.today {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .calendar-day.selected {
+            background: #e8f4f8;
+            border-color: #3498db;
+        }
+
+        /* Slots Grid */
+        .slots-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .slot {
+            padding: 14px 10px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9em;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slot:hover:not(.booked) {
+            border-color: #e74c3c;
+            background: #fff3e0;
+            transform: translateY(-2px);
+        }
+
+        .slot.available {
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .slot.booked {
+            background: #ffe8e8;
+            border-color: #e74c3c;
+            color: #c0392b;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .slot.selected {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        /* Courts List */
+        .courts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .court-card {
+            background: rgba(255,255,255,0.98);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .court-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .court-card h3 {
+            color: #1a1f36;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .court-info {
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .court-info strong {
+            color: #2c3e50;
+            display: block;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        .court-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .court-status.available {
+            background: #d4efdf;
+            color: #1e7e34;
+        }
+
+        .court-status.busy {
+            background: #ffe8e8;
+            color: #c0392b;
+        }
+
+        /* Bookings Table */
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.98);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .bookings-table thead {
+            background: linear-gradient(135deg, #1a1f36 0%, #2c3e50 100%);
+            color: white;
+        }
+
+        .bookings-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bookings-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #ecf0f1;
+            color: #2c3e50;
+            font-size: 0.95em;
+        }
+
+        .bookings-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-confirmed {
+            background: #d4efdf;
+            color: #1e7e34;
+        }
+
+        .status-pending {
+            background: #fff8e1;
+            color: #f39c12;
+        }
+
+        .status-cancelled {
+            background: #ffe8e8;
+            color: #c0392b;
+        }
+
+        /* Admin Section */
+        .admin-section {
+            background: rgba(255,255,255,0.98);
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .admin-section h3 {
+            color: #1a1f36;
+            margin-bottom: 24px;
+            font-size: 1.4em;
+            font-weight: 700;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 12px;
+        }
+
+        .admin-section h4 {
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .stat-card h4 {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .stat-card .value {
+            font-size: 2.4em;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 32px;
+            border-radius: 14px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-content h3 {
+            color: #1a1f36;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .modal-content p {
+            color: #555;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 28px;
+        }
+
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #27ae60 0%, #1e7e34 100%);
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        @media (max-width: 1024px) {
+            .booking-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .courts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            header {
+                padding: 24px 16px;
+                margin-bottom: 24px;
+            }
+
+            header h1 {
+                font-size: 1.6em;
+            }
+
+            header p {
+                font-size: 0.9em;
+            }
+
+            .tabs {
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .tab-btn {
+                padding: 10px 12px;
+                font-size: 0.8em;
+                min-width: 100px;
+            }
+
+            .booking-panel {
+                gap: 16px;
+            }
+
+            .booking-form,
+            .calendar-view {
+                padding: 20px;
+            }
+
+            .booking-form h2 {
+                font-size: 1.3em;
+                margin-bottom: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .slots-container {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 8px;
+            }
+
+            .slot {
+                padding: 12px 8px;
+                font-size: 0.85em;
+                min-height: 40px;
+            }
+
+            .calendar {
+                gap: 6px;
+            }
+
+            .calendar-day {
+                min-height: 40px;
+                font-size: 0.85em;
+            }
+
+            .calendar-day-header {
+                font-size: 0.8em;
+                padding: 8px;
+            }
+
+            .calendar-header {
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            .calendar-header h2 {
+                font-size: 1.2em;
+            }
+
+            .calendar-header button {
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+
+            .courts-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .court-card {
+                padding: 20px;
+            }
+
+            .court-card h3 {
+                font-size: 1.1em;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-card h4 {
+                font-size: 0.8em;
+            }
+
+            .stat-card .value {
+                font-size: 1.8em;
+            }
+
+            .admin-section {
+                padding: 20px;
+                margin-bottom: 16px;
+            }
+
+            .admin-section h3 {
+                font-size: 1.2em;
+                margin-bottom: 16px;
+            }
+
+            .bookings-table {
+                font-size: 0.9em;
+            }
+
+            .bookings-table th,
+            .bookings-table td {
+                padding: 12px;
+            }
+
+            .modal-content {
+                padding: 24px;
+            }
+
+            .modal-content h3 {
+                font-size: 1.2em;
+            }
+
+            .modal-buttons {
+                gap: 8px;
+                flex-direction: column;
+            }
+
+            .btn {
+                padding: 10px 16px;
+            }
+
+            .btn-primary {
+                min-height: 44px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            header {
+                padding: 16px 12px;
+                margin-bottom: 16px;
+            }
+
+            header h1 {
+                font-size: 1.4em;
+                margin-bottom: 4px;
+            }
+
+            header p {
+                font-size: 0.8em;
+            }
+
+            .tabs {
+                gap: 6px;
+                padding: 6px;
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+                padding: 10px;
+                font-size: 0.85em;
+                min-width: auto;
+            }
+
+            .booking-form,
+            .calendar-view {
+                padding: 16px;
+            }
+
+            .booking-form h2 {
+                font-size: 1.2em;
+            }
+
+            .form-group label {
+                font-size: 0.9em;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .slots-container {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                gap: 6px;
+            }
+
+            .slot {
+                padding: 10px 6px;
+                font-size: 0.8em;
+                min-height: 36px;
+            }
+
+            .calendar {
+                gap: 4px;
+            }
+
+            .calendar-day {
+                min-height: 36px;
+                font-size: 0.75em;
+            }
+
+            .calendar-day-header {
+                font-size: 0.7em;
+                padding: 6px;
+            }
+
+            .calendar-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .calendar-header h2 {
+                font-size: 1.1em;
+            }
+
+            .calendar-header button {
+                width: 100%;
+                padding: 10px;
+                font-size: 0.8em;
+            }
+
+            .court-card {
+                padding: 16px;
+            }
+
+            .court-card h3 {
+                font-size: 1em;
+            }
+
+            .court-info {
+                font-size: 0.9em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-card .value {
+                font-size: 1.6em;
+            }
+
+            .admin-section {
+                padding: 16px;
+            }
+
+            .admin-section h3 {
+                font-size: 1.1em;
+                padding-bottom: 8px;
+            }
+
+            #adminCourtsContainer {
+                grid-template-columns: 1fr !important;
+            }
+
+            .bookings-table {
+                font-size: 0.85em;
+            }
+
+            .bookings-table th,
+            .bookings-table td {
+                padding: 8px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .modal-content h3 {
+                font-size: 1.1em;
+                margin-bottom: 16px;
+            }
+
+            .modal-content p {
+                font-size: 0.95em;
+                margin-bottom: 8px;
+            }
+
+            .modal-buttons {
+                flex-direction: column-reverse;
+                margin-top: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 10px;
+                font-size: 0.95em;
+            }
+
+            .btn-primary {
+                min-height: 44px;
+            }
+
+            .btn-secondary,
+            .btn-danger {
+                min-height: 40px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            header h1 {
+                font-size: 1.2em;
+            }
+
+            .tabs {
+                gap: 4px;
+            }
+
+            .tab-btn {
+                padding: 8px;
+                font-size: 0.75em;
+            }
+
+            .booking-form,
+            .calendar-view {
+                padding: 12px;
+            }
+
+            .calendar-day {
+                font-size: 0.7em;
+            }
+
+            .slots-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .bookings-table th,
+            .bookings-table td {
+                padding: 6px;
+                font-size: 0.8em;
+            }
+
+            .stat-card .value {
+                font-size: 1.4em;
+            }
+        }
+
+        /* Login Page Styles */
+        .login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1f36 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            font-size: 2em;
+            color: #1a1f36;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .login-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .login-tab.active {
+            color: #e74c3c;
+            border-bottom-color: #e74c3c;
+        }
+
+        .login-form {
+            display: none;
+        }
+
+        .login-form.active {
+            display: block;
+        }
+
+        .login-form-group {
+            margin-bottom: 16px;
+        }
+
+        .login-form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #1a1f36;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .login-form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .login-form-group input:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .login-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .login-message.error {
+            background: #ffe8e8;
+            color: #c0392b;
+            display: block;
+        }
+
+        .login-message.success {
+            background: #d4efdf;
+            color: #1e7e34;
+            display: block;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+
+        .role-badge {
+            background: rgba(231, 76, 60, 0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 24px;
+                margin: 16px;
+            }
+
+            .login-header h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page">
+        <div class="login-container">
+            <div style="text-align: center; margin-bottom: 20px; font-size: 3em; font-weight: bold; color: #e74c3c; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                A4B
+            </div>
+            <div style="text-align: center; margin-bottom: 20px; font-size: 0.9em; color: #999; letter-spacing: 2px; text-transform: uppercase;">
+                Elite Basketball
+            </div>
+            <div class="login-header">
+                <h2>🏀 A4B Elite</h2>
+                <p>Basketball Management System</p>
+            </div>
+
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchLoginTab('login')">Login</button>
+                <button class="login-tab" onclick="switchLoginTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="login-form active">
+                <div id="loginMessage" class="login-message"></div>
+                <div class="login-form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter your username">
+                </div>
+                <div class="login-form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                </div>
+                <button class="login-btn" onclick="handleLogin()">Login</button>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="login-form">
+                <div id="registerMessage" class="login-message"></div>
+                <div class="login-form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="registerName" placeholder="Enter your full name">
+                </div>
+                <div class="login-form-group">
+                    <label>Email</label>
+                    <input type="email" id="registerEmail" placeholder="Enter your email">
+                </div>
+                <div class="login-form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="registerPhone" placeholder="Enter your phone">
+                </div>
+                <div class="login-form-group">
+                    <label>I am a:</label>
+                    <select id="registerRole" required>
+                        <option value="parent">Parent (Book sessions for my child)</option>
+                        <option value="coach">Coach (Create and manage sessions)</option>
+                    </select>
+                </div>
+                <div class="login-form-group">
+                    <label>Username</label>
+                    <input type="text" id="registerUsername" placeholder="Choose a username">
+                </div>
+                <div class="login-form-group">
+                    <label>Password</label>
+                    <input type="password" id="registerPassword" placeholder="Choose a password (min 6 chars)">
+                </div>
+                <button class="login-btn" onclick="handleRegister()">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (Hidden until login) -->
+    <div id="appContainer" style="display: none;">
+    <div class="container">
+        <header>
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                <div>
+                    <h1>🏀 A4B Elite Basketball Booking</h1>
+                    <p>Professional Court Reservation System</p>
+                </div>
+                <div class="user-info">
+                    <span id="userDisplayName"></span>
+                    <span id="userRole" class="role-badge"></span>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('booking')">📅 Book Session</button>
+            <button class="tab-btn" onclick="switchTab('attendance')">✓ Attendance</button>
+            <button class="tab-btn" onclick="switchTab('payments')">💳 Payments</button>
+            <button class="tab-btn" onclick="switchTab('bookings')">📋 My Bookings</button>
+            <button class="tab-btn" onclick="switchTab('admin')">⚙️ Admin</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ Settings</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div class="stat-card" style="background: rgba(255,255,255,0.98); box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                    <h4 style="color: #e74c3c; font-size: 1.1em; margin-bottom: 12px;">Today's Session</h4>
+                    <div id="todaySession" style="color: #555; line-height: 1.8;">
+                        <p><strong>Court:</strong> <span id="todaysCourt">No booking</span></p>
+                        <p><strong>Time:</strong> <span id="todaysTime">-</span></p>
+                        <p><strong>Team:</strong> <span id="todaysTeam">-</span></p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: linear-gradient(135deg, #d4efdf 0%, #c8e6c9 100%); border: 2px solid #27ae60;">
+                    <h4 style="color: #27ae60; font-size: 1.1em; margin-bottom: 12px;">✓ Confirmed</h4>
+                    <div style="font-size: 2.8em; font-weight: 700; color: #27ae60;" id="dashConfirmed">0</div>
+                </div>
+
+                <div class="stat-card" style="background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); border: 2px solid #f39c12;">
+                    <h4 style="color: #f39c12; font-size: 1.1em; margin-bottom: 12px;">🔔 Pending</h4>
+                    <div style="font-size: 2.8em; font-weight: 700; color: #f39c12;" id="dashPending">0</div>
+                </div>
+
+                <div class="stat-card" style="background: linear-gradient(135deg, #ffe8e8 0%, #ffcccc 100%); border: 2px solid #e74c3c;">
+                    <h4 style="color: #e74c3c; font-size: 1.1em; margin-bottom: 12px;">💰 Unpaid</h4>
+                    <div style="font-size: 2.8em; font-weight: 700; color: #e74c3c;" id="dashUnpaid">0</div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>👥 Today's Attendees</h3>
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Player Name</th>
+                            <th>Contact</th>
+                            <th>Team</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashboardAttendees"></tbody>
+                </table>
+            </div>
+
+            <div class="admin-section">
+                <h3>📋 Quick Preparation Checklist</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <label style="display: flex; align-items: center; cursor: pointer; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                        <input type="checkbox" id="checkCourts" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+                        <span style="color: #333; font-weight: 500;">📍 Courts Prepared</span>
+                    </label>
+                    <label style="display: flex; align-items: center; cursor: pointer; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                        <input type="checkbox" id="checkEquipment" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+                        <span style="color: #333; font-weight: 500;">🏀 Equipment Ready</span>
+                    </label>
+                    <label style="display: flex; align-items: center; cursor: pointer; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                        <input type="checkbox" id="checkNotified" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+                        <span style="color: #333; font-weight: 500;">📢 Players Notified</span>
+                    </label>
+                    <label style="display: flex; align-items: center; cursor: pointer; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                        <input type="checkbox" id="checkPayments" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+                        <span style="color: #333; font-weight: 500;">💵 Payments Collected</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="booking" class="tab-content">
+            <div id="alertContainer"></div>
+            <div style="background: rgba(255,255,255,0.08); padding: 24px; border-radius: 12px; margin-bottom: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <h2 style="color: white; font-size: 1.8em; font-weight: 700; margin: 0;">📚 Book a Coaching Session</h2>
+            </div>
+
+            <div class="admin-section" id="parentBookingSection">
+                <h3>Available Sessions</h3>
+                <div id="sessionsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;"></div>
+            </div>
+
+            <div class="admin-section" id="coachSessionsSection" style="display: none;">
+                <h3>My Coaching Sessions</h3>
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="showCreateSessionForm()">➕ Create New Session</button>
+                </div>
+                <div id="coachSessionsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;"></div>
+            </div>
+
+            <div class="admin-section" id="createCoachSessionSection" style="display: none;">
+                <h3>Create Coaching Session</h3>
+                <form id="coachSessionForm" onsubmit="submitCoachSession(event)">
+                    <div class="form-group">
+                        <label>Session Name *</label>
+                        <input type="text" id="coachSessionName" required placeholder="e.g., Advanced Ball Handling">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Court *</label>
+                        <select id="coachSessionCourt" required>
+                            <option value="">Select a court</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="coachSessionDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Time *</label>
+                        <select id="coachSessionStartTime" required>
+                            <option value="">Select start time</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Time *</label>
+                        <select id="coachSessionEndTime" required>
+                            <option value="">Select end time</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Player Capacity *</label>
+                        <input type="number" id="coachSessionCapacity" required min="1" max="20" placeholder="Max players for this session">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cost Per Player *</label>
+                        <input type="number" id="coachSessionCost" required min="0" step="0.01" placeholder="e.g., 25.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="coachSessionDescription" placeholder="Session details and requirements..." style="font-family: inherit; font-size: 0.95rem; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn btn-primary">✓ Create Session</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelCoachSessionForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="admin-section" id="sessionRegistrationSection" style="display: none;">
+                <h3>Register for Session</h3>
+                <form id="sessionRegistrationForm" onsubmit="submitSessionRegistration(event)">
+                    <input type="hidden" id="selectedSessionId">
+                    
+                    <div class="form-group">
+                        <label>Player Name *</label>
+                        <input type="text" id="sessionPlayerName" required placeholder="Enter player name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="sessionPlayerEmail" required placeholder="Enter email">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone *</label>
+                        <input type="tel" id="sessionPlayerPhone" required placeholder="Enter phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Session Details</label>
+                        <div id="sessionDetails" style="background: #f8f9fa; padding: 12px; border-radius: 8px; color: #333;"></div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn btn-primary">✓ Confirm Registration</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelSessionRegistration()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Courts Tab -->
+        <div id="courts" class="tab-content">
+            <div style="background: rgba(255,255,255,0.08); padding: 24px; border-radius: 12px; margin-bottom: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <h2 style="color: white; font-size: 1.8em; font-weight: 700; margin: 0;">Available Courts</h2>
+            </div>
+            <div id="courtsContainer" class="courts-grid"></div>
+        </div>
+
+        <!-- Attendance Tab -->
+        <div id="attendance" class="tab-content">
+            <div style="background: rgba(255,255,255,0.08); padding: 24px; border-radius: 12px; margin-bottom: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <h2 style="color: white; font-size: 1.8em; font-weight: 700; margin: 0;">✓ Check-In Attendees</h2>
+            </div>
+
+            <div class="admin-section">
+                <h3>Select Session</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Date</label>
+                        <input type="date" id="attendanceDate" onchange="loadSessionAttendance()">
+                    </div>
+                    <div class="form-group">
+                        <label>Select Court</label>
+                        <select id="attendanceCourt" onchange="loadSessionAttendance()">
+                            <option value="">-- All Courts --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>Attendance Status</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 20px;">
+                    <div style="background: #d4efdf; padding: 16px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.8em; font-weight: 700; color: #27ae60;" id="presentCount">0</div>
+                        <div style="font-size: 0.9em; color: #1e7e34; font-weight: 600;">Present</div>
+                    </div>
+                    <div style="background: #fff8e1; padding: 16px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.8em; font-weight: 700; color: #f39c12;" id="absentCount">0</div>
+                        <div style="font-size: 0.9em; color: #d68910; font-weight: 600;">Absent</div>
+                    </div>
+                    <div style="background: #ffe8e8; padding: 16px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.8em; font-weight: 700; color: #e74c3c;" id="noShowCount">0</div>
+                        <div style="font-size: 0.9em; color: #c0392b; font-weight: 600;">No Show</div>
+                    </div>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Contact</th>
+                                <th>Team</th>
+                                <th>Attendance</th>
+                                <th>Check-In Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Tab -->
+        <div id="payments" class="tab-content">
+            <div style="background: rgba(255,255,255,0.08); padding: 24px; border-radius: 12px; margin-bottom: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <h2 style="color: white; font-size: 1.8em; font-weight: 700; margin: 0;">💳 Payment Management</h2>
+            </div>
+
+            <div class="admin-section">
+                <h3>Payment Summary</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div style="background: linear-gradient(135deg, #d4efdf 0%, #c8e6c9 100%); padding: 16px; border-radius: 8px; border: 2px solid #27ae60;">
+                        <h4 style="color: #27ae60; font-size: 0.9em; font-weight: 700; margin-bottom: 8px;">Total Paid</h4>
+                        <div style="font-size: 2em; font-weight: 700; color: #27ae60;" id="totalPaid">$0.00</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #ffe8e8 0%, #ffcccc 100%); padding: 16px; border-radius: 8px; border: 2px solid #e74c3c;">
+                        <h4 style="color: #e74c3c; font-size: 0.9em; font-weight: 700; margin-bottom: 8px;">Total Unpaid</h4>
+                        <div style="font-size: 2em; font-weight: 700; color: #e74c3c;" id="totalUnpaid">$0.00</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #e8f4f8 0%, #d1e7f0 100%); padding: 16px; border-radius: 8px; border: 2px solid #3498db;">
+                        <h4 style="color: #3498db; font-size: 0.9em; font-weight: 700; margin-bottom: 8px;">Total Expected</h4>
+                        <div style="font-size: 2em; font-weight: 700; color: #3498db;" id="totalExpected">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>Payment Records</h3>
+                <div style="margin-bottom: 20px;">
+                    <input type="text" id="paymentSearch" placeholder="Search by player name..." style="width: 100%; padding: 12px; border: 2px solid #ecf0f1; border-radius: 8px; font-size: 1em;">
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Player Name</th>
+                                <th>Booking ID</th>
+                                <th>Date</th>
+                                <th>Court</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="bookings" class="tab-content">
+            <div style="background: rgba(255,255,255,0.08); padding: 24px; border-radius: 12px; margin-bottom: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <h2 style="color: white; font-size: 1.8em; font-weight: 700; margin: 0;">Your Bookings</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table id="bookingsTable" class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Court</th>
+                            <th>Team/Player</th>
+                            <th>Players</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Admin Tab -->
+        <div id="admin" class="tab-content">
+            <div class="admin-section">
+                <h3>📊 Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Total Bookings</h4>
+                        <div class="value" id="totalBookings">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Confirmed</h4>
+                        <div class="value" id="confirmedBookings">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Pending</h4>
+                        <div class="value" id="pendingBookings">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Court Utilization</h4>
+                        <div class="value" id="courtUtilization">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>🏟️ Manage Courts</h3>
+                <form onsubmit="addCourt(event)" style="margin-bottom: 20px;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Court Name</label>
+                            <input type="text" id="courtName" required placeholder="e.g., Court A - Indoor">
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="courtLocation" required placeholder="e.g., Building 1, Floor 2">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Capacity (Players)</label>
+                            <input type="number" id="courtCapacity" required min="1" placeholder="e.g., 20">
+                        </div>
+                        <div class="form-group">
+                            <label>Rate per Hour ($)</label>
+                            <input type="number" id="courtRate" required min="0" step="0.01" placeholder="e.g., 50.00">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">+ Add Court</button>
+                </form>
+
+                <h4 style="color: #333; margin-top: 25px; margin-bottom: 15px;">Current Courts:</h4>
+                <div id="adminCourtsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;"></div>
+            </div>
+
+            <div class="admin-section">
+                <h3>📚 Create Coaching Session</h3>
+                <form onsubmit="createSession(event)" style="margin-bottom: 20px;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Session Name *</label>
+                            <input type="text" id="sessionName" required placeholder="e.g., Basketball Training - Advanced">
+                        </div>
+                        <div class="form-group">
+                            <label>Coach Name *</label>
+                            <input type="text" id="coachName" required placeholder="e.g., Coach John">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Court *</label>
+                            <select id="sessionCourt" required>
+                                <option value="">Choose a court...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input type="date" id="sessionDate" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Time *</label>
+                            <select id="sessionTime" required>
+                                <option value="">Choose time...</option>
+                                <option value="06:00-07:00">06:00 - 07:00</option>
+                                <option value="07:00-08:00">07:00 - 08:00</option>
+                                <option value="08:00-09:00">08:00 - 09:00</option>
+                                <option value="09:00-10:00">09:00 - 10:00</option>
+                                <option value="10:00-11:00">10:00 - 11:00</option>
+                                <option value="11:00-12:00">11:00 - 12:00</option>
+                                <option value="12:00-13:00">12:00 - 13:00</option>
+                                <option value="13:00-14:00">13:00 - 14:00</option>
+                                <option value="14:00-15:00">14:00 - 15:00</option>
+                                <option value="15:00-16:00">15:00 - 16:00</option>
+                                <option value="16:00-17:00">16:00 - 17:00</option>
+                                <option value="17:00-18:00">17:00 - 18:00</option>
+                                <option value="18:00-19:00">18:00 - 19:00</option>
+                                <option value="19:00-20:00">19:00 - 20:00</option>
+                                <option value="20:00-21:00">20:00 - 21:00</option>
+                                <option value="21:00-22:00">21:00 - 22:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Max Capacity *</label>
+                            <input type="number" id="sessionCapacity" required min="1" placeholder="e.g., 12">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cost per Player ($) *</label>
+                            <input type="number" id="sessionCost" required min="0" step="0.01" placeholder="e.g., 25.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="sessionDescription" rows="2" placeholder="Session description or notes"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">+ Create Session</button>
+                </form>
+
+                <h4 style="color: #333; margin-top: 25px; margin-bottom: 15px;">Active Sessions:</h4>
+                <div id="adminSessionsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;"></div>
+            </div>
+
+            <div class="admin-section">
+                <h3>📝 All Bookings</h3>
+                <div style="overflow-x: auto;">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Player</th>
+                                <th>Booked By</th>
+                                <th>Court</th>
+                                <th>Date/Time</th>
+                                <th>Team</th>
+                                <th>Players</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBookingsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div style="background: rgba(255,255,255,0.08); padding: 24px; border-radius: 12px; margin-bottom: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <h2 style="color: white; font-size: 1.8em; font-weight: 700; margin: 0;">⚙️ System Settings</h2>
+            </div>
+
+            <!-- App Branding Settings -->
+            <div class="admin-section">
+                <h3>🎨 App Branding</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">App Name</label>
+                        <input type="text" id="appName" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 8px; font-size: 1em;" value="A4B Elite">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Primary Color</label>
+                        <input type="color" id="primaryColor" style="width: 100%; height: 44px; border: 2px solid #ecf0f1; border-radius: 8px; cursor: pointer;" value="#e74c3c">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveBrandingSettings()" style="margin-top: 15px;">Save Branding</button>
+            </div>
+
+            <!-- Time Slot Settings -->
+            <div class="admin-section">
+                <h3>⏰ Working Hours & Time Slots</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Opening Hour</label>
+                        <select id="openingHour" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 8px; font-size: 1em;">
+                            <option value="06">6:00 AM</option>
+                            <option value="07">7:00 AM</option>
+                            <option value="08">8:00 AM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Closing Hour</label>
+                        <select id="closingHour" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 8px; font-size: 1em;">
+                            <option value="20">8:00 PM</option>
+                            <option value="21">9:00 PM</option>
+                            <option value="22">10:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveTimeSlotSettings()" style="margin-top: 15px;">Save Hours</button>
+            </div>
+
+            <!-- Payment Settings -->
+            <div class="admin-section">
+                <h3>💰 Payment Settings</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Payment Terms (Days)</label>
+                        <input type="number" id="paymentTerms" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 8px;" value="7" min="0">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Currency</label>
+                        <select id="currency" style="width: 100%; padding: 10px; border: 2px solid #ecf0f1; border-radius: 8px;">
+                            <option value="$">USD ($)</option>
+                            <option value="€">EUR (€)</option>
+                            <option value="£">GBP (£)</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="savePaymentSettings()" style="margin-top: 15px;">Save Payment Settings</button>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="admin-section">
+                <h3>📧 Notification Settings</h3>
+                <label style="display: flex; align-items: center; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="emailNotifications" checked style="width: 18px; height: 18px; margin-right: 10px; cursor: pointer;">
+                    <span style="color: #333; font-weight: 500;">Send booking confirmation emails</span>
+                </label>
+                <label style="display: flex; align-items: center; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="paymentReminders" checked style="width: 18px; height: 18px; margin-right: 10px; cursor: pointer;">
+                    <span style="color: #333; font-weight: 500;">Send payment reminder notifications</span>
+                </label>
+                <label style="display: flex; align-items: center; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="attendanceReminders" checked style="width: 18px; height: 18px; margin-right: 10px; cursor: pointer;">
+                    <span style="color: #333; font-weight: 500;">Send attendance reminders</span>
+                </label>
+                <button class="btn btn-primary" onclick="saveNotificationSettings()" style="margin-top: 15px;">Save Notifications</button>
+            </div>
+
+            <!-- Data Management -->
+            <div class="admin-section">
+                <h3>💾 Data Management</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                    <button class="btn" style="background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="exportData()">📥 Export Data (JSON)</button>
+                    <button class="btn" style="background: #27ae60; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="backupData()">💾 Backup to File</button>
+                    <button class="btn" style="background: #f39c12; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="clearOldData()">🗑️ Clear Old Data</button>
+                    <button class="btn" style="background: #e74c3c; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="resetAll()">⚠️ Reset Everything</button>
+                </div>
+            </div>
+
+            <!-- User Management -->
+            <div class="admin-section">
+                <h3>👥 User Management</h3>
+                <div style="overflow-x: auto;">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersListBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Booking Details</h3>
+            <div id="modalBody"></div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button id="cancelBookingBtn" class="btn btn-danger" onclick="cancelBooking()" style="display: none;">Cancel Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== LOGIN SYSTEM ====================
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('users')) || [
+            { username: 'Admin', password: 'NathZakku0105', role: 'admin', name: 'Administrator' }
+        ];
+
+        function switchLoginTab(tab) {
+            document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(tab === 'login' ? 'loginForm' : 'registerForm').classList.add('active');
+            event.target.classList.add('active');
+
+            clearLoginMessages();
+        }
+
+        function showLoginMessage(type, message) {
+            const messageEl = document.getElementById(type === 'login' ? 'loginMessage' : 'registerMessage');
+            messageEl.textContent = message;
+            messageEl.className = `login-message ${type === 'error' ? 'error' : 'success'}`;
+        }
+
+        function clearLoginMessages() {
+            document.getElementById('loginMessage').className = 'login-message';
+            document.getElementById('registerMessage').className = 'login-message';
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showLoginMessage('error', '❌ Please fill in all fields');
+                return;
+            }
+
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = { username: user.username, role: user.role, name: user.name };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showLoginPage(false);
+                initializeApp();
+            } else {
+                showLoginMessage('error', '❌ Invalid username or password');
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const phone = document.getElementById('registerPhone').value.trim();
+            const username = document.getElementById('registerUsername').value.trim();
+            const password = document.getElementById('registerPassword').value;
+
+            if (!name || !email || !phone || !username || !password) {
+                showLoginMessage('register', '❌ Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 6) {
+                showLoginMessage('register', '❌ Password must be at least 6 characters');
+                return;
+            }
+
+            if (users.find(u => u.username === username)) {
+                showLoginMessage('register', '❌ Username already exists');
+                return;
+            }
+
+            const newUser = {
+                username: username,
+                password: password,
+                role: document.getElementById('registerRole').value || 'parent',
+                name: name,
+                email: email,
+                phone: phone
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            showLoginMessage('register', '✓ Account created! You can now login.');
+            setTimeout(() => {
+                switchLoginTab('login');
+            }, 1500);
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                showLoginPage(true);
+                clearLoginMessages();
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        function showLoginPage(show) {
+            document.getElementById('loginPage').style.display = show ? 'flex' : 'none';
+            document.getElementById('appContainer').style.display = show ? 'none' : 'block';
+        }
+
+        function updateUserDisplay() {
+            if (currentUser) {
+                document.getElementById('userDisplayName').textContent = `👤 ${currentUser.name}`;
+                const roleLabel = currentUser.role === 'admin' ? 'Admin' : currentUser.role === 'coach' ? 'Coach' : 'Parent';
+                document.getElementById('userRole').textContent = roleLabel;
+                updateTabVisibility();
+            }
+        }
+
+        function updateTabVisibility() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            if (currentUser && currentUser.role === 'parent') {
+                // Parents: Dashboard, Book Session, My Bookings
+                tabs[0].style.display = 'block'; // Dashboard
+                tabs[1].style.display = 'block'; // Book Session
+                tabs[2].style.display = 'none'; // Attendance
+                tabs[3].style.display = 'none'; // Payments
+                tabs[4].style.display = 'block'; // My Bookings
+                tabs[5].style.display = 'none'; // Admin
+                tabs[6].style.display = 'none'; // Settings
+            } else if (currentUser && currentUser.role === 'coach') {
+                // Coaches: Dashboard, My Sessions, Attendance, Payments
+                tabs[0].style.display = 'block'; // Dashboard
+                tabs[1].style.display = 'block'; // My Sessions (Book Session tab repurposed)
+                tabs[2].style.display = 'block'; // Attendance
+                tabs[3].style.display = 'block'; // Payments
+                tabs[4].style.display = 'none'; // My Bookings
+                tabs[5].style.display = 'none'; // Admin
+                tabs[6].style.display = 'none'; // Settings
+            } else {
+                // Admins see all tabs
+                tabs.forEach(tab => tab.style.display = 'block');
+            }
+        }
+
+        // ==================== SETTINGS FUNCTIONS ====================
+        function saveBrandingSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings')) || {};
+            settings.appName = document.getElementById('appName').value;
+            settings.primaryColor = document.getElementById('primaryColor').value;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            showAlert('✓ Branding settings saved!', 'success');
+        }
+
+        function saveTimeSlotSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings')) || {};
+            settings.openingHour = document.getElementById('openingHour').value;
+            settings.closingHour = document.getElementById('closingHour').value;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            showAlert('✓ Time slot settings saved!', 'success');
+        }
+
+        function savePaymentSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings')) || {};
+            settings.paymentTerms = document.getElementById('paymentTerms').value;
+            settings.currency = document.getElementById('currency').value;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            showAlert('✓ Payment settings saved!', 'success');
+        }
+
+        function saveNotificationSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings')) || {};
+            settings.emailNotifications = document.getElementById('emailNotifications').checked;
+            settings.paymentReminders = document.getElementById('paymentReminders').checked;
+            settings.attendanceReminders = document.getElementById('attendanceReminders').checked;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            showAlert('✓ Notification settings saved!', 'success');
+        }
+
+        function exportData() {
+            const data = {
+                courts: courts,
+                bookings: bookings,
+                attendance: attendance,
+                payments: payments,
+                users: users,
+                settings: JSON.parse(localStorage.getItem('settings')) || {}
+            };
+            const json = JSON.stringify(data, null, 2);
+            downloadFile(json, 'basketball-data-export.json', 'application/json');
+            showAlert('✓ Data exported successfully!', 'success');
+        }
+
+        function backupData() {
+            const backup = {
+                timestamp: new Date().toISOString(),
+                courts: courts,
+                bookings: bookings,
+                attendance: attendance,
+                payments: payments,
+                users: users,
+                settings: JSON.parse(localStorage.getItem('settings')) || {}
+            };
+            const json = JSON.stringify(backup, null, 2);
+            downloadFile(json, `basketball-backup-${new Date().toISOString().split('T')[0]}.json`, 'application/json');
+            showAlert('✓ Backup created successfully!', 'success');
+        }
+
+        function downloadFile(content, filename, type) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:' + type + ';charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function clearOldData() {
+            if (confirm('Clear bookings older than 90 days? This cannot be undone!')) {
+                const ninetyDaysAgo = new Date();
+                ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+                const oldDate = ninetyDaysAgo.toISOString().split('T')[0];
+                
+                bookings = bookings.filter(b => b.date >= oldDate);
+                attendance = attendance.filter(a => a.date >= oldDate);
+                payments = payments.filter(p => p.date >= oldDate);
+                
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                localStorage.setItem('attendance', JSON.stringify(attendance));
+                localStorage.setItem('payments', JSON.stringify(payments));
+                
+                showAlert('✓ Old data cleared!', 'success');
+            }
+        }
+
+        function resetAll() {
+            if (confirm('WARNING: This will DELETE ALL DATA. Are you sure?')) {
+                if (confirm('FINAL WARNING: This action cannot be undone. Delete everything?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            }
+        }
+
+        function displayUsersList() {
+            const tbody = document.getElementById('usersListBody');
+            const html = users.map((user, index) => `
+                <tr>
+                    <td>${user.username}</td>
+                    <td>${user.name || '-'}</td>
+                    <td><span class="status-badge" style="background: ${user.role === 'admin' ? '#e74c3c' : '#3498db'}; color: white; padding: 4px 8px;">${user.role}</span></td>
+                    <td>${user.email || '-'}</td>
+                    <td>
+                        ${user.role !== 'admin' ? `<button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.85em;" onclick="deleteUser(${index})">Delete</button>` : '-'}
+                    </td>
+                </tr>
+            `).join('');
+            tbody.innerHTML = html;
+        }
+
+        function deleteUser(index) {
+            if (confirm(`Delete user ${users[index].username}?`)) {
+                users.splice(index, 1);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayUsersList();
+                showAlert('✓ User deleted!', 'success');
+            }
+        }
+
+        function initializeSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings')) || {};
+            document.getElementById('appName').value = settings.appName || 'A4B Elite';
+            document.getElementById('primaryColor').value = settings.primaryColor || '#e74c3c';
+            document.getElementById('openingHour').value = settings.openingHour || '06';
+            document.getElementById('closingHour').value = settings.closingHour || '22';
+            document.getElementById('paymentTerms').value = settings.paymentTerms || '7';
+            document.getElementById('currency').value = settings.currency || '$';
+            document.getElementById('emailNotifications').checked = settings.emailNotifications !== false;
+            document.getElementById('paymentReminders').checked = settings.paymentReminders !== false;
+            document.getElementById('attendanceReminders').checked = settings.attendanceReminders !== false;
+            displayUsersList();
+        }
+
+        function initializeApp() {
+            updateUserDisplay();
+            updateDashboard();
+            updateCourtsSelect();
+            displayCourts();
+            populateAttendanceCourts();
+            setDefaultDate();
+            renderCalendar();
+            initializeSettings();
+            // Initialize booking section visibility based on user role
+            if (currentUser && currentUser.role === 'parent') {
+                const parentSection = document.getElementById('parentBookingSection');
+                const coachSection = document.getElementById('coachSessionsSection');
+                if (parentSection) parentSection.style.display = 'block';
+                if (coachSection) coachSection.style.display = 'none';
+                setTimeout(() => displayAvailableSessions(), 100);
+            }
+        }
+
+        // Check if user is already logged in
+        window.addEventListener('load', () => {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showLoginPage(false);
+                initializeApp();
+            } else {
+                showLoginPage(true);
+            }
+        });
+
+        // ==================== DATA STORAGE ====================
+        let courts = JSON.parse(localStorage.getItem('courts')) || [
+            { id: 'C001', name: 'Court A - Indoor', location: 'Building 1, Floor 2', capacity: 20, rate: 50, status: 'available' },
+            { id: 'C002', name: 'Court B - Outdoor', location: 'Field Area, Main Campus', capacity: 15, rate: 30, status: 'available' },
+            { id: 'C003', name: 'Court C - Training', location: 'Gym Complex, Wing B', capacity: 12, rate: 40, status: 'available' }
+        ];
+
+        let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+        let attendance = JSON.parse(localStorage.getItem('attendance')) || [];
+        let payments = JSON.parse(localStorage.getItem('payments')) || [];
+        let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let selectedDate = null;
+        let selectedSlot = null;
+
+        // Initialize (moved to end with session initialization)
+
+        // Calendar Functions
+        function renderCalendar() {
+            const monthYearElement = document.getElementById('monthYear');
+            const calendarElement = document.getElementById('calendar');
+            if (!monthYearElement || !calendarElement) return; // Don't fail if elements don't exist
+            
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+
+            const monthYear = new Date(currentYear, currentMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            monthYearElement.textContent = monthYear;
+
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            let html = '';
+
+            dayNames.forEach(day => {
+                html += `<div class="calendar-day-header">${day}</div>`;
+            });
+
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const isToday = date.toDateString() === today.toDateString();
+                const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+                
+                html += `<div class="calendar-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" 
+                         onclick="selectDate(new Date(${currentYear}, ${currentMonth}, ${day}))">${day}</div>`;
+            }
+
+            document.getElementById('calendar').innerHTML = html;
+        }
+
+        function previousMonth() {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            renderCalendar();
+        }
+
+        function selectDate(date) {
+            selectedDate = date;
+            document.getElementById('bookingDate').value = date.toISOString().split('T')[0];
+            renderCalendar();
+            loadAvailableSlots();
+        }
+
+        // Courts Functions
+        function updateCourtsSelect() {
+            const select = document.getElementById('courtSelect');
+            if (!select) return; // Don't fail if element doesn't exist
+            const options = courts.map(court => 
+                `<option value="${court.id}">${court.name} (${court.capacity} players)</option>`
+            ).join('');
+            select.innerHTML = '<option value="">Choose a court...</option>' + options;
+        }
+
+        function displayCourts() {
+            const container = document.getElementById('courtsContainer');
+            if (!container) return; // Don't fail if element doesn't exist
+            const html = courts.map(court => `
+                <div class="court-card">
+                    <h3>${court.name}</h3>
+                    <div class="court-info">
+                        <div><strong>📍 Location:</strong> ${court.location}</div>
+                        <div><strong>👥 Capacity:</strong> ${court.capacity} players</div>
+                        <div><strong>💰 Rate:</strong> $${court.rate.toFixed(2)}/hour</div>
+                    </div>
+                    <span class="court-status ${court.status === 'available' ? 'available' : 'busy'}">
+                        ${court.status === 'available' ? '✓ Available' : '✗ Busy'}
+                    </span>
+                    <button class="btn btn-primary" onclick="scrollToBooking()">Book Now</button>
+                </div>
+            `).join('');
+            container.innerHTML = html;
+        }
+
+        function scrollToBooking() {
+            switchTab('booking');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Time Slots
+        const timeSlots = [
+            '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00',
+            '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00',
+            '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00',
+            '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00'
+        ];
+
+        function loadAvailableSlots() {
+            const courtId = document.getElementById('courtSelect').value;
+            const date = document.getElementById('bookingDate').value;
+
+            if (!courtId || !date) {
+                document.getElementById('slotsContainer').innerHTML = '<p style="color: #999;">Select court and date first</p>';
+                return;
+            }
+
+            const bookedSlots = bookings.filter(b => b.courtId === courtId && b.date === date && b.status !== 'cancelled').map(b => b.timeSlot);
+
+            const slotsHtml = timeSlots.map(slot => {
+                const isBooked = bookedSlots.includes(slot);
+                return `
+                    <div class="slot ${isBooked ? 'booked' : 'available'} ${selectedSlot === slot ? 'selected' : ''}"
+                         onclick="${isBooked ? '' : `selectSlot('${slot}')`}">
+                        ${slot}
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('slotsContainer').innerHTML = slotsHtml;
+        }
+
+        function selectSlot(slot) {
+            selectedSlot = slot;
+            document.getElementById('selectedSlot').value = slot;
+            loadAvailableSlots();
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            const today = new Date().toISOString().split('T')[0];
+            const todaysBookings = bookings.filter(b => b.date === today && b.status !== 'cancelled');
+
+            if (todaysBookings.length > 0) {
+                const booking = todaysBookings[0];
+                const court = courts.find(c => c.id === booking.courtId);
+                document.getElementById('todaysCourt').textContent = court ? court.name : 'N/A';
+                document.getElementById('todaysTime').textContent = booking.timeSlot;
+                document.getElementById('todaysTeam').textContent = booking.teamName;
+            }
+
+            // Update stats
+            const confirmed = todaysBookings.filter(b => b.status === 'confirmed').length;
+            const pending = todaysBookings.filter(b => b.status === 'pending').length;
+            const unpaid = payments.filter(p => p.status === 'unpaid' && p.date === today).length;
+
+            document.getElementById('dashConfirmed').textContent = confirmed;
+            document.getElementById('dashPending').textContent = pending;
+            document.getElementById('dashUnpaid').textContent = unpaid;
+
+            // Display today's attendees
+            const attendeesHtml = todaysBookings.map(booking => {
+                const payment = payments.find(p => p.bookingId === booking.id);
+                const paymentStatus = payment ? payment.status : 'unpaid';
+                return `
+                    <tr>
+                        <td>${booking.playerName}</td>
+                        <td>${booking.playerPhone}</td>
+                        <td>${booking.teamName}</td>
+                        <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                        <td><span class="status-badge status-${paymentStatus === 'paid' ? 'confirmed' : 'pending'}">${paymentStatus === 'paid' ? '✓ Paid' : 'Unpaid'}</span></td>
+                        <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85em;" onclick="viewBooking('${booking.id}')">Details</button></td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('dashboardAttendees').innerHTML = attendeesHtml || '<tr><td colspan="6" style="text-align: center; color: #999;">No sessions today</td></tr>';
+        }
+
+        // Attendance Functions
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('attendanceDate').value = today;
+        }
+
+        function populateAttendanceCourts() {
+            const select = document.getElementById('attendanceCourt');
+            const options = courts.map(court => 
+                `<option value="${court.id}">${court.name}</option>`
+            ).join('');
+            select.innerHTML = '<option value="">-- All Courts --</option>' + options;
+        }
+
+        function loadSessionAttendance() {
+            const date = document.getElementById('attendanceDate').value;
+            const courtId = document.getElementById('attendanceCourt').value;
+
+            if (!date) return;
+
+            let sessionAttendance = attendance.filter(a => a.date === date);
+            if (courtId) {
+                sessionAttendance = sessionAttendance.filter(a => a.courtId === courtId);
+            }
+
+            const present = sessionAttendance.filter(a => a.status === 'present').length;
+            const absent = sessionAttendance.filter(a => a.status === 'absent').length;
+            const noShow = sessionAttendance.filter(a => a.status === 'no-show').length;
+
+            document.getElementById('presentCount').textContent = present;
+            document.getElementById('absentCount').textContent = absent;
+            document.getElementById('noShowCount').textContent = noShow;
+
+            const tbody = document.getElementById('attendanceTable');
+            const html = sessionAttendance.map(record => {
+                const booking = bookings.find(b => b.id === record.bookingId);
+                return `
+                    <tr>
+                        <td>${record.playerName}</td>
+                        <td>${booking ? booking.playerPhone : 'N/A'}</td>
+                        <td>${booking ? booking.teamName : 'N/A'}</td>
+                        <td>
+                            <select onchange="updateAttendanceStatus('${record.id}', this.value)" style="padding: 6px; border-radius: 4px; border: 1px solid #ddd;">
+                                <option value="pending" ${record.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                <option value="present" ${record.status === 'present' ? 'selected' : ''}>✓ Present</option>
+                                <option value="absent" ${record.status === 'absent' ? 'selected' : ''}>✗ Absent</option>
+                                <option value="no-show" ${record.status === 'no-show' ? 'selected' : ''}>No Show</option>
+                            </select>
+                        </td>
+                        <td>${record.checkInTime ? new Date(record.checkInTime).toLocaleTimeString() : '-'}</td>
+                        <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85em;" onclick="checkInPlayer('${record.id}')">Check In</button></td>
+                    </tr>
+                `;
+            }).join('');
+
+            tbody.innerHTML = html || '<tr><td colspan="6" style="text-align: center; color: #999;">No attendees for this session</td></tr>';
+        }
+
+        function updateAttendanceStatus(attendanceId, status) {
+            const record = attendance.find(a => a.id === attendanceId);
+            if (record) {
+                record.status = status;
+                localStorage.setItem('attendance', JSON.stringify(attendance));
+                loadSessionAttendance();
+                showAlert('Attendance updated', 'success');
+            }
+        }
+
+        function checkInPlayer(attendanceId) {
+            const record = attendance.find(a => a.id === attendanceId);
+            if (record) {
+                record.status = 'present';
+                record.checkInTime = new Date().toISOString();
+                localStorage.setItem('attendance', JSON.stringify(attendance));
+                loadSessionAttendance();
+                showAlert('✓ Player checked in', 'success');
+            }
+        }
+
+        // Payment Functions
+        function updatePaymentDisplay() {
+            const totalPaid = payments.filter(p => p.status === 'paid').reduce((sum, p) => sum + p.amount, 0);
+            const totalUnpaid = payments.filter(p => p.status === 'unpaid').reduce((sum, p) => sum + p.amount, 0);
+            const totalExpected = payments.reduce((sum, p) => sum + p.amount, 0);
+
+            document.getElementById('totalPaid').textContent = '$' + totalPaid.toFixed(2);
+            document.getElementById('totalUnpaid').textContent = '$' + totalUnpaid.toFixed(2);
+            document.getElementById('totalExpected').textContent = '$' + totalExpected.toFixed(2);
+
+            const tbody = document.getElementById('paymentTable');
+            const html = payments.map(payment => {
+                const booking = bookings.find(b => b.id === payment.bookingId);
+                const court = courts.find(c => c.id === payment.courtId);
+                return `
+                    <tr>
+                        <td>${payment.playerName}</td>
+                        <td>${payment.bookingId}</td>
+                        <td>${payment.date}</td>
+                        <td>${court ? court.name : 'N/A'}</td>
+                        <td>$${payment.amount.toFixed(2)}</td>
+                        <td><span class="status-badge status-${payment.status === 'paid' ? 'confirmed' : 'pending'}">${payment.status === 'paid' ? '✓ Paid' : 'Unpaid'}</span></td>
+                        <td>
+                            ${payment.status === 'unpaid' ? 
+                                `<button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85em;" onclick="markPaymentPaid('${payment.id}')">Mark Paid</button>` :
+                                `<button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85em;" onclick="markPaymentUnpaid('${payment.id}')">Mark Unpaid</button>`
+                            }
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            tbody.innerHTML = html || '<tr><td colspan="7" style="text-align: center; color: #999;">No payment records</td></tr>';
+        }
+
+        function markPaymentPaid(paymentId) {
+            const payment = payments.find(p => p.id === paymentId);
+            if (payment) {
+                payment.status = 'paid';
+                localStorage.setItem('payments', JSON.stringify(payments));
+                updatePaymentDisplay();
+                updateDashboard();
+                showAlert('✓ Payment marked as paid', 'success');
+            }
+        }
+
+        function markPaymentUnpaid(paymentId) {
+            const payment = payments.find(p => p.id === paymentId);
+            if (payment) {
+                payment.status = 'unpaid';
+                localStorage.setItem('payments', JSON.stringify(payments));
+                updatePaymentDisplay();
+                updateDashboard();
+                showAlert('Payment marked as unpaid', 'info');
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'booking') {
+                // Show different content based on user role
+                if (currentUser && (currentUser.role === 'coach' || currentUser.role === 'admin')) {
+                    // Coaches and admins see sessions to manage and create new ones
+                    document.getElementById('parentBookingSection').style.display = 'none';
+                    document.getElementById('sessionRegistrationSection').style.display = 'none';
+                    document.getElementById('coachSessionsSection').style.display = 'block';
+                    document.getElementById('createCoachSessionSection').style.display = 'none';
+                    displayCoachSessions();
+                } else if (currentUser && currentUser.role === 'parent') {
+                    // Parents see available sessions to register for
+                    const parentSection = document.getElementById('parentBookingSection');
+                    if (parentSection) {
+                        parentSection.style.display = 'block';
+                    }
+                    const coachSection = document.getElementById('coachSessionsSection');
+                    if (coachSection) {
+                        coachSection.style.display = 'none';
+                    }
+                    const createSection = document.getElementById('createCoachSessionSection');
+                    if (createSection) {
+                        createSection.style.display = 'none';
+                    }
+                    displayAvailableSessions();
+                } else {
+                    // Fallback: show parent booking section
+                    const parentSection = document.getElementById('parentBookingSection');
+                    if (parentSection) {
+                        parentSection.style.display = 'block';
+                    }
+                    const coachSection = document.getElementById('coachSessionsSection');
+                    if (coachSection) {
+                        coachSection.style.display = 'none';
+                    }
+                    displayAvailableSessions();
+                }
+            }
+            if (tabName === 'bookings') updateBookingsDisplay();
+            if (tabName === 'admin') {
+                updateAdminStats();
+                updateAdminCourts();
+                displayAdminBookings();
+            }
+            if (tabName === 'attendance') loadSessionAttendance();
+            if (tabName === 'payments') updatePaymentDisplay();
+            if (tabName === 'dashboard') updateDashboard();
+            if (tabName === 'settings') {
+                initializeSettings();
+            }
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+
+            if (!selectedSlot) {
+                showAlert('Please select a time slot', 'error');
+                return;
+            }
+
+            const costPerPlayer = parseFloat(document.getElementById('costPerPlayer').value) || 0;
+            const totalCost = costPerPlayer * parseInt(document.getElementById('numPlayers').value);
+
+            const booking = {
+                id: 'BK' + Date.now(),
+                playerName: document.getElementById('playerName').value,
+                playerEmail: document.getElementById('playerEmail').value,
+                playerPhone: document.getElementById('playerPhone').value,
+                courtId: document.getElementById('courtSelect').value,
+                date: document.getElementById('bookingDate').value,
+                timeSlot: selectedSlot,
+                teamName: document.getElementById('teamName').value || 'Individual',
+                numPlayers: document.getElementById('numPlayers').value,
+                costPerPlayer: costPerPlayer,
+                totalCost: totalCost,
+                specialRequests: document.getElementById('specialRequests').value,
+                status: 'confirmed',
+                bookingDate: new Date().toISOString(),
+                bookedBy: currentUser ? currentUser.username : 'Unknown'
+            };
+
+            bookings.push(booking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            // Create payment record
+            const payment = {
+                id: 'PAY' + Date.now(),
+                bookingId: booking.id,
+                playerName: booking.playerName,
+                playerEmail: booking.playerEmail,
+                playerPhone: booking.playerPhone,
+                amount: totalCost,
+                status: 'unpaid',
+                date: booking.date,
+                courtId: booking.courtId
+            };
+            payments.push(payment);
+            localStorage.setItem('payments', JSON.stringify(payments));
+
+            // Create attendance record
+            const attendanceRecord = {
+                id: 'ATT' + Date.now(),
+                bookingId: booking.id,
+                playerName: booking.playerName,
+                date: booking.date,
+                courtId: booking.courtId,
+                timeSlot: selectedSlot,
+                status: 'pending',
+                checkInTime: null
+            };
+            attendance.push(attendanceRecord);
+            localStorage.setItem('attendance', JSON.stringify(attendance));
+
+            showAlert(`✓ Booking confirmed! Booking ID: ${booking.id}`, 'success');
+            document.getElementById('bookingForm').reset();
+            selectedSlot = null;
+            selectedDate = null;
+            renderCalendar();
+            loadAvailableSlots();
+            updateDashboard();
+        }
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            container.appendChild(alertDiv);
+
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        // My Bookings
+        function updateBookingsDisplay() {
+            const tbody = document.getElementById('bookingsBody');
+
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #999;">No bookings yet</td></tr>';
+                return;
+            }
+
+            // Filter bookings: parents see only their own, admins see all
+            let filteredBookings = bookings;
+            if (currentUser && currentUser.role === 'parent') {
+                filteredBookings = bookings.filter(b => b.bookedBy === currentUser.username);
+            }
+
+            if (filteredBookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #999;">No bookings found</td></tr>';
+                return;
+            }
+
+            const html = filteredBookings.map(booking => {
+                const court = courts.find(c => c.id === booking.courtId);
+                return `
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td>${booking.date}</td>
+                        <td>${booking.timeSlot}</td>
+                        <td>${court ? court.name : 'N/A'}</td>
+                        <td>${booking.teamName}</td>
+                        <td>${booking.numPlayers}</td>
+                        <td><span class="status-badge status-${booking.status}">${booking.status}</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85em;" 
+                                    onclick="viewBooking('${booking.id}')">View</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            tbody.innerHTML = html;
+        }
+
+        function viewBooking(bookingId) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (!booking) return;
+
+            const court = courts.find(c => c.id === booking.courtId);
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <p><strong>Booking ID:</strong> ${booking.id}</p>
+                <p><strong>Player:</strong> ${booking.playerName}</p>
+                <p><strong>Email:</strong> ${booking.playerEmail}</p>
+                <p><strong>Phone:</strong> ${booking.playerPhone}</p>
+                <p><strong>Court:</strong> ${court ? court.name : 'N/A'}</p>
+                <p><strong>Date:</strong> ${booking.date}</p>
+                <p><strong>Time:</strong> ${booking.timeSlot}</p>
+                <p><strong>Team:</strong> ${booking.teamName}</p>
+                <p><strong>Players:</strong> ${booking.numPlayers}</p>
+                <p><strong>Special Requests:</strong> ${booking.specialRequests || 'None'}</p>
+                <p><strong>Status:</strong> <span class="status-badge status-${booking.status}">${booking.status}</span></p>
+            `;
+
+            document.getElementById('modalTitle').textContent = 'Booking Details';
+            document.getElementById('cancelBookingBtn').style.display = booking.status !== 'cancelled' ? 'block' : 'none';
+            document.getElementById('cancelBookingBtn').onclick = () => cancelBookingId(bookingId);
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function cancelBookingId(bookingId) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (booking) {
+                booking.status = 'cancelled';
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                showAlert('Booking cancelled', 'info');
+                closeModal();
+                updateBookingsDisplay();
+            }
+        }
+
+        // Admin Functions
+        function addCourt(event) {
+            event.preventDefault();
+
+            const court = {
+                id: 'C' + Date.now(),
+                name: document.getElementById('courtName').value,
+                location: document.getElementById('courtLocation').value,
+                capacity: parseInt(document.getElementById('courtCapacity').value),
+                rate: parseFloat(document.getElementById('courtRate').value),
+                status: 'available'
+            };
+
+            courts.push(court);
+            localStorage.setItem('courts', JSON.stringify(courts));
+
+            event.target.reset();
+            updateCourtsSelect();
+            displayCourts();
+            updateAdminCourts();
+            showAlert('✓ Court added successfully', 'success');
+        }
+
+        function updateAdminStats() {
+            const total = bookings.length;
+            const confirmed = bookings.filter(b => b.status === 'confirmed').length;
+            const pending = bookings.filter(b => b.status === 'pending').length;
+            const utilization = courts.length > 0 ? Math.round((confirmed / (courts.length * 16)) * 100) : 0;
+
+            document.getElementById('totalBookings').textContent = total;
+            document.getElementById('confirmedBookings').textContent = confirmed;
+            document.getElementById('pendingBookings').textContent = pending;
+            document.getElementById('courtUtilization').textContent = utilization + '%';
+        }
+
+        function updateAdminCourts() {
+            const container = document.getElementById('adminCourtsContainer');
+            const html = courts.map(court => `
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%); padding: 18px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.05);">
+                    <h4 style="color: #1a1f36; margin-bottom: 12px; font-size: 1.1em; font-weight: 700;">${court.name}</h4>
+                    <p style="color: #555; font-size: 0.9em; margin: 8px 0; line-height: 1.6;">📍 ${court.location}</p>
+                    <p style="color: #555; font-size: 0.9em; margin: 8px 0; line-height: 1.6;">👥 ${court.capacity} players | 💰 $${court.rate}/hr</p>
+                    <button class="btn btn-danger" style="margin-top: 12px; width: 100%;" onclick="removeCourt('${court.id}')">Remove Court</button>
+                </div>
+            `).join('');
+            container.innerHTML = html || '<p style="color: #999; text-align: center; padding: 20px;">No courts added yet</p>';
+        }
+
+        function removeCourt(courtId) {
+            if (confirm('Remove this court?')) {
+                courts = courts.filter(c => c.id !== courtId);
+                localStorage.setItem('courts', JSON.stringify(courts));
+                updateCourtsSelect();
+                displayCourts();
+                updateAdminCourts();
+                showAlert('Court removed', 'info');
+            }
+        }
+
+        function displayAdminBookings() {
+            const tbody = document.getElementById('adminBookingsBody');
+
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: #999;">No bookings</td></tr>';
+                return;
+            }
+
+            const html = bookings.map(booking => {
+                const court = courts.find(c => c.id === booking.courtId);
+                return `
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td>${booking.playerName}</td>
+                        <td>${booking.bookedBy || 'N/A'}</td>
+                        <td>${court ? court.name : 'N/A'}</td>
+                        <td>${booking.date} ${booking.timeSlot}</td>
+                        <td>${booking.teamName}</td>
+                        <td>${booking.numPlayers}</td>
+                        <td><span class="status-badge status-${booking.status}">${booking.status}</span></td>
+                        <td>
+                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85em;" 
+                                    onclick="adminCancelBooking('${booking.id}')">Cancel</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            tbody.innerHTML = html;
+        }
+
+        function adminCancelBooking(bookingId) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (booking && confirm('Cancel this booking?')) {
+                booking.status = 'cancelled';
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                displayAdminBookings();
+                updateAdminStats();
+                showAlert('Booking cancelled', 'info');
+            }
+        }
+
+        // ==================== SESSION FUNCTIONS ====================
+        function loadSessionCourts() {
+            const select = document.getElementById('sessionCourt');
+            select.innerHTML = '<option value="">Choose a court...</option>';
+            courts.forEach(court => {
+                select.innerHTML += `<option value="${court.id}">${court.name}</option>`;
+            });
+        }
+
+        function createSession(event) {
+            event.preventDefault();
+
+            const session = {
+                id: 'SES' + Date.now(),
+                name: document.getElementById('sessionName').value,
+                coach: document.getElementById('coachName').value,
+                courtId: document.getElementById('sessionCourt').value,
+                date: document.getElementById('sessionDate').value,
+                time: document.getElementById('sessionTime').value,
+                capacity: parseInt(document.getElementById('sessionCapacity').value),
+                cost: parseFloat(document.getElementById('sessionCost').value),
+                description: document.getElementById('sessionDescription').value,
+                createdBy: currentUser ? currentUser.username : 'Admin',
+                registrations: 0
+            };
+
+            sessions.push(session);
+            localStorage.setItem('sessions', JSON.stringify(sessions));
+
+            showAlert(`✓ Session "${session.name}" created successfully!`, 'success');
+            document.getElementById('sessionName').value = '';
+            document.getElementById('coachName').value = '';
+            document.getElementById('sessionCourt').value = '';
+            document.getElementById('sessionDate').value = '';
+            document.getElementById('sessionTime').value = '';
+            document.getElementById('sessionCapacity').value = '';
+            document.getElementById('sessionCost').value = '';
+            document.getElementById('sessionDescription').value = '';
+
+            displayAdminSessions();
+            displayAvailableSessions();
+        }
+
+        function displayAdminSessions() {
+            const container = document.getElementById('adminSessionsContainer');
+            
+            // Filter sessions based on user role
+            let displaySessions = sessions;
+            if (currentUser && currentUser.role === 'coach') {
+                displaySessions = sessions.filter(s => s.createdBy === currentUser.username);
+            }
+            
+            if (displaySessions.length === 0) {
+                container.innerHTML = '<p style="color: #999; grid-column: 1/-1;">No sessions created yet</p>';
+                return;
+            }
+
+            const html = displaySessions.map(session => {
+                const court = courts.find(c => c.id === session.courtId);
+                const registrationCount = bookings.filter(b => b.sessionId === session.id).length;
+                const timeDisplay = session.time || `${session.startTime}-${session.endTime}`;
+                
+                return `
+                    <div style="background: rgba(255,255,255,0.95); padding: 16px; border-radius: 12px; border-left: 4px solid #e74c3c;">
+                        <h4 style="color: #e74c3c; margin: 0 0 12px 0; font-size: 1.1em;">${session.name}</h4>
+                        <p style="margin: 6px 0; color: #333;"><strong>Coach:</strong> ${session.coach}</p>
+                        <p style="margin: 6px 0; color: #333;"><strong>Court:</strong> ${court ? court.name : 'N/A'}</p>
+                        <p style="margin: 6px 0; color: #333;"><strong>Date & Time:</strong> ${session.date} ${timeDisplay}</p>
+                        <p style="margin: 6px 0; color: #333;"><strong>Capacity:</strong> ${registrationCount}/${session.capacity}</p>
+                        <p style="margin: 6px 0; color: #e74c3c; font-weight: 600;"><strong>Cost:</strong> $${session.cost.toFixed(2)} per player</p>
+                        <div style="margin-top: 12px; display: flex; gap: 8px;">
+                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85em;" onclick="deleteSession('${session.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
+        function deleteSession(sessionId) {
+            // Check if user has permission to delete
+            if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'coach')) {
+                showAlert('You do not have permission to delete sessions', 'error');
+                return;
+            }
+
+            // Get the session to check ownership for coaches
+            const session = sessions.find(s => s.id === sessionId);
+            if (!session) {
+                showAlert('Session not found', 'error');
+                return;
+            }
+
+            // Coaches can only delete their own sessions; admins can delete any
+            if (currentUser.role === 'coach' && session.createdBy !== currentUser.username) {
+                showAlert('You can only delete sessions you created', 'error');
+                return;
+            }
+
+            if (confirm('Delete this session? Registrations will also be deleted.')) {
+                sessions = sessions.filter(s => s.id !== sessionId);
+                bookings = bookings.filter(b => b.sessionId !== sessionId);
+                localStorage.setItem('sessions', JSON.stringify(sessions));
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                displayAdminSessions();
+                displayCoachSessions();
+                displayAvailableSessions();
+                updateAdminStats();
+                showAlert('Session deleted', 'info');
+            }
+        }
+
+        function displayAvailableSessions() {
+            const container = document.getElementById('sessionsContainer');
+            if (!container) return;
+            
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Show all upcoming sessions (from today onwards)
+            const upcomingSessions = sessions.filter(s => s.date >= today).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            if (!upcomingSessions || upcomingSessions.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No upcoming sessions available</div>';
+                return;
+            }
+
+            const html = upcomingSessions.map(session => {
+                const court = courts.find(c => c.id === session.courtId);
+                const registrationCount = bookings.filter(b => b.sessionId === session.id).length;
+                const spotsAvailable = session.capacity - registrationCount;
+                const isFullLabel = spotsAvailable <= 0 ? ' (FULL)' : '';
+                const timeDisplay = session.time || `${session.startTime}-${session.endTime}`;
+
+                return `
+                    <div style="background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,1) 100%); padding: 20px; border-radius: 12px; border-top: 4px solid #e74c3c; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                        <h4 style="color: #e74c3c; margin: 0 0 12px 0; font-size: 1.15em; font-weight: 700;">${session.name}</h4>
+                        <p style="margin: 8px 0; color: #555;"><strong>👨‍🏫 Coach:</strong> ${session.coach}</p>
+                        <p style="margin: 8px 0; color: #555;"><strong>🏟️ Court:</strong> ${court ? court.name : 'N/A'}</p>
+                        <p style="margin: 8px 0; color: #555;"><strong>📅 Date & Time:</strong> ${session.date} ${timeDisplay}</p>
+                        <p style="margin: 8px 0; color: #555;"><strong>👥 Spots:</strong> ${spotsAvailable}/${session.capacity} available${isFullLabel}</p>
+                        <p style="margin: 8px 0; color: #e74c3c; font-weight: 600; font-size: 1.1em;"><strong>💰 $${session.cost.toFixed(2)}</strong> per player</p>
+                        ${session.description ? `<p style="margin: 8px 0; color: #777; font-size: 0.9em; font-style: italic;">${session.description}</p>` : ''}
+                        <button class="btn btn-primary" style="margin-top: 12px; width: 100%;" onclick="selectSessionForRegistration('${session.id}')" ${spotsAvailable <= 0 ? 'disabled' : ''}>Register</button>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
+        function selectSessionForRegistration(sessionId) {
+            const session = sessions.find(s => s.id === sessionId);
+            if (!session) return;
+
+            document.getElementById('selectedSessionId').value = sessionId;
+            document.getElementById('sessionRegistrationSection').style.display = 'block';
+            
+            const court = courts.find(c => c.id === session.courtId);
+            const timeDisplay = session.time || `${session.startTime}-${session.endTime}`;
+            document.getElementById('sessionDetails').innerHTML = `
+                <p><strong>Session:</strong> ${session.name}</p>
+                <p><strong>Coach:</strong> ${session.coach}</p>
+                <p><strong>Court:</strong> ${court ? court.name : 'N/A'}</p>
+                <p><strong>Date & Time:</strong> ${session.date} ${timeDisplay}</p>
+                <p><strong>Cost:</strong> $${session.cost.toFixed(2)}</p>
+            `;
+            
+            window.scrollTo(0, document.getElementById('sessionRegistrationSection').offsetTop - 100);
+        }
+
+        function cancelSessionRegistration() {
+            document.getElementById('selectedSessionId').value = '';
+            document.getElementById('sessionRegistrationForm').reset();
+            document.getElementById('sessionRegistrationSection').style.display = 'none';
+        }
+
+        function submitSessionRegistration(event) {
+            event.preventDefault();
+
+            const sessionId = document.getElementById('selectedSessionId').value;
+            const session = sessions.find(s => s.id === sessionId);
+
+            if (!session) {
+                showAlert('Session not found', 'error');
+                return;
+            }
+
+            const registrationCount = bookings.filter(b => b.sessionId === sessionId).length;
+            if (registrationCount >= session.capacity) {
+                showAlert('This session is full', 'error');
+                return;
+            }
+
+            const booking = {
+                id: 'BK' + Date.now(),
+                sessionId: sessionId,
+                sessionName: session.name,
+                playerName: document.getElementById('sessionPlayerName').value,
+                playerEmail: document.getElementById('sessionPlayerEmail').value,
+                playerPhone: document.getElementById('sessionPlayerPhone').value,
+                courtId: session.courtId,
+                date: session.date,
+                timeSlot: session.time,
+                teamName: 'Session',
+                numPlayers: 1,
+                costPerPlayer: session.cost,
+                totalCost: session.cost,
+                status: 'confirmed',
+                bookingDate: new Date().toISOString(),
+                bookedBy: currentUser ? currentUser.username : 'Parent'
+            };
+
+            bookings.push(booking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            // Create payment record
+            const payment = {
+                id: 'PAY' + Date.now(),
+                bookingId: booking.id,
+                playerName: booking.playerName,
+                playerEmail: booking.playerEmail,
+                playerPhone: booking.playerPhone,
+                amount: booking.totalCost,
+                status: 'unpaid',
+                date: booking.date,
+                courtId: booking.courtId
+            };
+            payments.push(payment);
+            localStorage.setItem('payments', JSON.stringify(payments));
+
+            // Create attendance record
+            const attendanceRecord = {
+                id: 'ATT' + Date.now(),
+                bookingId: booking.id,
+                playerName: booking.playerName,
+                date: booking.date,
+                courtId: booking.courtId,
+                timeSlot: booking.timeSlot,
+                status: 'pending',
+                checkInTime: null
+            };
+            attendance.push(attendanceRecord);
+            localStorage.setItem('attendance', JSON.stringify(attendance));
+
+            showAlert(`✓ Registration confirmed! Booking ID: ${booking.id}`, 'success');
+            cancelSessionRegistration();
+            displayAvailableSessions();
+            updateDashboard();
+            updateBookingsDisplay();
+        }
+
+        // Coach Session Management Functions
+        function displayCoachSessions() {
+            if (!currentUser || (currentUser.role !== 'coach' && currentUser.role !== 'admin')) return;
+
+            const container = document.getElementById('coachSessionsContainer');
+            if (!container) return;
+
+            // Admins see all sessions, coaches see only their own
+            const coachSessions = currentUser.role === 'admin' 
+                ? sessions 
+                : sessions.filter(s => s.createdBy === currentUser.username);
+
+            if (coachSessions.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No sessions created yet. Create one to get started!</div>';
+                return;
+            }
+
+            const html = coachSessions.map(session => {
+                const court = courts.find(c => c.id === session.courtId);
+                const registrationCount = bookings.filter(b => b.sessionId === session.id).length;
+                const spotsAvailable = session.capacity - registrationCount;
+                const timeDisplay = session.time || `${session.startTime}-${session.endTime}`;
+
+                return `
+                    <div style="background: linear-gradient(135deg, rgba(231,76,60,0.1) 0%, rgba(231,76,60,0.05) 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #e74c3c; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                        <h4 style="color: #e74c3c; margin: 0 0 12px 0; font-size: 1.15em; font-weight: 700;">${session.name}</h4>
+                        <p style="margin: 8px 0; color: #555;"><strong>🏟️ Court:</strong> ${court ? court.name : 'N/A'}</p>
+                        <p style="margin: 8px 0; color: #555;"><strong>📅 Date & Time:</strong> ${session.date} ${timeDisplay}</p>
+                        <p style="margin: 8px 0; color: #555;"><strong>👥 Registrations:</strong> ${registrationCount}/${session.capacity}</p>
+                        <p style="margin: 8px 0; color: #e74c3c; font-weight: 600;"><strong>💰 $${session.cost.toFixed(2)}</strong> per player</p>
+                        <p style="margin: 8px 0; color: #777; font-size: 0.9em;">${session.description || 'No description'}</p>
+                        <div style="margin-top: 12px; display: flex; gap: 8px;">
+                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85em;" onclick="deleteSession('${session.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
+        function showCreateSessionForm() {
+            document.getElementById('coachSessionsSection').style.display = 'none';
+            document.getElementById('createCoachSessionSection').style.display = 'block';
+            populateCoachCourts();
+            populateCoachSessionTimes();
+        }
+
+        function cancelCoachSessionForm() {
+            document.getElementById('coachSessionForm').reset();
+            document.getElementById('createCoachSessionSection').style.display = 'none';
+            document.getElementById('coachSessionsSection').style.display = 'block';
+        }
+
+        function populateCoachCourts() {
+            const select = document.getElementById('coachSessionCourt');
+            if (!select) return;
+
+            select.innerHTML = '<option value="">Select a court</option>';
+            courts.forEach(court => {
+                const option = document.createElement('option');
+                option.value = court.id;
+                option.textContent = court.name;
+                select.appendChild(option);
+            });
+        }
+
+        function populateCoachSessionTimes() {
+            const startSelect = document.getElementById('coachSessionStartTime');
+            const endSelect = document.getElementById('coachSessionEndTime');
+            if (!startSelect || !endSelect) return;
+
+            const timeSlots = [];
+            for (let i = 6; i < 22; i++) {
+                for (let m = 0; m < 60; m += 30) {
+                    const time = `${String(i).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+                    timeSlots.push(time);
+                }
+            }
+
+            startSelect.innerHTML = '<option value="">Select start time</option>';
+            endSelect.innerHTML = '<option value="">Select end time</option>';
+            
+            timeSlots.forEach(time => {
+                const startOption = document.createElement('option');
+                startOption.value = time;
+                startOption.textContent = time;
+                startSelect.appendChild(startOption);
+                
+                const endOption = document.createElement('option');
+                endOption.value = time;
+                endOption.textContent = time;
+                endSelect.appendChild(endOption);
+            });
+        }
+
+        function submitCoachSession(event) {
+            event.preventDefault();
+
+            const sessionName = document.getElementById('coachSessionName').value;
+            const courtId = document.getElementById('coachSessionCourt').value;
+            const date = document.getElementById('coachSessionDate').value;
+            const startTime = document.getElementById('coachSessionStartTime').value;
+            const endTime = document.getElementById('coachSessionEndTime').value;
+            const capacity = parseInt(document.getElementById('coachSessionCapacity').value);
+            const cost = parseFloat(document.getElementById('coachSessionCost').value);
+            const description = document.getElementById('coachSessionDescription').value;
+
+            if (!sessionName || !courtId || !date || !startTime || !endTime || !capacity || !cost) {
+                showAlert('Please fill in all required fields', 'error');
+                return;
+            }
+
+            // Validate end time is after start time
+            if (startTime >= endTime) {
+                showAlert('End time must be after start time', 'error');
+                return;
+            }
+
+            // Get coach name - for admin, use their name; for coach, use their name
+            const coachName = currentUser.role === 'admin' ? currentUser.name : currentUser.name;
+
+            const newSession = {
+                id: 'SES' + Date.now(),
+                name: sessionName,
+                coach: coachName,
+                courtId: courtId,
+                date: date,
+                startTime: startTime,
+                endTime: endTime,
+                time: `${startTime}-${endTime}`,
+                capacity: capacity,
+                cost: cost,
+                description: description,
+                createdBy: currentUser.username,
+                createdDate: new Date().toISOString()
+            };
+
+            sessions.push(newSession);
+            localStorage.setItem('sessions', JSON.stringify(sessions));
+
+            showAlert(`✓ Session "${sessionName}" created successfully!`, 'success');
+            document.getElementById('coachSessionForm').reset();
+            document.getElementById('createCoachSessionSection').style.display = 'none';
+            document.getElementById('coachSessionsSection').style.display = 'block';
+            displayCoachSessions();
+            displayAvailableSessions();
+        }
+
+        // Update initialization to load sessions and courts in session dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCourtsSelect();
+            loadSessionCourts();
+            displayCourts();
+            renderCalendar();
+            displayAvailableSessions();
+            displayAdminSessions();
+            updateBookingsDisplay();
+            updateAdminStats();
+            updateAdminCourts();
+            updateDashboard();
+            populateAttendanceCourts();
+            setDefaultDate();
+        });
+    </script>
+</body>
+</html>
