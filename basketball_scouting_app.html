@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A4B Elite | Scouting Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-main: #020916;
+        --bg-panel: rgba(7, 22, 46, 0.82);
+        --bg-panel-soft: rgba(8, 27, 58, 0.62);
+        --line: rgba(111, 173, 255, 0.24);
+        --line-strong: rgba(111, 173, 255, 0.45);
+        --text-main: #f4f9ff;
+        --text-soft: #91a6c7;
+        --accent: #17d9ff;
+        --accent-2: #5dff9f;
+        --accent-3: #ff8a3d;
+        --accent-4: #ff5f6d;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: "Space Grotesk", sans-serif;
+        color: var(--text-main);
+        min-height: 100vh;
+        background:
+            radial-gradient(circle at 18% 10%, rgba(23, 217, 255, 0.18), transparent 34%),
+            radial-gradient(circle at 82% 86%, rgba(93, 255, 159, 0.15), transparent 35%),
+            linear-gradient(130deg, #01050f 0%, #041022 45%, #020916 100%);
+        padding: 18px;
+    }
+
+    .app-shell {
+        max-width: 1500px;
+        min-height: calc(100vh - 36px);
+        margin: 0 auto;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        overflow: hidden;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 34px 80px rgba(0, 0, 0, 0.45);
+        background: rgba(2, 9, 23, 0.75);
+    }
+
+    .side {
+        border-right: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(2, 14, 34, 0.98), rgba(3, 11, 24, 0.9));
+        display: flex;
+        flex-direction: column;
+        padding: 22px 14px;
+        gap: 14px;
+        overflow-y: auto;
+    }
+
+    .brand { padding: 8px 10px 14px; border-bottom: 1px solid var(--line); margin-bottom: 2px; }
+    .brand h1 { font-family: "Sora", sans-serif; font-size: 1.7rem; letter-spacing: 1px; font-weight: 800; }
+    .brand h1 span { color: var(--accent); }
+    .brand small { color: var(--text-soft); letter-spacing: 1.3px; font-size: 0.72rem; text-transform: uppercase; }
+
+    .menu { list-style: none; display: grid; gap: 6px; margin-top: 4px; }
+    .menu button {
+        width: 100%; border: 1px solid transparent; color: #c5d4eb; background: transparent;
+        border-radius: 10px; padding: 11px 12px; text-align: left; font: 600 0.9rem "Space Grotesk", sans-serif;
+        cursor: pointer; transition: 0.2s ease;
+    }
+    .menu button:hover { border-color: var(--line); background: rgba(23, 217, 255, 0.1); }
+    .menu button.active {
+        background: linear-gradient(90deg, rgba(23, 217, 255, 0.24), rgba(93, 255, 159, 0.2));
+        border-color: rgba(93, 255, 159, 0.55); color: #f8fdff;
+    }
+
+    .scout-card { border: 1px solid var(--line); background: var(--bg-panel-soft); border-radius: 12px; padding: 12px; margin-top: auto; }
+    .scout-card h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: #a0b8db; margin-bottom: 8px; }
+    .scout-card label { display: block; font-size: 0.72rem; color: var(--text-soft); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .scout-card input {
+        width: 100%; border: 1px solid rgba(111, 173, 255, 0.4); border-radius: 6px; background: #08203f;
+        color: #e8f3ff; font: 600 0.8rem "Space Grotesk", sans-serif; padding: 7px 8px; margin-bottom: 8px;
+    }
+
+    .conn-pill { font-size: 0.68rem; padding: 4px 8px; border-radius: 20px; border: 1px solid var(--line); color: var(--text-soft); text-align: center; }
+    .conn-pill.on { border-color: rgba(93, 255, 159, 0.6); color: var(--accent-2); }
+
+    .main { display: flex; flex-direction: column; padding: 14px; gap: 12px; overflow-y: auto; }
+
+    .topbar {
+        border: 1px solid var(--line); background: rgba(3, 14, 32, 0.7); border-radius: 12px; padding: 12px 16px;
+        display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .topbar h2 { font-size: 1rem; color: #d2e6ff; letter-spacing: 0.6px; text-transform: uppercase; font-weight: 700; }
+    .topbar p { color: var(--text-soft); font-size: 0.78rem; margin-top: 2px; }
+
+    .view { display: none; flex-direction: column; gap: 12px; }
+    .view.active { display: flex; }
+
+    .card { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-panel); padding: 16px; }
+
+    .card-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; color: #cee0fa; font-weight: 700; }
+
+    .field-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .field-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .field label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #a0b8db; margin-bottom: 4px; }
+    .field input, .field select, .field textarea {
+        width: 100%; border: 1px solid rgba(111, 173, 255, 0.4); border-radius: 8px; background: #08203f;
+        color: #e8f3ff; font: 600 0.85rem "Space Grotesk", sans-serif; padding: 9px 10px;
+    }
+    .field textarea { resize: vertical; min-height: 70px; font-weight: 500; line-height: 1.4; }
+    datalist {}
+
+    .ratings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+    .rating-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; }
+    .rating-item label { font-size: 0.82rem; color: #c5d4eb; }
+    .rating-item .val { font-weight: 700; color: var(--accent-2); min-width: 30px; text-align: right; }
+    .rating-item input[type="range"] { grid-column: span 2; width: 100%; accent-color: var(--accent); }
+
+    .overall-banner {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px;
+        border-top: 1px solid var(--line); padding-top: 12px;
+    }
+    .overall-banner .score { font-family: "Sora", sans-serif; font-size: 2.1rem; color: var(--accent); }
+    .overall-banner .score small { display: block; font-size: 0.68rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    select.rec-select { border-color: var(--line-strong); }
+
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    button.btn {
+        border: 1px solid var(--line); background: #04152f; color: #d7e6fb; padding: 10px 16px;
+        border-radius: 9px; font: 700 0.82rem "Space Grotesk", sans-serif; cursor: pointer; transition: 0.2s;
+    }
+    button.btn:hover { border-color: var(--line-strong); }
+    button.btn.primary { border-color: rgba(93, 255, 159, 0.65); background: linear-gradient(130deg, rgba(23, 217, 255, 0.3), rgba(93, 255, 159, 0.3)); }
+    button.btn.warn { border-color: rgba(255, 138, 61, 0.65); background: linear-gradient(130deg, rgba(255, 138, 61, 0.3), rgba(255, 95, 109, 0.22)); }
+    button.btn.ghost { background: transparent; }
+    button.btn.small { padding: 6px 10px; font-size: 0.74rem; }
+
+    .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .toolbar input, .toolbar select { border: 1px solid var(--line); background: #04152f; color: #d7e6fb; padding: 8px 10px; border-radius: 8px; font: 600 0.8rem "Space Grotesk", sans-serif; }
+    .toolbar input { flex: 1; min-width: 160px; }
+
+    .board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .player-card {
+        border: 1px solid var(--line); border-radius: 12px; background: var(--bg-panel-soft); padding: 12px;
+        cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 6px;
+    }
+    .player-card:hover { border-color: rgba(93, 255, 159, 0.72); background: rgba(17, 217, 255, 0.1); }
+    .player-card .pname { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1rem; }
+    .player-card .pmeta { color: var(--text-soft); font-size: 0.76rem; }
+    .player-card .prow { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .player-card .pscore { font-family: "Sora", sans-serif; font-size: 1.5rem; color: var(--accent-2); }
+    .badge { display: inline-block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 3px 8px; border-radius: 20px; border: 1px solid var(--line); color: var(--text-soft); }
+    .badge.must-track { border-color: var(--accent-2); color: var(--accent-2); }
+    .badge.priority-recruit { border-color: var(--accent); color: var(--accent); }
+    .badge.keep-watching { border-color: var(--accent-3); color: var(--accent-3); }
+    .badge.pass { border-color: var(--accent-4); color: var(--accent-4); }
+
+    .empty-state { color: var(--text-soft); font-size: 0.85rem; padding: 30px; text-align: center; }
+
+    .profile-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .profile-header h2 { font-family: "Sora", sans-serif; font-size: 1.5rem; }
+    .profile-header p { color: var(--text-soft); font-size: 0.85rem; margin-top: 4px; }
+    .stat-chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .stat-chip { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: rgba(4, 20, 44, 0.75); text-align: center; min-width: 90px; }
+    .stat-chip strong { display: block; font-size: 0.68rem; text-transform: uppercase; color: #7f9bc2; }
+    .stat-chip span { display: block; margin-top: 2px; font-size: 1rem; font-weight: 700; color: var(--accent-2); }
+
+    .bar-list { display: grid; gap: 8px; margin-top: 10px; }
+    .bar-row { display: grid; grid-template-columns: 110px 1fr 34px; align-items: center; gap: 8px; font-size: 0.8rem; color: #c5d4eb; }
+    .bar { height: 8px; width: 100%; border-radius: 20px; background: rgba(12, 33, 63, 0.92); overflow: hidden; border: 1px solid rgba(111, 173, 255, 0.2); }
+    .bar i { display: block; height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+    .timeline { display: grid; gap: 10px; margin-top: 12px; }
+    .report-entry { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: rgba(4, 19, 38, 0.66); }
+    .report-entry .rhead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .report-entry .rhead strong { color: #dff0ff; }
+    .report-entry .rmeta { color: var(--text-soft); font-size: 0.76rem; }
+    .report-entry .rnotes { margin-top: 8px; font-size: 0.83rem; line-height: 1.5; color: #d5e6fa; }
+    .report-entry .rnotes b { color: #9db3d4; }
+    .report-entry .ractions { margin-top: 8px; display: flex; gap: 8px; }
+
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .kpi { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--bg-panel-soft); text-align: center; }
+    .kpi strong { display: block; font-size: 1.6rem; font-family: "Sora", sans-serif; color: var(--accent); }
+    .kpi span { color: var(--text-soft); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.4px; }
+
+    table.leader { width: 100%; border-collapse: collapse; }
+    table.leader th, table.leader td { text-align: left; padding: 8px 6px; border-bottom: 1px solid rgba(111, 173, 255, 0.18); font-size: 0.82rem; }
+    table.leader th { color: #85a0c8; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.5px; }
+    table.leader tr { cursor: pointer; }
+    table.leader tr:hover td { background: rgba(23, 217, 255, 0.06); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 1160px) {
+        .app-shell { grid-template-columns: 84px 1fr; }
+        .brand h1, .brand small, .menu span, .scout-card { display: none; }
+        .menu button { text-align: center; padding: 11px 4px; font-size: 0.72rem; }
+        .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .ratings-grid { grid-template-columns: 1fr; }
+        .compare-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+        body { padding: 8px; }
+        .app-shell { border-radius: 16px; grid-template-columns: 1fr; }
+        .side { border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; align-items: center; padding: 10px; gap: 10px; }
+        .brand, .scout-card { display: none; }
+        .menu { grid-auto-flow: column; }
+        .field-grid { grid-template-columns: 1fr 1fr; }
+        .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
+</head>
+<body>
+<div class="app-shell">
+    <aside class="side">
+        <div class="brand">
+            <h1>A<span>4</span>B</h1>
+            <small>Scouting Console</small>
+        </div>
+
+        <ul class="menu" id="menuTabs">
+            <li><button class="active" data-view="liveScout">Live Scout</button></li>
+            <li><button data-view="board">Scouting Board</button></li>
+            <li><button data-view="analyze">Analyze</button></li>
+        </ul>
+
+        <div class="conn-pill" id="connPill">Connecting...</div>
+
+        <div class="scout-card">
+            <h3>Scout Session</h3>
+            <label>Your Name</label>
+            <input id="scoutName" placeholder="e.g. Coach Alex">
+            <label>Event / Tournament</label>
+            <input id="scoutEvent" placeholder="e.g. Spring Showcase">
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h2 id="viewTitle">Live Scout</h2>
+                <p id="viewSubtitle">Log a player while you're watching them play.</p>
+            </div>
+        </div>
+
+        <!-- LIVE SCOUT VIEW -->
+        <section class="view active" id="view-liveScout">
+            <article class="card">
+                <div class="card-title"><span>Player</span></div>
+                <div class="field-grid">
+                    <div class="field">
+                        <label>Name</label>
+                        <input id="fPlayerName" list="playerNames" placeholder="Player name">
+                        <datalist id="playerNames"></datalist>
+                    </div>
+                    <div class="field">
+                        <label>Team / Club</label>
+                        <input id="fTeam" placeholder="Team name">
+                    </div>
+                    <div class="field">
+                        <label>Jersey #</label>
+                        <input id="fNumber" type="number" min="0" max="99" placeholder="#">
+                    </div>
+                    <div class="field">
+                        <label>Position</label>
+                        <select id="fPosition">
+                            <option value="">--</option>
+                            <option>PG</option><option>SG</option><option>SF</option><option>PF</option><option>C</option><option>Combo</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Grad Year / Age</label>
+                        <input id="fGradYear" placeholder="e.g. 2027 or 16">
+                    </div>
+                    <div class="field">
+                        <label>Date Seen</label>
+                        <input id="fDate" type="date">
+                    </div>
+                    <div class="field" style="grid-column: span 2;">
+                        <label>Event / Tournament</label>
+                        <input id="fEvent" placeholder="e.g. Spring Showcase">
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-title"><span>Ratings</span><span>1 (Poor) - 10 (Elite)</span></div>
+                <div class="ratings-grid" id="ratingsGrid"></div>
+                <div class="overall-banner">
+                    <div class="score"><span id="overallVal">0.0</span><small>Overall Grade</small></div>
+                    <div class="field" style="min-width: 220px;">
+                        <label>Recommendation</label>
+                        <select id="fRecommendation" class="rec-select">
+                            <option>Must Track</option>
+                            <option>Priority Recruit</option>
+                            <option selected>Keep Watching</option>
+                            <option>Depth Piece</option>
+                            <option>Pass</option>
+                        </select>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-title"><span>Scouting Notes</span></div>
+                <div class="field-grid two">
+                    <div class="field">
+                        <label>Strengths</label>
+                        <textarea id="fStrengths" placeholder="What stood out?"></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Weaknesses / Needs</label>
+                        <textarea id="fWeaknesses" placeholder="What needs work?"></textarea>
+                    </div>
+                </div>
+                <div class="field" style="margin-top: 10px;">
+                    <label>General Notes</label>
+                    <textarea id="fNotes" placeholder="Anything else - context, matchup, health, effort..."></textarea>
+                </div>
+                <div class="btn-row">
+                    <button class="btn primary" id="saveReportBtn">Save Scouting Report</button>
+                    <button class="btn ghost" id="resetFormBtn">Clear Form</button>
+                </div>
+            </article>
+
+            <article class="card" id="recentSavedCard">
+                <div class="card-title"><span>Just Logged</span></div>
+                <div id="recentSavedList" class="empty-state">Nothing saved yet this session.</div>
+            </article>
+        </section>
+
+        <!-- BOARD VIEW -->
+        <section class="view" id="view-board">
+            <article class="card" id="boardListPane">
+                <div class="toolbar">
+                    <input id="boardSearch" placeholder="Search name or team...">
+                    <select id="boardPosition"><option value="">All Positions</option></select>
+                    <select id="boardEvent"><option value="">All Events</option></select>
+                    <select id="boardRec"><option value="">All Recommendations</option></select>
+                    <select id="boardSort">
+                        <option value="overall">Sort: Overall Grade</option>
+                        <option value="recent">Sort: Recently Scouted</option>
+                        <option value="name">Sort: Name A-Z</option>
+                        <option value="times">Sort: Times Scouted</option>
+                    </select>
+                </div>
+                <div class="board-grid" id="boardGrid" style="margin-top: 14px;"></div>
+            </article>
+
+            <article class="card hidden" id="boardProfilePane">
+                <button class="btn ghost small" id="backToBoardBtn">&larr; Back to Board</button>
+                <div class="profile-header" style="margin-top: 10px;">
+                    <div>
+                        <h2 id="pName"></h2>
+                        <p id="pMeta"></p>
+                    </div>
+                    <div class="btn-row" style="margin-top: 0;">
+                        <button class="btn" id="scoutAgainBtn">Scout Again</button>
+                        <button class="btn warn" id="deletePlayerBtn">Delete Player</button>
+                    </div>
+                </div>
+                <div class="stat-chip-row" id="pStats"></div>
+                <div class="bar-list" id="pAvgBars"></div>
+                <div class="card-title" style="margin-top: 16px;"><span>Report History</span></div>
+                <div class="timeline" id="pTimeline"></div>
+            </article>
+        </section>
+
+        <!-- ANALYZE VIEW -->
+        <section class="view" id="view-analyze">
+            <article class="card">
+                <div class="kpi-row" id="analyzeKpis"></div>
+            </article>
+
+            <article class="card">
+                <div class="card-title"><span>Top Prospects</span></div>
+                <div class="toolbar">
+                    <select id="leaderMinReports">
+                        <option value="0">Any # of reports</option>
+                        <option value="2">2+ reports</option>
+                        <option value="3">3+ reports</option>
+                    </select>
+                    <select id="leaderEvent"><option value="">All Events</option></select>
+                </div>
+                <table class="leader" style="margin-top: 12px;">
+                    <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Pos</th><th>Grade</th><th>Reports</th><th>Last Seen</th></tr></thead>
+                    <tbody id="leaderBody"></tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <div class="card-title"><span>Compare Players</span></div>
+                <div class="field-grid two">
+                    <div class="field">
+                        <label>Player A</label>
+                        <select id="compareA"></select>
+                    </div>
+                    <div class="field">
+                        <label>Player B</label>
+                        <select id="compareB"></select>
+                    </div>
+                </div>
+                <div class="compare-grid" style="margin-top: 12px;">
+                    <div class="bar-list" id="compareBarsA"></div>
+                    <div class="bar-list" id="compareBarsB"></div>
+                </div>
+            </article>
+        </section>
+    </main>
+</div>
+
+<!-- Firebase SDK (compat version for classic script usage) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<script>
+    // ==================== FIREBASE INIT ====================
+    const firebaseConfig = {
+        apiKey: "AIzaSyCYUuphUMXLamb_c7iGtCFoBFXbPr_lNtI",
+        authDomain: "basketball-booking-dee44.firebaseapp.com",
+        projectId: "basketball-booking-dee44",
+        storageBucket: "basketball-booking-dee44.firebasestorage.app",
+        messagingSenderId: "679981100572",
+        appId: "1:679981100572:web:e1989d8c6d9dff72a479d9",
+        measurementId: "G-FYK95HY6B4"
+    };
+    let db = null;
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+    } catch (err) {
+        console.error("Firebase failed to initialize:", err);
+    }
+
+    // ==================== CONSTANTS ====================
+    const RATING_CATEGORIES = [
+        ["scoring", "Scoring"],
+        ["shooting", "Shooting"],
+        ["ballHandling", "Ball Handling"],
+        ["passing", "Passing"],
+        ["defense", "Defense"],
+        ["rebounding", "Rebounding"],
+        ["athleticism", "Athleticism"],
+        ["iq", "Basketball IQ"],
+        ["motor", "Motor / Effort"],
+        ["upside", "Upside"]
+    ];
+    const REC_OPTIONS = ["Must Track", "Priority Recruit", "Keep Watching", "Depth Piece", "Pass"];
+
+    function recSlug(rec) {
+        return (rec || "").toLowerCase().replace(/[^a-z]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+
+    function playerKey(name, team) {
+        return `${(name || "").trim().toLowerCase()}|${(team || "").trim().toLowerCase()}`;
+    }
+
+    function todayStr() {
+        return new Date().toISOString().slice(0, 10);
+    }
+
+    // ==================== STATE ====================
+    let players = [];   // scoutPlayers docs
+    let reports = [];   // scoutReports docs
+    let selectedPlayerId = null;
+    let activeView = "liveScout";
+    const sessionSavedLog = [];
+
+    // ==================== PERSISTED SESSION PREFS ====================
+    const scoutNameInput = document.getElementById("scoutName");
+    const scoutEventInput = document.getElementById("scoutEvent");
+    scoutNameInput.value = localStorage.getItem("scout_name") || "";
+    scoutEventInput.value = localStorage.getItem("scout_event") || "";
+    scoutNameInput.addEventListener("input", () => localStorage.setItem("scout_name", scoutNameInput.value));
+    scoutEventInput.addEventListener("input", () => {
+        localStorage.setItem("scout_event", scoutEventInput.value);
+        document.getElementById("fEvent").value = scoutEventInput.value;
+    });
+
+    // ==================== FIRESTORE SYNC ====================
+    const connPill = document.getElementById("connPill");
+    let playersLoaded = false, reportsLoaded = false;
+
+    function markConnected() {
+        if (playersLoaded && reportsLoaded) {
+            connPill.textContent = "Synced";
+            connPill.classList.add("on");
+        }
+    }
+
+    if (db) {
+        db.collection("scoutPlayers").onSnapshot((snapshot) => {
+            players = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            playersLoaded = true;
+            markConnected();
+            renderAll();
+        }, (err) => {
+            connPill.textContent = "Offline / Error";
+            console.error(err);
+        });
+
+        db.collection("scoutReports").onSnapshot((snapshot) => {
+            reports = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            reportsLoaded = true;
+            markConnected();
+            renderAll();
+        }, (err) => {
+            connPill.textContent = "Offline / Error";
+            console.error(err);
+        });
+    } else {
+        connPill.textContent = "Offline / Error";
+    }
+
+    // ==================== DERIVED HELPERS ====================
+    function reportsForPlayer(playerId) {
+        return reports
+            .filter((r) => r.playerId === playerId)
+            .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0) || (b.createdAt || 0) - (a.createdAt || 0));
+    }
+
+    function avgOf(list) {
+        if (!list.length) return 0;
+        return list.reduce((sum, n) => sum + Number(n || 0), 0) / list.length;
+    }
+
+    function playerSummary(player) {
+        const rpts = reportsForPlayer(player.id);
+        const avgOverall = avgOf(rpts.map((r) => r.overall));
+        const catAverages = {};
+        for (const [key] of RATING_CATEGORIES) {
+            catAverages[key] = avgOf(rpts.map((r) => (r.ratings || {})[key]));
+        }
+        const events = [...new Set(rpts.map((r) => r.event).filter(Boolean))];
+        const latest = rpts[0] || null;
+        return {
+            player, reports: rpts, avgOverall, catAverages, events,
+            timesScouted: rpts.length,
+            latestRec: latest ? latest.recommendation : "",
+            lastDate: latest ? latest.date : "",
+        };
+    }
+
+    function allSummaries() {
+        return players.map(playerSummary);
+    }
+
+    // ==================== VIEW SWITCHING ====================
+    const viewTitles = {
+        liveScout: ["Live Scout", "Log a player while you're watching them play."],
+        board: ["Scouting Board", "Every player you've scouted, searchable and sortable."],
+        analyze: ["Analyze", "Compare prospects and spot your top targets."]
+    };
+
+    document.getElementById("menuTabs").addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        setView(button.dataset.view);
+    });
+
+    function setView(view) {
+        activeView = view;
+        for (const btn of document.querySelectorAll("#menuTabs button")) {
+            btn.classList.toggle("active", btn.dataset.view === view);
+        }
+        for (const section of document.querySelectorAll(".view")) {
+            section.classList.toggle("active", section.id === `view-${view}`);
+        }
+        document.getElementById("viewTitle").textContent = viewTitles[view][0];
+        document.getElementById("viewSubtitle").textContent = viewTitles[view][1];
+        if (view === "board" && !selectedPlayerId) showBoardList();
+        if (view === "analyze") renderAnalyze();
+    }
+
+    // ==================== LIVE SCOUT FORM ====================
+    const ratingsGrid = document.getElementById("ratingsGrid");
+    const ratingInputs = {};
+    for (const [key, label] of RATING_CATEGORIES) {
+        const wrap = document.createElement("div");
+        wrap.className = "rating-item";
+        wrap.innerHTML = `
+            <label>${label}</label>
+            <span class="val" data-val="${key}">5.0</span>
+            <input type="range" min="1" max="10" step="0.5" value="5" data-key="${key}">
+        `;
+        ratingsGrid.appendChild(wrap);
+        ratingInputs[key] = wrap.querySelector("input");
+    }
+
+    function currentRatings() {
+        const out = {};
+        for (const [key] of RATING_CATEGORIES) out[key] = Number(ratingInputs[key].value);
+        return out;
+    }
+
+    function computeOverall() {
+        const ratings = currentRatings();
+        const avg = avgOf(Object.values(ratings));
+        document.getElementById("overallVal").textContent = avg.toFixed(1);
+        return avg;
+    }
+
+    ratingsGrid.addEventListener("input", (event) => {
+        const input = event.target;
+        if (input.type !== "range") return;
+        ratingsGrid.querySelector(`.val[data-val="${input.dataset.key}"]`).textContent = Number(input.value).toFixed(1);
+        computeOverall();
+    });
+
+    function resetLiveForm(keepPlayer) {
+        if (!keepPlayer) {
+            document.getElementById("fPlayerName").value = "";
+            document.getElementById("fTeam").value = "";
+            document.getElementById("fNumber").value = "";
+            document.getElementById("fPosition").value = "";
+            document.getElementById("fGradYear").value = "";
+        }
+        document.getElementById("fDate").value = todayStr();
+        document.getElementById("fEvent").value = scoutEventInput.value;
+        document.getElementById("fRecommendation").value = "Keep Watching";
+        document.getElementById("fStrengths").value = "";
+        document.getElementById("fWeaknesses").value = "";
+        document.getElementById("fNotes").value = "";
+        for (const [key] of RATING_CATEGORIES) {
+            ratingInputs[key].value = 5;
+            ratingsGrid.querySelector(`.val[data-val="${key}"]`).textContent = "5.0";
+        }
+        computeOverall();
+    }
+
+    function refreshPlayerNameDatalist() {
+        const datalist = document.getElementById("playerNames");
+        datalist.innerHTML = players.map((p) => `<option value="${p.name}">`).join("");
+    }
+
+    document.getElementById("fPlayerName").addEventListener("change", (event) => {
+        const match = players.find((p) => p.name.toLowerCase() === event.target.value.trim().toLowerCase());
+        if (!match) return;
+        document.getElementById("fTeam").value = match.team || "";
+        document.getElementById("fNumber").value = match.jerseyNumber || "";
+        document.getElementById("fPosition").value = match.position || "";
+        document.getElementById("fGradYear").value = match.gradYear || "";
+    });
+
+    document.getElementById("resetFormBtn").addEventListener("click", () => resetLiveForm(false));
+
+    document.getElementById("saveReportBtn").addEventListener("click", async () => {
+        if (!db) { alert("Not connected to the database. Check your connection and try again."); return; }
+        const name = document.getElementById("fPlayerName").value.trim();
+        if (!name) { alert("Enter a player name before saving."); return; }
+
+        const team = document.getElementById("fTeam").value.trim();
+        const jerseyNumber = document.getElementById("fNumber").value.trim();
+        const position = document.getElementById("fPosition").value;
+        const gradYear = document.getElementById("fGradYear").value.trim();
+        const event = document.getElementById("fEvent").value.trim();
+        const date = document.getElementById("fDate").value || todayStr();
+        const ratings = currentRatings();
+        const overall = Number(computeOverall().toFixed(1));
+        const recommendation = document.getElementById("fRecommendation").value;
+        const strengths = document.getElementById("fStrengths").value.trim();
+        const weaknesses = document.getElementById("fWeaknesses").value.trim();
+        const notes = document.getElementById("fNotes").value.trim();
+        const scoutedBy = scoutNameInput.value.trim();
+
+        const saveBtn = document.getElementById("saveReportBtn");
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving...";
+
+        try {
+            const key = playerKey(name, team);
+            let player = players.find((p) => p.key === key);
+            let playerId;
+
+            if (player) {
+                playerId = player.id;
+                await db.collection("scoutPlayers").doc(playerId).update({
+                    team, jerseyNumber, position, gradYear
+                });
+            } else {
+                const docRef = await db.collection("scoutPlayers").add({
+                    name, team, jerseyNumber, position, gradYear, key,
+                    createdAt: Date.now()
+                });
+                playerId = docRef.id;
+            }
+
+            await db.collection("scoutReports").add({
+                playerId, playerName: name, team,
+                event, date, scoutedBy,
+                ratings, overall, recommendation,
+                strengths, weaknesses, notes,
+                createdAt: Date.now()
+            });
+
+            sessionSavedLog.unshift({ name, team, overall, date });
+            renderRecentSaved();
+            resetLiveForm(false);
+        } catch (err) {
+            console.error(err);
+            alert("Could not save report. Check your connection and try again.");
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "Save Scouting Report";
+        }
+    });
+
+    function renderRecentSaved() {
+        const container = document.getElementById("recentSavedList");
+        if (!sessionSavedLog.length) {
+            container.innerHTML = "";
+            container.classList.add("empty-state");
+            container.textContent = "Nothing saved yet this session.";
+            return;
+        }
+        container.classList.remove("empty-state");
+        container.innerHTML = sessionSavedLog.slice(0, 8).map((entry) =>
+            `<div class="report-entry"><div class="rhead"><strong>${entry.name}</strong><span class="badge">Grade ${entry.overall.toFixed(1)}</span></div><div class="rmeta">${entry.team || "No team"} | ${entry.date}</div></div>`
+        ).join("");
+    }
+
+    // ==================== BOARD VIEW ====================
+    const boardSearch = document.getElementById("boardSearch");
+    const boardPosition = document.getElementById("boardPosition");
+    const boardEvent = document.getElementById("boardEvent");
+    const boardRec = document.getElementById("boardRec");
+    const boardSort = document.getElementById("boardSort");
+
+    for (const el of [boardSearch]) el.addEventListener("input", renderBoard);
+    for (const el of [boardPosition, boardEvent, boardRec, boardSort]) el.addEventListener("change", renderBoard);
+
+    function populateFilterOptions() {
+        const positions = [...new Set(players.map((p) => p.position).filter(Boolean))].sort();
+        const events = [...new Set(reports.map((r) => r.event).filter(Boolean))].sort();
+
+        for (const [select, values] of [[boardPosition, positions], [boardEvent, events]]) {
+            const current = select.value;
+            select.innerHTML = `<option value="">${select === boardPosition ? "All Positions" : "All Events"}</option>` +
+                values.map((v) => `<option value="${v}">${v}</option>`).join("");
+            select.value = current;
+        }
+        if (!boardRec.dataset.filled) {
+            boardRec.innerHTML = `<option value="">All Recommendations</option>` + REC_OPTIONS.map((r) => `<option value="${r}">${r}</option>`).join("");
+            boardRec.dataset.filled = "1";
+        }
+
+        const leaderEvent = document.getElementById("leaderEvent");
+        if (leaderEvent) {
+            const current = leaderEvent.value;
+            leaderEvent.innerHTML = `<option value="">All Events</option>` + events.map((v) => `<option value="${v}">${v}</option>`).join("");
+            leaderEvent.value = current;
+        }
+    }
+
+    function renderBoard() {
+        populateFilterOptions();
+        const search = boardSearch.value.trim().toLowerCase();
+        const position = boardPosition.value;
+        const eventFilter = boardEvent.value;
+        const rec = boardRec.value;
+        const sort = boardSort.value;
+
+        let summaries = allSummaries().filter((s) => {
+            if (search && !`${s.player.name} ${s.player.team}`.toLowerCase().includes(search)) return false;
+            if (position && s.player.position !== position) return false;
+            if (eventFilter && !s.events.includes(eventFilter)) return false;
+            if (rec && s.latestRec !== rec) return false;
+            return true;
+        });
+
+        summaries.sort((a, b) => {
+            if (sort === "overall") return b.avgOverall - a.avgOverall;
+            if (sort === "recent") return new Date(b.lastDate || 0) - new Date(a.lastDate || 0);
+            if (sort === "name") return a.player.name.localeCompare(b.player.name);
+            if (sort === "times") return b.timesScouted - a.timesScouted;
+            return 0;
+        });
+
+        const grid = document.getElementById("boardGrid");
+        if (!summaries.length) {
+            grid.innerHTML = `<div class="empty-state">No players match your filters yet. Log one from Live Scout.</div>`;
+            return;
+        }
+
+        grid.innerHTML = summaries.map((s) => `
+            <div class="player-card" data-player-id="${s.player.id}">
+                <div class="pname">${s.player.name} ${s.player.jerseyNumber ? `#${s.player.jerseyNumber}` : ""}</div>
+                <div class="pmeta">${s.player.team || "No team"} | ${s.player.position || "-"}</div>
+                <div class="prow">
+                    <span class="pscore">${s.avgOverall.toFixed(1)}</span>
+                    <span class="badge ${recSlug(s.latestRec)}">${s.latestRec || "Unrated"}</span>
+                </div>
+                <div class="pmeta">Scouted ${s.timesScouted}x | Last: ${s.lastDate || "-"}</div>
+            </div>
+        `).join("");
+
+        grid.querySelectorAll(".player-card").forEach((card) => {
+            card.addEventListener("click", () => openProfile(card.dataset.playerId));
+        });
+    }
+
+    function showBoardList() {
+        selectedPlayerId = null;
+        document.getElementById("boardListPane").classList.remove("hidden");
+        document.getElementById("boardProfilePane").classList.add("hidden");
+        renderBoard();
+    }
+
+    document.getElementById("backToBoardBtn").addEventListener("click", showBoardList);
+
+    function openProfile(playerId) {
+        selectedPlayerId = playerId;
+        setView("board");
+        document.getElementById("boardListPane").classList.add("hidden");
+        document.getElementById("boardProfilePane").classList.remove("hidden");
+        renderProfile();
+    }
+
+    function renderProfile() {
+        const player = players.find((p) => p.id === selectedPlayerId);
+        if (!player) { showBoardList(); return; }
+        const summary = playerSummary(player);
+
+        document.getElementById("pName").textContent = `${player.name}${player.jerseyNumber ? " #" + player.jerseyNumber : ""}`;
+        document.getElementById("pMeta").textContent = `${player.team || "No team"} | ${player.position || "-"} | ${player.gradYear || "-"}`;
+
+        document.getElementById("pStats").innerHTML = `
+            <div class="stat-chip"><strong>Overall</strong><span>${summary.avgOverall.toFixed(1)}</span></div>
+            <div class="stat-chip"><strong>Times Scouted</strong><span>${summary.timesScouted}</span></div>
+            <div class="stat-chip"><strong>Last Seen</strong><span>${summary.lastDate || "-"}</span></div>
+            <div class="stat-chip"><strong>Latest Rec.</strong><span>${summary.latestRec || "-"}</span></div>
+        `;
+
+        document.getElementById("pAvgBars").innerHTML = RATING_CATEGORIES.map(([key, label]) => `
+            <div class="bar-row">
+                <span>${label}</span>
+                <div class="bar"><i style="width: ${summary.catAverages[key] * 10}%;"></i></div>
+                <span>${summary.catAverages[key].toFixed(1)}</span>
+            </div>
+        `).join("");
+
+        const timeline = document.getElementById("pTimeline");
+        if (!summary.reports.length) {
+            timeline.innerHTML = `<div class="empty-state">No reports logged yet.</div>`;
+        } else {
+            timeline.innerHTML = summary.reports.map((r) => `
+                <div class="report-entry" data-report-id="${r.id}">
+                    <div class="rhead">
+                        <strong>${r.date || "-"} | Grade ${Number(r.overall || 0).toFixed(1)}</strong>
+                        <span class="badge ${recSlug(r.recommendation)}">${r.recommendation || "Unrated"}</span>
+                    </div>
+                    <div class="rmeta">${r.event || "No event"} ${r.scoutedBy ? "| Scouted by " + r.scoutedBy : ""}</div>
+                    ${r.strengths ? `<div class="rnotes"><b>Strengths:</b> ${r.strengths}</div>` : ""}
+                    ${r.weaknesses ? `<div class="rnotes"><b>Needs:</b> ${r.weaknesses}</div>` : ""}
+                    ${r.notes ? `<div class="rnotes"><b>Notes:</b> ${r.notes}</div>` : ""}
+                    <div class="ractions">
+                        <button class="btn small warn" data-delete-report="${r.id}">Delete Report</button>
+                    </div>
+                </div>
+            `).join("");
+
+            timeline.querySelectorAll("[data-delete-report]").forEach((btn) => {
+                btn.addEventListener("click", async () => {
+                    if (!db) { alert("Not connected to the database. Check your connection and try again."); return; }
+                    if (!confirm("Delete this scouting report?")) return;
+                    await db.collection("scoutReports").doc(btn.dataset.deleteReport).delete();
+                });
+            });
+        }
+    }
+
+    document.getElementById("scoutAgainBtn").addEventListener("click", () => {
+        const player = players.find((p) => p.id === selectedPlayerId);
+        if (!player) return;
+        setView("liveScout");
+        document.getElementById("fPlayerName").value = player.name;
+        document.getElementById("fTeam").value = player.team || "";
+        document.getElementById("fNumber").value = player.jerseyNumber || "";
+        document.getElementById("fPosition").value = player.position || "";
+        document.getElementById("fGradYear").value = player.gradYear || "";
+    });
+
+    document.getElementById("deletePlayerBtn").addEventListener("click", async () => {
+        if (!db) { alert("Not connected to the database. Check your connection and try again."); return; }
+        const player = players.find((p) => p.id === selectedPlayerId);
+        if (!player) return;
+        if (!confirm(`Delete ${player.name} and all their scouting reports? This cannot be undone.`)) return;
+        const rpts = reportsForPlayer(player.id);
+        const batch = db.batch();
+        for (const r of rpts) batch.delete(db.collection("scoutReports").doc(r.id));
+        batch.delete(db.collection("scoutPlayers").doc(player.id));
+        await batch.commit();
+        showBoardList();
+    });
+
+    // ==================== ANALYZE VIEW ====================
+    document.getElementById("leaderMinReports").addEventListener("change", renderAnalyze);
+    document.getElementById("leaderEvent").addEventListener("change", renderAnalyze);
+    document.getElementById("compareA").addEventListener("change", renderCompare);
+    document.getElementById("compareB").addEventListener("change", renderCompare);
+
+    function renderAnalyze() {
+        const summaries = allSummaries();
+        const totalReports = reports.length;
+        const events = new Set(reports.map((r) => r.event).filter(Boolean));
+        const avgOverallAll = avgOf(summaries.map((s) => s.avgOverall));
+
+        document.getElementById("analyzeKpis").innerHTML = `
+            <div class="kpi"><strong>${players.length}</strong><span>Players Tracked</span></div>
+            <div class="kpi"><strong>${totalReports}</strong><span>Reports Logged</span></div>
+            <div class="kpi"><strong>${events.size}</strong><span>Events Covered</span></div>
+            <div class="kpi"><strong>${avgOverallAll.toFixed(1)}</strong><span>Avg. Grade</span></div>
+        `;
+
+        const minReports = Number(document.getElementById("leaderMinReports").value);
+        const eventFilter = document.getElementById("leaderEvent").value;
+        let leaderRows = summaries.filter((s) => {
+            if (s.timesScouted < minReports) return false;
+            if (eventFilter && !s.events.includes(eventFilter)) return false;
+            return true;
+        });
+        leaderRows.sort((a, b) => b.avgOverall - a.avgOverall);
+
+        const body = document.getElementById("leaderBody");
+        if (!leaderRows.length) {
+            body.innerHTML = `<tr><td colspan="7" class="empty-state">No players match these filters.</td></tr>`;
+        } else {
+            body.innerHTML = leaderRows.map((s, idx) => `
+                <tr data-player-id="${s.player.id}">
+                    <td>${idx + 1}</td>
+                    <td>${s.player.name}</td>
+                    <td>${s.player.team || "-"}</td>
+                    <td>${s.player.position || "-"}</td>
+                    <td>${s.avgOverall.toFixed(1)}</td>
+                    <td>${s.timesScouted}</td>
+                    <td>${s.lastDate || "-"}</td>
+                </tr>
+            `).join("");
+            body.querySelectorAll("tr").forEach((row) => {
+                row.addEventListener("click", () => openProfile(row.dataset.playerId));
+            });
+        }
+
+        const compareA = document.getElementById("compareA");
+        const compareB = document.getElementById("compareB");
+        const options = `<option value="">Select player</option>` + players.map((p) => `<option value="${p.id}">${p.name} (${p.team || "No team"})</option>`).join("");
+        for (const select of [compareA, compareB]) {
+            const current = select.value;
+            select.innerHTML = options;
+            select.value = current;
+        }
+        renderCompare();
+    }
+
+    function renderCompareSide(playerId, containerId) {
+        const container = document.getElementById(containerId);
+        const player = players.find((p) => p.id === playerId);
+        if (!player) { container.innerHTML = ""; return; }
+        const summary = playerSummary(player);
+        container.innerHTML = `<div class="rmeta" style="margin-bottom:6px; color:#d2e6ff; font-weight:700;">${player.name} - Overall ${summary.avgOverall.toFixed(1)}</div>` +
+            RATING_CATEGORIES.map(([key, label]) => `
+                <div class="bar-row">
+                    <span>${label}</span>
+                    <div class="bar"><i style="width: ${summary.catAverages[key] * 10}%;"></i></div>
+                    <span>${summary.catAverages[key].toFixed(1)}</span>
+                </div>
+            `).join("");
+    }
+
+    function renderCompare() {
+        renderCompareSide(document.getElementById("compareA").value, "compareBarsA");
+        renderCompareSide(document.getElementById("compareB").value, "compareBarsB");
+    }
+
+    // ==================== GLOBAL RENDER ====================
+    function renderAll() {
+        refreshPlayerNameDatalist();
+        if (activeView === "board") {
+            if (selectedPlayerId) renderProfile(); else renderBoard();
+        } else if (activeView === "analyze") {
+            renderAnalyze();
+        } else {
+            populateFilterOptions();
+        }
+    }
+
+    // ==================== INIT ====================
+    resetLiveForm(false);
+    renderRecentSaved();
+</script>
+</body>
+</html>
