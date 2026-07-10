@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,175 +21,77 @@
   "@context": "https://schema.org",
   "@type": "MedicalOrganization",
   "name": "Medical Laboratory Services",
-  "parentOrganization": {
-    "@type": "Hospital",
-    "name": "Saint James Hospital Group"
-  },
+  "parentOrganization": { "@type": "Hospital", "name": "Saint James Hospital Group" },
   "areaServed": "Malta",
   "department": [
-    {
-      "@type": "MedicalOrganization",
-      "name": "Medical Laboratory Services — Sliema",
-      "telephone": "+356 2329 1604",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Gorg Borg Olivier Street",
-        "addressLocality": "Sliema",
-        "addressCountry": "MT"
-      }
-    },
-    {
-      "@type": "MedicalOrganization",
-      "name": "Medical Laboratory Services — Żejtun",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Triq Tal-Ħotba",
-        "addressLocality": "Żejtun",
-        "addressCountry": "MT"
-      }
-    }
+    { "@type": "MedicalOrganization", "name": "Medical Laboratory Services — Sliema", "telephone": "+356 2329 1604",
+      "address": { "@type": "PostalAddress", "streetAddress": "Gorg Borg Olivier Street", "addressLocality": "Sliema", "addressCountry": "MT" } },
+    { "@type": "MedicalOrganization", "name": "Medical Laboratory Services — Żejtun",
+      "address": { "@type": "PostalAddress", "streetAddress": "Triq Tal-Ħotba", "addressLocality": "Żejtun", "addressCountry": "MT" } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Do I need a doctor's referral to get tested?","acceptedAnswer":{"@type":"Answer","text":"No — Medical Laboratory Services accepts both physician-referred and self-requested testing."}},
+    {"@type":"Question","name":"Is walk-in testing available, or do I need an appointment?","acceptedAnswer":{"@type":"Answer","text":"Both branches accept bookings, and walk-ins may be seen depending on demand."}},
+    {"@type":"Question","name":"Will my results be shared with my doctor?","acceptedAnswer":{"@type":"Answer","text":"Yes, results are issued to you directly and to your referring physician where one is on file."}},
+    {"@type":"Question","name":"Which branch should I visit — Sliema or Żejtun?","acceptedAnswer":{"@type":"Answer","text":"Both branches offer diagnostics and wellness screening; Sliema is the main branch and Żejtun serves the south of Malta."}}
   ]
 }
 </script>
 <style>
   :root{
-    --navy-bg:#0B2545;
-    --on-navy:#FFFFFF;
-    --heading:#0B2545;
-    --ink:#14213D;
-    --teal:#0F8B8D;
-    --teal-dark:#0A6668;
-    --paper:#FFFFFF;
-    --mist:#F2F6F7;
-    --line:#DCE4E6;
-    --muted:#5B6B72;
-    --chip-bg:#E6F3F3;
-    --chip-border:#CDE7E7;
+    --navy-bg:#0B2545; --on-navy:#FFFFFF; --heading:#0B2545; --ink:#14213D;
+    --teal:#0F8B8D; --teal-dark:#0A6668; --paper:#FFFFFF; --mist:#F2F6F7;
+    --line:#DCE4E6; --muted:#5B6B72; --chip-bg:#E6F3F3; --chip-border:#CDE7E7;
     --shadow:0 24px 48px -24px rgba(11,37,69,0.18);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --heading:#EAF2FF;
-      --ink:#DCE6F2;
-      --paper:#0B1220;
-      --mist:#101A2C;
-      --line:#243252;
-      --muted:#96A8C4;
-      --teal:#3FD6D0;
-      --teal-dark:#6BE6E1;
-      --chip-bg:#13293A;
-      --chip-border:#1E4351;
+      --heading:#EAF2FF; --ink:#DCE6F2; --paper:#0B1220; --mist:#101A2C; --line:#243252;
+      --muted:#96A8C4; --teal:#3FD6D0; --teal-dark:#6BE6E1; --chip-bg:#13293A; --chip-border:#1E4351;
       --shadow:0 24px 48px -24px rgba(0,0,0,0.6);
     }
   }
   :root[data-theme="dark"]{
-    --heading:#EAF2FF;
-    --ink:#DCE6F2;
-    --paper:#0B1220;
-    --mist:#101A2C;
-    --line:#243252;
-    --muted:#96A8C4;
-    --teal:#3FD6D0;
-    --teal-dark:#6BE6E1;
-    --chip-bg:#13293A;
-    --chip-border:#1E4351;
+    --heading:#EAF2FF; --ink:#DCE6F2; --paper:#0B1220; --mist:#101A2C; --line:#243252;
+    --muted:#96A8C4; --teal:#3FD6D0; --teal-dark:#6BE6E1; --chip-bg:#13293A; --chip-border:#1E4351;
     --shadow:0 24px 48px -24px rgba(0,0,0,0.6);
   }
   :root[data-theme="light"]{
-    --heading:#0B2545;
-    --ink:#14213D;
-    --paper:#FFFFFF;
-    --mist:#F2F6F7;
-    --line:#DCE4E6;
-    --muted:#5B6B72;
-    --chip-bg:#E6F3F3;
-    --chip-border:#CDE7E7;
-    --shadow:0 24px 48px -24px rgba(11,37,69,0.18);
+    --heading:#0B2545; --ink:#14213D; --paper:#FFFFFF; --mist:#F2F6F7; --line:#DCE4E6;
+    --muted:#5B6B72; --chip-bg:#E6F3F3; --chip-border:#CDE7E7; --shadow:0 24px 48px -24px rgba(11,37,69,0.18);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{
-    font-family:'Inter', sans-serif;
-    color:var(--ink);
-    background:var(--paper);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    transition:background 0.25s ease, color 0.25s ease;
-  }
-  h1,h2,h3{
-    font-family:'Space Grotesk', sans-serif;
-    color:var(--heading);
-    letter-spacing:-0.01em;
-  }
+  body{ font-family:'Inter', sans-serif; color:var(--ink); background:var(--paper); line-height:1.6; -webkit-font-smoothing:antialiased; transition:background 0.25s ease, color 0.25s ease; }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; color:var(--heading); letter-spacing:-0.01em; }
   .mono{ font-family:'IBM Plex Mono', monospace; }
   a{color:inherit; text-decoration:none;}
   .wrap{max-width:1140px; margin:0 auto; padding:0 24px;}
   svg{display:block;}
-
-  .skip-link{
-    position:absolute; left:12px; top:-60px;
-    background:var(--navy-bg); color:#fff;
-    padding:10px 16px; border-radius:6px; font-size:13.5px; font-weight:600;
-    z-index:100; transition:top 0.2s ease;
-  }
+  .skip-link{ position:absolute; left:12px; top:-60px; background:var(--navy-bg); color:#fff; padding:10px 16px; border-radius:6px; font-size:13.5px; font-weight:600; z-index:100; transition:top 0.2s ease; }
   .skip-link:focus{ top:12px; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{ outline:2px solid var(--teal); outline-offset:3px; }
 
-  a:focus-visible, button:focus-visible, summary:focus-visible{
-    outline:2px solid var(--teal);
-    outline-offset:3px;
-  }
-
-  /* ---------- HEADER ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(255,255,255,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
+  header{ position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
   :root[data-theme="dark"] header{ background:rgba(11,18,32,0.86); }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]) header{ background:rgba(11,18,32,0.86); }
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 24px;
-    gap:16px;
-  }
-  .brand{
-    display:flex; align-items:center; gap:10px;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700; font-size:17px; color:var(--heading);
-  }
-  .brand .mark{
-    width:34px; height:34px; border-radius:8px;
-    background:var(--navy-bg);
-    display:flex; align-items:center; justify-content:center;
-    color:var(--teal); font-family:'IBM Plex Mono', monospace;
-    font-size:11px; font-weight:500; letter-spacing:0.02em;
-    flex-shrink:0;
-  }
-  .brand small{
-    display:block; font-family:'Inter'; font-weight:400; font-size:10.5px; color:var(--muted); letter-spacing:0.02em;
-  }
-  nav.primary-nav ul{
-    display:flex; gap:32px; list-style:none;
-  }
-  nav.primary-nav a{
-    font-size:14px; font-weight:500; color:var(--ink);
-    position:relative; padding-bottom:4px;
-  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) header{ background:rgba(11,18,32,0.86); } }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; gap:16px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:17px; color:var(--heading); }
+  .brand .mark{ width:34px; height:34px; border-radius:8px; background:var(--navy-bg); display:flex; align-items:center; justify-content:center; color:var(--teal); font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:500; letter-spacing:0.02em; flex-shrink:0; }
+  .brand small{ display:block; font-family:'Inter'; font-weight:400; font-size:10.5px; color:var(--muted); letter-spacing:0.02em; }
+  nav.primary-nav ul{ display:flex; gap:28px; list-style:none; }
+  nav.primary-nav a{ font-size:14px; font-weight:500; color:var(--ink); position:relative; padding-bottom:4px; }
   nav.primary-nav a:hover, nav.primary-nav a[aria-current="true"]{color:var(--teal-dark);}
-  .nav-actions{ display:flex; align-items:center; gap:10px; }
-  .nav-cta{
-    background:var(--teal); color:#fff !important; font-size:13.5px; font-weight:600;
-    padding:10px 18px; border-radius:6px; white-space:nowrap;
-  }
+  .nav-actions{ display:flex; align-items:center; gap:8px; }
+  .nav-cta{ background:var(--teal); color:#fff !important; font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:6px; white-space:nowrap; }
   .nav-cta:hover{background:var(--teal-dark);}
-  .icon-btn{
-    background:none; border:1px solid var(--line); border-radius:7px;
-    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; color:var(--ink); flex-shrink:0;
-  }
+  .icon-btn{ background:none; border:1px solid var(--line); border-radius:7px; width:38px; height:38px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink); flex-shrink:0; }
   .icon-btn:hover{ border-color:var(--teal); color:var(--teal-dark); }
   .theme-toggle .sun{display:none;}
   :root[data-theme="dark"] .theme-toggle .sun{display:block;}
@@ -199,326 +101,220 @@
     :root:not([data-theme="light"]) .theme-toggle .moon{display:none;}
   }
   .menu-toggle{display:none;}
+  .lang-toggle{ display:flex; border:1px solid var(--line); border-radius:7px; overflow:hidden; flex-shrink:0; }
+  .lang-toggle button{ background:none; border:none; padding:0 11px; height:36px; font-size:12.5px; font-weight:600; color:var(--muted); cursor:pointer; font-family:'IBM Plex Mono', monospace; }
+  .lang-toggle button[aria-pressed="true"]{ background:var(--navy-bg); color:#fff; }
+  .nav-lang-mobile{ display:none; }
 
   @media (max-width: 860px){
-    nav.primary-nav{
-      display:block; position:fixed; inset:64px 0 auto 0;
-      background:var(--paper); border-bottom:1px solid var(--line);
-      max-height:0; overflow:hidden; transition:max-height 0.3s ease;
-      box-shadow:0 16px 32px -20px rgba(11,37,69,0.25);
-    }
-    nav.primary-nav.open{max-height:320px;}
+    nav.primary-nav{ display:block; position:fixed; inset:64px 0 auto 0; background:var(--paper); border-bottom:1px solid var(--line); max-height:0; overflow:hidden; transition:max-height 0.3s ease; box-shadow:0 16px 32px -20px rgba(11,37,69,0.25); }
+    nav.primary-nav.open{max-height:420px; overflow-y:auto;}
     nav.primary-nav ul{flex-direction:column; gap:0; padding:8px 24px 18px;}
     nav.primary-nav li{border-top:1px solid var(--line);}
     nav.primary-nav a{display:block; padding:14px 2px;}
     .menu-toggle{display:flex;}
     .nav-cta{display:none;}
+    .lang-toggle.desktop-only{display:none;}
+    .nav-lang-mobile{ display:flex; padding:14px 2px; }
   }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    padding:88px 0 70px;
-    background:linear-gradient(180deg, var(--mist) 0%, var(--paper) 100%);
-    border-bottom:1px solid var(--line);
-    position:relative;
-    overflow:hidden;
-  }
-  .hero-grid{
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
-  }
-  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
-
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px; color:var(--teal-dark);
-    background:var(--chip-bg); border:1px solid var(--chip-border);
-    padding:6px 12px; border-radius:999px;
-    margin-bottom:22px;
-  }
-  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--teal); display:inline-block;}
-
-  .hero h1{
-    font-size:clamp(34px, 4.4vw, 52px);
-    line-height:1.08;
-    font-weight:700;
-    margin-bottom:20px;
-  }
-  .hero h1 span{color:var(--teal-dark);}
-  .hero p.lead{
-    font-size:17px; color:var(--muted); max-width:480px; margin-bottom:20px;
-  }
-  .hero-points{ list-style:none; margin-bottom:32px; display:flex; flex-direction:column; gap:9px; }
-  .hero-points li{ display:flex; align-items:flex-start; gap:9px; font-size:14px; color:var(--ink); }
-  .hero-points svg{ flex-shrink:0; margin-top:2px; color:var(--teal); }
-  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:13px 24px; border-radius:7px; font-size:14.5px; font-weight:600;
-    border:1px solid transparent; cursor:pointer;
-    font-family:inherit;
-  }
+  section{padding:84px 0;}
+  .section-head{ max-width:600px; margin-bottom:48px; }
+  .section-head .kicker{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; display:block; }
+  .section-head h2{ font-size:clamp(26px, 3vw, 34px); margin-bottom:14px; }
+  .section-head p{color:var(--muted); font-size:15.5px;}
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:7px; font-size:14.5px; font-weight:600; border:1px solid transparent; cursor:pointer; font-family:inherit; }
   .btn-primary{background:var(--navy-bg); color:#fff;}
   .btn-primary:hover{background:#0a1c37;}
   .btn-ghost{background:transparent; color:var(--heading); border-color:var(--line);}
   .btn-ghost:hover{border-color:var(--teal);}
   .btn-sm{ padding:9px 16px; font-size:13.5px; }
 
-  /* Signature element: the requisition panel */
-  .panel{
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:12px;
-    box-shadow:var(--shadow);
-    overflow:hidden;
-  }
-  .panel-head{
-    background:var(--navy-bg);
-    color:#fff;
-    padding:16px 20px;
-    display:flex; justify-content:space-between; align-items:center;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    letter-spacing:0.03em;
-  }
+  .hero{ padding:88px 0 70px; background:linear-gradient(180deg, var(--mist) 0%, var(--paper) 100%); border-bottom:1px solid var(--line); position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--teal-dark); background:var(--chip-bg); border:1px solid var(--chip-border); padding:6px 12px; border-radius:999px; margin-bottom:22px; }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--teal); display:inline-block;}
+  .hero h1{ font-size:clamp(34px, 4.4vw, 52px); line-height:1.08; font-weight:700; margin-bottom:20px; }
+  .hero h1 span{color:var(--teal-dark);}
+  .hero p.lead{ font-size:17px; color:var(--muted); max-width:480px; margin-bottom:20px; }
+  .hero-points{ list-style:none; margin-bottom:32px; display:flex; flex-direction:column; gap:9px; }
+  .hero-points li{ display:flex; align-items:flex-start; gap:9px; font-size:14px; color:var(--ink); }
+  .hero-points svg{ flex-shrink:0; margin-top:2px; color:var(--teal); }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .panel{ background:var(--paper); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; }
+  .panel-head{ background:var(--navy-bg); color:#fff; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.03em; }
   .panel-head span.id{color:#8FD3D4;}
   .panel-body{padding:22px 20px 20px;}
-  .panel-row{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:11px 0; border-bottom:1px dashed var(--line);
-    font-size:13.5px; gap:10px;
-  }
+  .panel-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px dashed var(--line); font-size:13.5px; gap:10px; }
   .panel-row:last-child{border-bottom:none;}
   .panel-row .name{color:var(--ink); font-weight:500;}
   .panel-row .range{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--muted); white-space:nowrap;}
-  .status{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px; font-weight:500;
-    padding:3px 9px; border-radius:999px;
-    background:var(--chip-bg); color:var(--teal-dark);
-    letter-spacing:0.03em; white-space:nowrap;
-  }
-  .panel-foot{
-    background:var(--mist);
-    padding:13px 20px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px; color:var(--muted);
-    display:flex; justify-content:space-between;
-    border-top:1px solid var(--line);
-  }
-  .panel-caption{
-    text-align:center; font-size:11.5px; color:var(--muted); margin-top:10px;
-  }
+  .status{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:500; padding:3px 9px; border-radius:999px; background:var(--chip-bg); color:var(--teal-dark); letter-spacing:0.03em; white-space:nowrap; }
+  .panel-foot{ background:var(--mist); padding:13px 20px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted); display:flex; justify-content:space-between; border-top:1px solid var(--line); }
+  .panel-caption{ text-align:center; font-size:11.5px; color:var(--muted); margin-top:10px; }
 
-  /* ---------- STRIP ---------- */
-  .strip{
-    border-bottom:1px solid var(--line);
-    padding:22px 0;
-  }
-  .strip .wrap{
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px;
-  }
-  .strip-item{
-    display:flex; align-items:center; gap:10px;
-    font-size:13.5px; color:var(--muted);
-  }
+  .strip{ border-bottom:1px solid var(--line); padding:22px 0; }
+  .strip .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; }
+  .strip-item{ display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--muted); }
   .strip-item strong{color:var(--heading); font-weight:600;}
 
-  /* ---------- SECTION shared ---------- */
-  section{padding:84px 0;}
-  .section-head{
-    max-width:600px; margin-bottom:48px;
-  }
-  .section-head .kicker{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px; color:var(--teal-dark);
-    text-transform:uppercase; letter-spacing:0.08em;
-    margin-bottom:12px; display:block;
-  }
-  .section-head h2{
-    font-size:clamp(26px, 3vw, 34px);
-    margin-bottom:14px;
-  }
-  .section-head p{color:var(--muted); font-size:15.5px;}
-
-  /* ---------- TRUST BAND ---------- */
   .trust{ background:var(--paper); }
-  .trust-grid{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
-  }
+  .trust-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
   @media (max-width:820px){ .trust-grid{grid-template-columns:1fr;} }
   .trust-card{ display:flex; gap:14px; align-items:flex-start; }
-  .trust-card .ico{
-    width:42px; height:42px; border-radius:9px; background:var(--chip-bg);
-    display:flex; align-items:center; justify-content:center; color:var(--teal-dark); flex-shrink:0;
-  }
+  .trust-card .ico{ width:42px; height:42px; border-radius:9px; background:var(--chip-bg); display:flex; align-items:center; justify-content:center; color:var(--teal-dark); flex-shrink:0; }
   .trust-card h4{ font-family:'Space Grotesk'; font-size:15.5px; margin-bottom:5px; color:var(--heading); }
   .trust-card p{ font-size:13.5px; color:var(--muted); }
 
-  /* ---------- SERVICES ---------- */
+  .note{ margin-top:18px; font-size:12.5px; color:var(--muted); background:var(--mist); border:1px solid var(--line); border-radius:8px; padding:12px 14px; display:flex; gap:9px; align-items:flex-start; }
+  .note svg{ flex-shrink:0; margin-top:1px; color:var(--teal-dark); }
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
   .services{background:var(--mist); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .service-grid{
-    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:12px;
-    overflow:hidden;
-  }
-  @media (max-width:820px){ .service-grid{grid-template-columns:1fr;} }
-  .service-card{
-    background:var(--paper); padding:32px 28px;
-  }
-  .service-card .ico{
-    width:40px; height:40px; border-radius:9px; background:var(--chip-bg);
-    display:flex; align-items:center; justify-content:center; color:var(--teal-dark);
-    margin-bottom:18px;
-  }
-  .service-card h3{font-size:18px; margin-bottom:10px;}
+  .service-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  @media (max-width:980px){ .service-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .service-grid{grid-template-columns:1fr;} }
+  .service-card{ background:var(--paper); padding:32px 26px; }
+  .service-card .ico{ width:40px; height:40px; border-radius:9px; background:var(--chip-bg); display:flex; align-items:center; justify-content:center; color:var(--teal-dark); margin-bottom:18px; }
+  .service-card h3{font-size:17px; margin-bottom:10px;}
   .service-card p{font-size:14px; color:var(--muted); margin-bottom:16px;}
   .chip-row{ display:flex; flex-wrap:wrap; gap:7px; }
-  .chip{
-    font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--teal-dark);
-    background:var(--chip-bg); border:1px solid var(--chip-border);
-    padding:4px 9px; border-radius:999px;
-  }
+  .chip{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--teal-dark); background:var(--chip-bg); border:1px solid var(--chip-border); padding:4px 9px; border-radius:999px; }
 
-  /* ---------- LOCATIONS ---------- */
-  .loc-grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:24px;
-  }
+  .catalog-controls{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; align-items:center; }
+  .search-input{ flex:1; min-width:220px; padding:12px 16px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:14px; background:var(--paper); color:var(--ink); }
+  .filter-chips{ display:flex; gap:8px; flex-wrap:wrap; }
+  .filter-chip{ padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:var(--paper); color:var(--muted); font-size:12.5px; font-weight:500; cursor:pointer; font-family:inherit; }
+  .filter-chip[aria-pressed="true"]{ background:var(--chip-bg); border-color:var(--chip-border); color:var(--teal-dark); }
+  .test-table-wrap{ border:1px solid var(--line); border-radius:12px; overflow:hidden; overflow-x:auto; }
+  .test-table{ width:100%; border-collapse:collapse; min-width:520px; }
+  .test-table th{ text-align:left; font-family:'IBM Plex Mono'; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); padding:12px 16px; background:var(--mist); border-bottom:1px solid var(--line); }
+  .test-table td{ padding:14px 16px; border-bottom:1px solid var(--line); font-size:14px; }
+  .test-table tr:last-child td{ border-bottom:none; }
+  .test-table .placeholder{ color:var(--muted); font-style:italic; font-size:12.5px; }
+  .no-results{ padding:32px; text-align:center; color:var(--muted); font-size:14px; display:none; background:var(--paper); }
+  .no-results.show{ display:block; }
+
+  .loc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
   @media (max-width:820px){ .loc-grid{grid-template-columns:1fr;} }
-  .loc-card{
-    border:1px solid var(--line); border-radius:12px; overflow:hidden;
-    display:flex; flex-direction:column; background:var(--paper);
-  }
-  .loc-map{
-    height:190px; border:0; width:100%; display:block;
-    filter:grayscale(0.15) contrast(1.02);
-  }
+  .loc-card{ border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; background:var(--paper); }
+  .map-wrap{ position:relative; height:190px; }
+  .loc-map{ height:190px; border:0; width:100%; display:block; filter:grayscale(0.15) contrast(1.02); }
   :root[data-theme="dark"] .loc-map{ filter:grayscale(0.3) invert(0.92) contrast(0.9) hue-rotate(180deg); }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]) .loc-map{ filter:grayscale(0.3) invert(0.92) contrast(0.9) hue-rotate(180deg); }
-  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .loc-map{ filter:grayscale(0.3) invert(0.92) contrast(0.9) hue-rotate(180deg); } }
+  .map-consent{ position:absolute; inset:0; background:var(--mist); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:16px; text-align:center; }
+  .map-consent p{ font-size:12px; color:var(--muted); max-width:230px; }
   .loc-body{padding:26px 26px 28px; flex:1; display:flex; flex-direction:column;}
-  .loc-tag{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal-dark);
-    text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:block;
-  }
+  .loc-tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:block; }
   .loc-body h3{font-size:20px; margin-bottom:6px;}
   .loc-body .addr{color:var(--muted); font-size:14px; margin-bottom:18px;}
-  .loc-detail{
-    display:flex; justify-content:space-between; padding:9px 0;
-    border-top:1px solid var(--line); font-size:13.5px; gap:10px;
-  }
+  .loc-detail{ display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line); font-size:13.5px; gap:10px; }
   .loc-detail span:first-child{color:var(--muted); white-space:nowrap;}
   .loc-detail span:last-child{font-weight:500; color:var(--ink); text-align:right;}
   .loc-actions{ margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
 
-  .note{
-    margin-top:18px; font-size:12.5px; color:var(--muted);
-    background:var(--mist); border:1px solid var(--line); border-radius:8px; padding:12px 14px;
-    display:flex; gap:9px; align-items:flex-start;
-  }
-  .note svg{ flex-shrink:0; margin-top:1px; color:var(--teal-dark); }
+  .badge-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media(max-width:820px){ .badge-grid{grid-template-columns:1fr;} }
+  .badge-card{ border:1px dashed var(--line); border-radius:12px; padding:22px; text-align:center; background:var(--mist); }
+  .badge-card .ico{ width:38px; height:38px; margin:0 auto 12px; color:var(--muted); }
+  .badge-card p{ font-size:12.5px; color:var(--muted); font-style:italic; }
 
-  /* ---------- PROCESS ---------- */
+  .team-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  @media(max-width:820px){ .team-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:480px){ .team-grid{grid-template-columns:1fr;} }
+  .team-card{ border:1px solid var(--line); border-radius:12px; padding:24px 20px; text-align:center; background:var(--paper); }
+  .avatar{ width:64px; height:64px; border-radius:50%; background:var(--chip-bg); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
+  .team-card h4{ font-family:'Space Grotesk'; font-size:14.5px; color:var(--muted); margin-bottom:4px; font-style:italic; }
+  .team-card p{ font-size:12.5px; color:var(--muted); font-style:italic; }
+
+  .insurer-grid{ display:flex; flex-wrap:wrap; gap:10px; }
+  .insurer-chip{ border:1px dashed var(--line); border-radius:8px; padding:14px 20px; font-size:13px; color:var(--muted); font-style:italic; background:var(--mist); }
+
   .process{background:var(--navy-bg); color:#fff;}
   .process .section-head h2{color:#fff;}
   .process .section-head p{color:#B7C4D6;}
-  .process-list{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
-  }
+  .process-list{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
   @media (max-width:900px){ .process-list{grid-template-columns:1fr 1fr;} }
   @media (max-width:560px){ .process-list{grid-template-columns:1fr;} }
-  .step{
-    border-top:2px solid #1E3A5F;
-    padding-top:18px;
-  }
-  .step .idx{
-    font-family:'IBM Plex Mono', monospace; font-size:12px; color:#3FD6D0;
-    display:block; margin-bottom:14px;
-  }
+  .step{ border-top:2px solid #1E3A5F; padding-top:18px; }
+  .step .idx{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:#3FD6D0; display:block; margin-bottom:14px; }
   .step h4{font-family:'Space Grotesk'; font-size:16.5px; margin-bottom:8px; color:#fff;}
   .step p{font-size:13.5px; color:#AEC0D6;}
 
-  /* ---------- FAQ ---------- */
   .faq-list{ display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
   .faq-item{ background:var(--paper); }
-  .faq-item summary{
-    list-style:none; cursor:pointer; padding:20px 24px;
-    display:flex; justify-content:space-between; align-items:center; gap:16px;
-    font-family:'Space Grotesk'; font-size:15.5px; color:var(--heading); font-weight:600;
-  }
+  .faq-item summary{ list-style:none; cursor:pointer; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; gap:16px; font-family:'Space Grotesk'; font-size:15.5px; color:var(--heading); font-weight:600; }
   .faq-item summary::-webkit-details-marker{display:none;}
   .faq-item summary .plus{ flex-shrink:0; color:var(--teal-dark); transition:transform 0.2s ease; }
   .faq-item[open] summary .plus{ transform:rotate(45deg); }
   .faq-item .faq-body{ padding:0 24px 22px; color:var(--muted); font-size:14px; max-width:640px; }
 
-  /* ---------- CONTACT / CTA ---------- */
   .cta{ text-align:center; }
-  .cta-box{
-    background:var(--mist);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:56px 40px;
-    text-align:center;
-  }
+  .cta-box{ background:var(--mist); border:1px solid var(--line); border-radius:16px; padding:56px 40px; text-align:center; }
   .cta-box h2{font-size:clamp(24px,3vw,32px); margin-bottom:14px;}
   .cta-box p{color:var(--muted); max-width:480px; margin:0 auto 28px;}
   .cta-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
 
-  /* ---------- FOOTER ---------- */
-  footer{
-    border-top:1px solid var(--line);
-    padding:40px 0 32px;
-  }
-  .foot-grid{
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;
-    margin-bottom:28px;
-  }
-  .foot-brand{max-width:280px;}
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; text-align:left; margin-top:32px; max-width:640px; margin-left:auto; margin-right:auto; }
+  @media(max-width:640px){ .form-grid{grid-template-columns:1fr;} }
+  .form-field{ display:flex; flex-direction:column; gap:6px; }
+  .form-field.full{ grid-column:1 / -1; }
+  .form-field label{ font-size:12.5px; font-weight:600; color:var(--heading); }
+  .form-field input, .form-field select, .form-field textarea{ padding:11px 14px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:14px; background:var(--paper); color:var(--ink); }
+  .form-field textarea{ resize:vertical; min-height:80px; }
+  .form-submit-row{ grid-column:1 / -1; display:flex; justify-content:center; margin-top:6px; }
+  .form-success{ display:none; margin-top:20px; max-width:640px; margin-left:auto; margin-right:auto; padding:16px 18px; border-radius:10px; background:var(--chip-bg); border:1px solid var(--chip-border); color:var(--teal-dark); font-size:13.5px; text-align:left; }
+  .form-success.show{ display:block; }
+
+  footer{ border-top:1px solid var(--line); padding:40px 0 32px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:28px; }
+  .foot-brand{max-width:260px;}
   .foot-brand .brand{margin-bottom:10px;}
   .foot-brand p{font-size:13px; color:var(--muted);}
-  .foot-col h5{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted);
-    text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;
-  }
+  .foot-col h5{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px; }
   .foot-col ul{list-style:none;}
   .foot-col li{margin-bottom:9px; font-size:13.5px;}
-  .foot-col a:hover{color:var(--teal-dark);}
-  .foot-bottom{
-    border-top:1px solid var(--line); padding-top:20px;
-    font-size:12.5px; color:var(--muted);
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
-  }
+  .foot-col a, .foot-col button{ background:none; border:none; padding:0; font:inherit; cursor:pointer; color:inherit; text-align:left; }
+  .foot-col a:hover, .foot-col button:hover{color:var(--teal-dark);}
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:20px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 
-  /* ---------- BACK TO TOP ---------- */
-  .to-top{
-    position:fixed; right:20px; bottom:20px; z-index:40;
-    width:44px; height:44px; border-radius:50%;
-    background:var(--navy-bg); color:#fff; border:none; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 12px 24px -8px rgba(11,37,69,0.4);
-    opacity:0; visibility:hidden; transform:translateY(8px);
-    transition:opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-  }
+  .modal-overlay{ position:fixed; inset:0; background:rgba(11,18,32,0.55); z-index:90; display:none; align-items:center; justify-content:center; padding:20px; }
+  .modal-overlay.show{ display:flex; }
+  .modal{ background:var(--paper); border-radius:14px; max-width:560px; width:100%; max-height:80vh; overflow-y:auto; padding:28px; border:1px solid var(--line); position:relative; }
+  .modal h3{ margin-bottom:14px; padding-right:30px; }
+  .modal p{ font-size:14px; color:var(--muted); margin-bottom:14px; }
+  .modal p.placeholder-note{ font-style:italic; }
+  .modal-close{ position:absolute; top:20px; right:20px; background:none; border:none; cursor:pointer; color:var(--muted); }
+  .modal-close:hover{ color:var(--teal-dark); }
+  .pref-row{ display:flex; justify-content:space-between; align-items:center; gap:16px; padding:14px 0; border-top:1px solid var(--line); }
+  .pref-row:first-of-type{ border-top:none; }
+  .pref-row h4{ font-size:14px; color:var(--heading); margin-bottom:3px; font-family:'Space Grotesk'; }
+  .pref-row p{ font-size:12.5px; margin:0; }
+  .switch{ position:relative; width:42px; height:24px; flex-shrink:0; }
+  .switch input{ opacity:0; width:100%; height:100%; margin:0; position:absolute; cursor:pointer; z-index:1; }
+  .switch .track{ position:absolute; inset:0; background:var(--line); border-radius:999px; transition:background 0.2s; }
+  .switch .thumb{ position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:transform 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.3); }
+  .switch input:checked + .track{ background:var(--teal); }
+  .switch input:checked + .track .thumb{ transform:translateX(18px); }
+  .switch input:disabled + .track{ opacity:0.6; }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
+
+  .cookie-banner{ position:fixed; left:16px; right:16px; bottom:16px; z-index:80; max-width:640px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:20px 22px; display:none; }
+  .cookie-banner.show{ display:block; }
+  .cookie-banner p{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
+  .cookie-banner h3{ font-size:15px; margin-bottom:8px; }
+  .cookie-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  .to-top{ position:fixed; right:20px; bottom:20px; z-index:40; width:44px; height:44px; border-radius:50%; background:var(--navy-bg); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 24px -8px rgba(11,37,69,0.4); opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; }
   .to-top.show{ opacity:1; visibility:visible; transform:translateY(0); }
   .to-top:hover{ background:var(--teal-dark); }
 
-  /* reveal animation */
-  .reveal{
-    opacity:0; transform:translateY(14px);
-    transition:opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reveal.in{opacity:1; transform:translateY(0);}
-  @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1; transform:none; transition:none;}
-    html{scroll-behavior:auto;}
-    .to-top{transition:none;}
-  }
-
   @media print{
-    header, .to-top, .hero-actions, .cta, footer .foot-bottom span:last-child{ display:none !important; }
+    header, .to-top, .hero-actions, .cta, footer .foot-bottom span:last-child, .cookie-banner, .modal-overlay{ display:none !important; }
     body{ color:#000; background:#fff; }
     section{ padding:24px 0; }
     a[href]:after{ content:" (" attr(href) ")"; font-size:11px; color:#555; }
@@ -526,8 +322,17 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie settings">
+  <h3 data-i18n="cookie_title">We use cookies</h3>
+  <p data-i18n="cookie_text">We use necessary cookies to run this site, and optional cookies (like Google Maps) to show branch locations. Choose what you're comfortable with.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-primary btn-sm" id="cookieAcceptAll" data-i18n="cookie_accept">Accept all</button>
+    <button class="btn btn-ghost btn-sm" id="cookieNecessary" data-i18n="cookie_necessary">Necessary only</button>
+    <button class="btn btn-ghost btn-sm" id="cookiePrefsOpen" data-i18n="cookie_prefs">Preferences</button>
+  </div>
+</div>
 
 <header>
   <div class="nav wrap">
@@ -540,14 +345,23 @@
     </a>
     <nav class="primary-nav" id="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#locations">Locations</a></li>
-        <li><a href="#process">How it works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#catalogue" data-i18n="nav_catalogue">Test Catalogue</a></li>
+        <li><a href="#locations" data-i18n="nav_locations">Locations</a></li>
+        <li><a href="#process" data-i18n="nav_process">How it works</a></li>
+        <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        <li class="nav-lang-mobile lang-toggle" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="mt" aria-pressed="false">MT</button>
+        </li>
       </ul>
     </nav>
     <div class="nav-actions">
+      <div class="lang-toggle desktop-only" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="mt" aria-pressed="false">MT</button>
+      </div>
       <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
         <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -555,7 +369,7 @@
       <button class="icon-btn menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
-      <a class="nav-cta" href="tel:+35623291604">Call Sliema Branch</a>
+      <a class="nav-cta" href="tel:+35623291604" data-i18n="nav_cta">Call Sliema Branch</a>
     </div>
   </div>
 </header>
@@ -565,16 +379,16 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow"><span class="dot"></span> LABORATORY NETWORK · SAINT JAMES HOSPITAL GROUP</div>
-      <h1>Precise results, <span>trusted since day one.</span></h1>
-      <p class="lead">Medical Laboratory Services is the official laboratory network of the Saint James Hospital Group, offering diagnostic testing and wellness screenings from two locations across Malta.</p>
+      <div class="eyebrow"><span class="dot"></span> <span data-i18n="eyebrow">LABORATORY NETWORK · SAINT JAMES HOSPITAL GROUP</span></div>
+      <h1><span data-i18n="hero_h1_1">Precise results, </span><span data-i18n="hero_h1_2" style="color:var(--teal-dark)">trusted since day one.</span></h1>
+      <p class="lead" data-i18n="hero_lead">Medical Laboratory Services is the official laboratory network of the Saint James Hospital Group, offering diagnostic testing and wellness screenings from two locations across Malta.</p>
       <ul class="hero-points">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Physician-referred and self-referred testing welcome</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Two branches — Sliema and Żejtun</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Backed by the Saint James Hospital clinical laboratory team</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="hero_point1">Physician-referred and self-referred testing welcome</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="hero_point2">Two branches — Sliema and Żejtun</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="hero_point3">Backed by the Saint James Hospital clinical laboratory team</span></li>
       </ul>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact">Book a Test</a>
+        <a class="btn btn-primary" href="#contact" data-i18n="btn_book">Book a Test</a>
         <a class="btn btn-ghost" href="tel:+35623291604">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           +356 2329 1604
@@ -588,43 +402,24 @@
           <span>ROUTINE</span>
         </div>
         <div class="panel-body">
-          <div class="panel-row">
-            <span class="name">Full Blood Count</span>
-            <span class="range mono">4.2–5.6 M/µL</span>
-            <span class="status">NORMAL</span>
-          </div>
-          <div class="panel-row">
-            <span class="name">Lipid Profile</span>
-            <span class="range mono">&lt; 200 mg/dL</span>
-            <span class="status">NORMAL</span>
-          </div>
-          <div class="panel-row">
-            <span class="name">Thyroid Panel (TSH)</span>
-            <span class="range mono">0.4–4.0 mIU/L</span>
-            <span class="status">NORMAL</span>
-          </div>
-          <div class="panel-row">
-            <span class="name">Vitamin D</span>
-            <span class="range mono">30–100 ng/mL</span>
-            <span class="status">NORMAL</span>
-          </div>
+          <div class="panel-row"><span class="name">Full Blood Count</span><span class="range mono">4.2–5.6 M/µL</span><span class="status">NORMAL</span></div>
+          <div class="panel-row"><span class="name">Lipid Profile</span><span class="range mono">&lt; 200 mg/dL</span><span class="status">NORMAL</span></div>
+          <div class="panel-row"><span class="name">Thyroid Panel (TSH)</span><span class="range mono">0.4–4.0 mIU/L</span><span class="status">NORMAL</span></div>
+          <div class="panel-row"><span class="name">Vitamin D</span><span class="range mono">30–100 ng/mL</span><span class="status">NORMAL</span></div>
         </div>
-        <div class="panel-foot">
-          <span>PROCESSED · ST. JAMES LAB</span>
-          <span>SLIEMA · MT</span>
-        </div>
+        <div class="panel-foot"><span>PROCESSED · ST. JAMES LAB</span><span>SLIEMA · MT</span></div>
       </div>
-      <p class="panel-caption">Illustrative example of a report layout — not an actual patient result.</p>
+      <p class="panel-caption" data-i18n="panel_caption">Illustrative example of a report layout — not an actual patient result.</p>
     </div>
   </div>
 </section>
 
 <div class="strip">
   <div class="wrap">
-    <div class="strip-item"><strong>2</strong>&nbsp;laboratory locations</div>
+    <div class="strip-item"><strong>2</strong>&nbsp;<span data-i18n="strip1">laboratory locations</span></div>
     <div class="strip-item"><strong>Sliema</strong>&nbsp;— St. James Capua Hospital</div>
     <div class="strip-item"><strong>Żejtun</strong>&nbsp;— Triq Tal-Ħotba</div>
-    <div class="strip-item"><strong>Part of</strong>&nbsp;the Saint James Hospital Group</div>
+    <div class="strip-item"><strong data-i18n="strip4a">Part of</strong>&nbsp;<span data-i18n="strip4b">the Saint James Hospital Group</span></div>
   </div>
 </div>
 
@@ -632,24 +427,15 @@
   <div class="wrap trust-grid">
     <div class="trust-card reveal">
       <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
-      <div>
-        <h4>Part of a hospital group</h4>
-        <p>Samples are processed by the same clinical laboratory team used across the Saint James Hospital Group.</p>
-      </div>
+      <div><h4 data-i18n="trust1_h">Part of a hospital group</h4><p data-i18n="trust1_p">Samples are processed by the same clinical laboratory team used across the Saint James Hospital Group.</p></div>
     </div>
     <div class="trust-card reveal">
       <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-      <div>
-        <h4>Two Malta locations</h4>
-        <p>Testing is available in Sliema, at St. James Capua Hospital, and in Żejtun on Triq Tal-Ħotba.</p>
-      </div>
+      <div><h4 data-i18n="trust2_h">Two Malta locations</h4><p data-i18n="trust2_p">Testing is available in Sliema, at St. James Capua Hospital, and in Żejtun on Triq Tal-Ħotba.</p></div>
     </div>
     <div class="trust-card reveal">
       <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-      <div>
-        <h4>Referred or self-requested</h4>
-        <p>Come with a doctor's referral or request testing directly — both pathways are supported.</p>
-      </div>
+      <div><h4 data-i18n="trust3_h">Referred or self-requested</h4><p data-i18n="trust3_p">Come with a doctor's referral or request testing directly — both pathways are supported.</p></div>
     </div>
   </div>
 </section>
@@ -657,43 +443,66 @@
 <section id="services" class="services">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="kicker">What we test</span>
-      <h2>Diagnostic testing &amp; wellness screening</h2>
-      <p>From routine bloodwork to targeted wellness panels, samples are processed using the same clinical standards used across the Saint James Hospital Group.</p>
+      <span class="kicker" data-i18n="services_kicker">What we test</span>
+      <h2 data-i18n="services_h2">Diagnostic testing &amp; wellness screening</h2>
+      <p data-i18n="services_p">From routine bloodwork to targeted wellness panels, samples are processed using the same clinical standards used across the Saint James Hospital Group.</p>
     </div>
     <div class="service-grid">
       <div class="service-card reveal">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6l-6 10a2 2 0 0 0 1.7 3h14.6a2 2 0 0 0 1.7-3l-6-10V2"/><path d="M8.5 2h7M6 15h12"/></svg></div>
-        <h3>Routine Diagnostics</h3>
-        <p>Full blood counts, metabolic panels, and general pathology testing to support diagnosis and ongoing care.</p>
-        <div class="chip-row">
-          <span class="chip">Full Blood Count</span>
-          <span class="chip">Metabolic Panel</span>
-        </div>
+        <h3 data-i18n="svc1_h">Routine Diagnostics</h3>
+        <p data-i18n="svc1_p">Full blood counts, metabolic panels, and general pathology testing to support diagnosis and ongoing care.</p>
+        <div class="chip-row"><span class="chip">Full Blood Count</span><span class="chip">Metabolic Panel</span></div>
       </div>
       <div class="service-card reveal">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-        <h3>Wellness Screening</h3>
-        <p>Preventive health checks and screening packages designed to catch concerns early, for individuals and employers.</p>
-        <div class="chip-row">
-          <span class="chip">Lipid Profile</span>
-          <span class="chip">Vitamin D</span>
-        </div>
+        <h3 data-i18n="svc2_h">Wellness Screening</h3>
+        <p data-i18n="svc2_p">Preventive health checks and screening packages designed to catch concerns early, for individuals and employers.</p>
+        <div class="chip-row"><span class="chip">Lipid Profile</span><span class="chip">Vitamin D</span></div>
       </div>
       <div class="service-card reveal">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/><path d="M9 14l2 2 4-4"/></svg></div>
-        <h3>Specialist Panels</h3>
-        <p>Hormone, thyroid, lipid, vitamin, and allergy panels, referred by your physician or requested directly.</p>
-        <div class="chip-row">
-          <span class="chip">Thyroid (TSH)</span>
-          <span class="chip">Hormone</span>
-          <span class="chip">Allergy</span>
-        </div>
+        <h3 data-i18n="svc3_h">Specialist Panels</h3>
+        <p data-i18n="svc3_p">Hormone, thyroid, lipid, vitamin, and allergy panels, referred by your physician or requested directly.</p>
+        <div class="chip-row"><span class="chip">Thyroid (TSH)</span><span class="chip">Hormone</span><span class="chip">Allergy</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <h3 data-i18n="svc4_h">Corporate &amp; Occupational Health</h3>
+        <p data-i18n="svc4_p">Screening programmes for employers looking after workforce health, plus pre-employment medicals.</p>
+        <div class="chip-row"><span class="chip mono" data-i18n="chip_enquire">On enquiry</span></div>
       </div>
     </div>
     <div class="note reveal">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span>The examples above illustrate the type of testing typically available. The full test menu and current pricing are confirmed on enquiry — call +356 2329 1604.</span>
+      <span data-i18n="services_note">The examples above illustrate the type of testing typically available. The full test menu and current pricing are confirmed on enquiry — call +356 2329 1604.</span>
+    </div>
+  </div>
+</section>
+
+<section id="catalogue">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker" data-i18n="cat_kicker">Full test menu</span>
+      <h2 data-i18n="cat_h2">Search our test catalogue</h2>
+      <p data-i18n="cat_p">Browse commonly requested tests by category. Preparation requirements vary by test — always confirm when you book.</p>
+    </div>
+    <div class="catalog-controls reveal">
+      <input type="text" class="search-input" id="catalogSearch" data-i18n-placeholder="cat_search_ph" placeholder="Search tests (e.g. thyroid, vitamin D)…">
+      <div class="filter-chips" id="catalogFilters" role="group" aria-label="Filter by category"></div>
+    </div>
+    <div class="test-table-wrap reveal">
+      <table class="test-table">
+        <thead>
+          <tr>
+            <th data-i18n="cat_col_test">Test</th>
+            <th data-i18n="cat_col_category">Category</th>
+            <th data-i18n="cat_col_prep">Preparation &amp; turnaround</th>
+          </tr>
+        </thead>
+        <tbody id="catalogBody"></tbody>
+      </table>
+      <div class="no-results" id="catalogEmpty" data-i18n="cat_empty">No tests match your search — call +356 2329 1604 to ask about a specific test.</div>
     </div>
   </div>
 </section>
@@ -701,43 +510,111 @@
 <section id="locations">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="kicker">Where to find us</span>
-      <h2>Two locations, one standard of care</h2>
-      <p>Walk-in and appointment testing is available at both branches. Call ahead to confirm same-day availability.</p>
+      <span class="kicker" data-i18n="loc_kicker">Where to find us</span>
+      <h2 data-i18n="loc_h2">Two locations, one standard of care</h2>
+      <p data-i18n="loc_p">Walk-in and appointment testing is available at both branches. Call ahead to confirm same-day availability.</p>
     </div>
     <div class="loc-grid">
       <div class="loc-card reveal">
-        <iframe class="loc-map" loading="lazy" title="Map of Medical Laboratory Services, Sliema" src="https://www.google.com/maps?q=Gorg+Borg+Olivier+Street,+Sliema,+Malta&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-wrap">
+          <iframe class="loc-map" loading="lazy" title="Map of Medical Laboratory Services, Sliema" data-src="https://www.google.com/maps?q=Gorg+Borg+Olivier+Street,+Sliema,+Malta&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="map-consent map-consent-gate">
+            <p data-i18n="map_consent_text">Maps require your consent to load Google Maps content.</p>
+            <button class="btn btn-primary btn-sm map-enable-btn" type="button" data-i18n="map_enable">Enable maps</button>
+          </div>
+        </div>
         <div class="loc-body">
-          <span class="loc-tag">Main Branch</span>
+          <span class="loc-tag" data-i18n="loc_main">Main Branch</span>
           <h3>Sliema</h3>
           <p class="addr">Gorg Borg Olivier Street, Sliema — at St. James Capua Hospital</p>
-          <div class="loc-detail"><span>Phone</span><span>+356 2329 1604</span></div>
-          <div class="loc-detail"><span>Testing</span><span>Diagnostics &amp; screening</span></div>
+          <div class="loc-detail"><span data-i18n="loc_phone">Phone</span><span>+356 2329 1604</span></div>
+          <div class="loc-detail"><span data-i18n="loc_testing">Testing</span><span data-i18n="loc_diag">Diagnostics &amp; screening</span></div>
           <div class="loc-actions">
-            <a class="btn btn-primary btn-sm" href="tel:+35623291604">Call this branch</a>
-            <a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Gorg+Borg+Olivier+Street%2C+Sliema%2C+Malta" target="_blank" rel="noopener">Get directions</a>
+            <a class="btn btn-primary btn-sm" href="tel:+35623291604" data-i18n="loc_call_this">Call this branch</a>
+            <a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Gorg+Borg+Olivier+Street%2C+Sliema%2C+Malta" target="_blank" rel="noopener" data-i18n="loc_directions">Get directions</a>
           </div>
         </div>
       </div>
       <div class="loc-card reveal">
-        <iframe class="loc-map" loading="lazy" title="Map of Medical Laboratory Services, Żejtun" src="https://www.google.com/maps?q=Triq+Tal-Hotba,+Zejtun,+Malta&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-wrap">
+          <iframe class="loc-map" loading="lazy" title="Map of Medical Laboratory Services, Żejtun" data-src="https://www.google.com/maps?q=Triq+Tal-Hotba,+Zejtun,+Malta&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="map-consent map-consent-gate">
+            <p data-i18n="map_consent_text">Maps require your consent to load Google Maps content.</p>
+            <button class="btn btn-primary btn-sm map-enable-btn" type="button" data-i18n="map_enable">Enable maps</button>
+          </div>
+        </div>
         <div class="loc-body">
-          <span class="loc-tag">Branch</span>
+          <span class="loc-tag" data-i18n="loc_branch">Branch</span>
           <h3>Żejtun</h3>
           <p class="addr">Triq Tal-Ħotba, Żejtun</p>
-          <div class="loc-detail"><span>Phone</span><span>Call Sliema to confirm</span></div>
-          <div class="loc-detail"><span>Testing</span><span>Diagnostics &amp; screening</span></div>
+          <div class="loc-detail"><span data-i18n="loc_phone">Phone</span><span data-i18n="loc_call_confirm">Call Sliema to confirm</span></div>
+          <div class="loc-detail"><span data-i18n="loc_testing">Testing</span><span data-i18n="loc_diag">Diagnostics &amp; screening</span></div>
           <div class="loc-actions">
-            <a class="btn btn-primary btn-sm" href="tel:+35623291604">Call Sliema to book</a>
-            <a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Triq+Tal-Hotba%2C+Zejtun%2C+Malta" target="_blank" rel="noopener">Get directions</a>
+            <a class="btn btn-primary btn-sm" href="tel:+35623291604" data-i18n="loc_call_book">Call Sliema to book</a>
+            <a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Triq+Tal-Hotba%2C+Zejtun%2C+Malta" target="_blank" rel="noopener" data-i18n="loc_directions">Get directions</a>
           </div>
         </div>
       </div>
     </div>
     <div class="note reveal">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span>Opening hours and the Żejtun branch's direct line aren't confirmed here — call the Sliema branch on +356 2329 1604 to check hours or book at either location.</span>
+      <span data-i18n="loc_note">Opening hours and the Żejtun branch's direct line aren't confirmed here — call the Sliema branch on +356 2329 1604 to check hours or book at either location.</span>
+    </div>
+  </div>
+</section>
+
+<section id="accreditation">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker" data-i18n="accr_kicker">Quality &amp; accreditation</span>
+      <h2 data-i18n="accr_h2">Held to hospital-grade standards</h2>
+      <p data-i18n="accr_p">As part of the Saint James Hospital Group, our laboratory processes follow the group's clinical governance framework. Specific certifications are listed below.</p>
+    </div>
+    <div class="badge-grid">
+      <div class="badge-card reveal">
+        <svg class="ico" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4Z"/></svg>
+        <p data-i18n="accr_ph1">[Add accreditation, e.g. ISO 15189 — certificate number / issuing body]</p>
+      </div>
+      <div class="badge-card reveal">
+        <svg class="ico" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+        <p data-i18n="accr_ph2">[Add quality assurance scheme membership, e.g. external EQA programme]</p>
+      </div>
+      <div class="badge-card reveal">
+        <svg class="ico" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+        <p data-i18n="accr_ph3">[Add regulatory registration, e.g. Malta health authority licence number]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker" data-i18n="team_kicker">The people behind the results</span>
+      <h2 data-i18n="team_h2">Our clinical team</h2>
+      <p data-i18n="team_p">Add photos, names, and credentials for your pathologists and lab scientists here.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal"><div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4 data-i18n="team_name_ph">[Name]</h4><p data-i18n="team_role_ph">[Role / Credentials]</p></div>
+      <div class="team-card reveal"><div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4 data-i18n="team_name_ph">[Name]</h4><p data-i18n="team_role_ph">[Role / Credentials]</p></div>
+      <div class="team-card reveal"><div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4 data-i18n="team_name_ph">[Name]</h4><p data-i18n="team_role_ph">[Role / Credentials]</p></div>
+      <div class="team-card reveal"><div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4 data-i18n="team_name_ph">[Name]</h4><p data-i18n="team_role_ph">[Role / Credentials]</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="insurance">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker" data-i18n="ins_kicker">Payment &amp; insurance</span>
+      <h2 data-i18n="ins_h2">Insurance &amp; health funds</h2>
+      <p data-i18n="ins_p">List the insurers and health funds you work with, or note that self-pay and direct billing are available.</p>
+    </div>
+    <div class="insurer-grid">
+      <div class="insurer-chip reveal" data-i18n="ins_ph">[Insurer name]</div>
+      <div class="insurer-chip reveal" data-i18n="ins_ph">[Insurer name]</div>
+      <div class="insurer-chip reveal" data-i18n="ins_ph">[Insurer name]</div>
+      <div class="insurer-chip reveal" data-i18n="ins_ph">[Insurer name]</div>
     </div>
   </div>
 </section>
@@ -745,31 +622,15 @@
 <section id="process" class="process">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="kicker">How it works</span>
-      <h2>From booking to results</h2>
-      <p>A straightforward path, whether you're self-referring or coming with a doctor's request.</p>
+      <span class="kicker" data-i18n="proc_kicker">How it works</span>
+      <h2 data-i18n="proc_h2">From booking to results</h2>
+      <p data-i18n="proc_p">A straightforward path, whether you're self-referring or coming with a doctor's request.</p>
     </div>
     <div class="process-list">
-      <div class="step reveal">
-        <span class="idx">STEP 01</span>
-        <h4>Book</h4>
-        <p>Call or enquire online to choose a test, a branch, and a time.</p>
-      </div>
-      <div class="step reveal">
-        <span class="idx">STEP 02</span>
-        <h4>Sample</h4>
-        <p>Visit the lab for sample collection — most visits take under 15 minutes.</p>
-      </div>
-      <div class="step reveal">
-        <span class="idx">STEP 03</span>
-        <h4>Process</h4>
-        <p>Your sample is analysed by the Saint James Hospital laboratory team.</p>
-      </div>
-      <div class="step reveal">
-        <span class="idx">STEP 04</span>
-        <h4>Results</h4>
-        <p>Results are issued to you and, where relevant, your referring physician.</p>
-      </div>
+      <div class="step reveal"><span class="idx">STEP 01</span><h4 data-i18n="step1_h">Book</h4><p data-i18n="step1_p">Call or enquire online to choose a test, a branch, and a time.</p></div>
+      <div class="step reveal"><span class="idx">STEP 02</span><h4 data-i18n="step2_h">Sample</h4><p data-i18n="step2_p">Visit the lab for sample collection — most visits take under 15 minutes.</p></div>
+      <div class="step reveal"><span class="idx">STEP 03</span><h4 data-i18n="step3_h">Process</h4><p data-i18n="step3_p">Your sample is analysed by the Saint James Hospital laboratory team.</p></div>
+      <div class="step reveal"><span class="idx">STEP 04</span><h4 data-i18n="step4_h">Results</h4><p data-i18n="step4_p">Results are issued to you and, where relevant, your referring physician.</p></div>
     </div>
   </div>
 </section>
@@ -777,26 +638,34 @@
 <section id="faq">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="kicker">Good to know</span>
-      <h2>Frequently asked questions</h2>
-      <p>Answers to what patients commonly ask before their first visit. For anything specific to your test, call ahead.</p>
+      <span class="kicker" data-i18n="faq_kicker">Good to know</span>
+      <h2 data-i18n="faq_h2">Frequently asked questions</h2>
+      <p data-i18n="faq_p">Answers to what patients commonly ask before their first visit. For anything specific to your test, call ahead.</p>
     </div>
     <div class="faq-list reveal">
       <details class="faq-item">
-        <summary>Do I need a doctor's referral to get tested?<span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-        <div class="faq-body">No — Medical Laboratory Services accepts both physician-referred and self-requested testing. If you have a referral, bring it with you; otherwise call ahead to discuss which tests are suitable.</div>
+        <summary><span data-i18n="faq_q1">Do I need a doctor's referral to get tested?</span><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="faq-body" data-i18n="faq_a1">No — Medical Laboratory Services accepts both physician-referred and self-requested testing. If you have a referral, bring it with you; otherwise call ahead to discuss which tests are suitable.</div>
       </details>
       <details class="faq-item">
-        <summary>Is walk-in testing available, or do I need an appointment?<span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-        <div class="faq-body">Both branches accept bookings, and walk-ins may be seen depending on demand. Calling the Sliema branch ahead of time is the best way to confirm same-day availability at either location.</div>
+        <summary><span data-i18n="faq_q2">Is walk-in testing available, or do I need an appointment?</span><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="faq-body" data-i18n="faq_a2">Both branches accept bookings, and walk-ins may be seen depending on demand. Calling the Sliema branch ahead of time is the best way to confirm same-day availability at either location.</div>
       </details>
       <details class="faq-item">
-        <summary>Will my results be shared with my doctor?<span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-        <div class="faq-body">Yes. Results are issued to you directly, and where a referring physician is on file, they receive a copy as well.</div>
+        <summary><span data-i18n="faq_q3">Will my results be shared with my doctor?</span><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="faq-body" data-i18n="faq_a3">Yes. Results are issued to you directly, and where a referring physician is on file, they receive a copy as well.</div>
       </details>
       <details class="faq-item">
-        <summary>Which branch should I visit — Sliema or Żejtun?<span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-        <div class="faq-body">Both branches offer diagnostics and wellness screening. Sliema is the main branch, based at St. James Capua Hospital; Żejtun is the closer option for patients in the south of Malta. Call +356 2329 1604 if you're unsure which suits you best.</div>
+        <summary><span data-i18n="faq_q4">Which branch should I visit — Sliema or Żejtun?</span><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="faq-body" data-i18n="faq_a4">Both branches offer diagnostics and wellness screening. Sliema is the main branch, based at St. James Capua Hospital; Żejtun is the closer option for patients in the south of Malta. Call +356 2329 1604 if you're unsure which suits you best.</div>
+      </details>
+      <details class="faq-item">
+        <summary><span data-i18n="faq_q5">Do you accept health insurance?</span><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="faq-body" data-i18n="faq_a5">See the Insurance &amp; Health Funds section above — call the Sliema branch to confirm whether your specific plan is accepted.</div>
+      </details>
+      <details class="faq-item">
+        <summary><span data-i18n="faq_q6">Is this website accessible?</span><span class="plus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="faq-body" data-i18n="faq_a6">We aim to meet WCAG 2.1 AA. See our Accessibility Statement in the footer, or contact us if you hit a barrier.</div>
       </details>
     </div>
   </div>
@@ -805,12 +674,42 @@
 <section id="contact" class="cta">
   <div class="wrap">
     <div class="cta-box reveal">
-      <h2>Ready to book a test?</h2>
-      <p>Speak to the Sliema branch to arrange testing at either location, ask about available panels, or check pricing.</p>
+      <h2 data-i18n="contact_h2">Ready to book a test?</h2>
+      <p data-i18n="contact_p">Speak to the Sliema branch to arrange testing at either location, ask about available panels, or check pricing.</p>
       <div class="cta-actions">
-        <a class="btn btn-primary" href="tel:+35623291604">Call +356 2329 1604</a>
-        <a class="btn btn-ghost" href="#locations">View locations</a>
+        <a class="btn btn-primary" href="tel:+35623291604" data-i18n="contact_call">Call +356 2329 1604</a>
+        <a class="btn btn-ghost" href="#locations" data-i18n="contact_view">View locations</a>
       </div>
+
+      <form class="form-grid" id="bookingForm" novalidate>
+        <div class="form-field full">
+          <label for="bf-name" data-i18n="form_name">Full name</label>
+          <input type="text" id="bf-name" name="name" required>
+        </div>
+        <div class="form-field">
+          <label for="bf-phone" data-i18n="form_phone">Phone number</label>
+          <input type="tel" id="bf-phone" name="phone" required>
+        </div>
+        <div class="form-field">
+          <label for="bf-branch" data-i18n="form_branch">Preferred branch</label>
+          <select id="bf-branch" name="branch">
+            <option value="sliema">Sliema</option>
+            <option value="zejtun">Żejtun</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="bf-date" data-i18n="form_date">Preferred date</label>
+          <input type="date" id="bf-date" name="date">
+        </div>
+        <div class="form-field">
+          <label for="bf-reason" data-i18n="form_reason">Test or reason for visit</label>
+          <input type="text" id="bf-reason" name="reason">
+        </div>
+        <div class="form-submit-row">
+          <button type="submit" class="btn btn-primary" data-i18n="form_submit">Send request</button>
+        </div>
+      </form>
+      <div class="form-success" id="formSuccess" data-i18n="form_success_text">Thanks — this form isn't yet connected to a booking inbox. For a guaranteed booking, please call +356 2329 1604 now.</div>
     </div>
   </div>
 </section>
@@ -822,32 +721,42 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <div class="brand"><div class="mark">MLS</div><div>Medical Laboratory Services</div></div>
-        <p>The official laboratory network of the Saint James Hospital Group, Malta.</p>
+        <p data-i18n="foot_tagline">The official laboratory network of the Saint James Hospital Group, Malta.</p>
       </div>
       <div class="foot-col">
-        <h5>Locations</h5>
+        <h5 data-i18n="foot_locations">Locations</h5>
         <ul>
           <li><a href="#locations">Sliema — St. James Capua Hospital</a></li>
           <li><a href="#locations">Żejtun — Triq Tal-Ħotba</a></li>
         </ul>
       </div>
       <div class="foot-col">
-        <h5>Contact</h5>
+        <h5 data-i18n="foot_contact">Contact</h5>
         <ul>
           <li><a href="tel:+35623291604">+356 2329 1604</a></li>
-          <li><a href="#contact">Book a test</a></li>
+          <li><a href="#contact" data-i18n="foot_book">Book a test</a></li>
         </ul>
       </div>
       <div class="foot-col">
-        <h5>Explore</h5>
+        <h5 data-i18n="foot_explore">Explore</h5>
         <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#services" data-i18n="nav_services">Services</a></li>
+          <li><a href="#catalogue" data-i18n="nav_catalogue">Test Catalogue</a></li>
+          <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="foot_legal">Legal</h5>
+        <ul>
+          <li><button type="button" class="modal-trigger" data-modal="modalPrivacy" data-i18n="foot_privacy">Privacy Policy</button></li>
+          <li><button type="button" class="modal-trigger" data-modal="modalTerms" data-i18n="foot_terms">Terms of Use</button></li>
+          <li><button type="button" class="modal-trigger" data-modal="modalAccessibility" data-i18n="foot_accessibility">Accessibility Statement</button></li>
+          <li><button type="button" class="modal-trigger" data-modal="modalCookiePrefs" data-i18n="foot_cookies">Cookie Preferences</button></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Medical Laboratory Services — Saint James Hospital Group.</span>
+      <span data-i18n="foot_copyright">© 2026 Medical Laboratory Services — Saint James Hospital Group.</span>
       <span>Part of Saint James Hospital Malta</span>
     </div>
   </div>
@@ -857,64 +766,432 @@
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
 
+<div class="modal-overlay" id="modalPrivacy">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalPrivacyTitle">
+    <button class="modal-close" type="button" aria-label="Close" data-close-modal>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 id="modalPrivacyTitle" data-i18n="foot_privacy">Privacy Policy</h3>
+    <p class="placeholder-note" data-i18n="privacy_body">[Insert your Privacy Policy here, covering what data you collect (e.g. via the appointment form and cookies), how it's used, retention, and patient rights under the Maltese Data Protection Act and GDPR. Have this reviewed by a data protection professional before publishing.]</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalTerms">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTermsTitle">
+    <button class="modal-close" type="button" aria-label="Close" data-close-modal>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 id="modalTermsTitle" data-i18n="foot_terms">Terms of Use</h3>
+    <p class="placeholder-note" data-i18n="terms_body">[Insert your Terms of Use here, covering acceptable use of the site, liability limitations, and how information shown online relates to official lab reports. Have this reviewed by legal counsel before publishing.]</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalAccessibility">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalAccessibilityTitle">
+    <button class="modal-close" type="button" aria-label="Close" data-close-modal>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 id="modalAccessibilityTitle" data-i18n="foot_accessibility">Accessibility Statement</h3>
+    <p data-i18n="access_body">Medical Laboratory Services aims to make this website usable by everyone, including people using assistive technology. It is built with semantic HTML, full keyboard navigation, visible focus states, sufficient colour contrast, and support for reduced motion.</p>
+    <p class="placeholder-note" data-i18n="access_contact_ph">[Add an accessibility contact email or phone number here, so visitors can report barriers.]</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalCookiePrefs">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalCookiePrefsTitle">
+    <button class="modal-close" type="button" aria-label="Close" data-close-modal>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 id="modalCookiePrefsTitle" data-i18n="foot_cookies">Cookie Preferences</h3>
+    <div class="pref-row">
+      <div><h4 data-i18n="pref_necessary_h">Necessary</h4><p data-i18n="pref_necessary_p">Required for the site to function. Always on.</p></div>
+      <div class="switch"><input type="checkbox" checked disabled><span class="track"><span class="thumb"></span></span></div>
+    </div>
+    <div class="pref-row">
+      <div><h4 data-i18n="pref_maps_h">Maps</h4><p data-i18n="pref_maps_p">Loads Google Maps to show branch locations.</p></div>
+      <div class="switch"><input type="checkbox" id="prefMapsToggle"><span class="track"><span class="thumb"></span></span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-sm" id="prefSave" data-i18n="pref_save">Save preferences</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Reveal-on-scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, {threshold:0.15});
-  revealEls.forEach(el=>io.observe(el));
-
-  // Mobile menu
-  const menuToggle = document.getElementById('menuToggle');
-  const primaryNav = document.getElementById('primary-nav');
-  function closeMenu(){
-    primaryNav.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Open menu');
+const translations = {
+  en: {
+    skip: "Skip to content",
+    cookie_title: "We use cookies", cookie_text: "We use necessary cookies to run this site, and optional cookies (like Google Maps) to show branch locations. Choose what you're comfortable with.",
+    cookie_accept: "Accept all", cookie_necessary: "Necessary only", cookie_prefs: "Preferences",
+    nav_services: "Services", nav_catalogue: "Test Catalogue", nav_locations: "Locations", nav_process: "How it works", nav_faq: "FAQ", nav_contact: "Contact", nav_cta: "Call Sliema Branch",
+    eyebrow: "LABORATORY NETWORK · SAINT JAMES HOSPITAL GROUP",
+    hero_h1_1: "Precise results, ", hero_h1_2: "trusted since day one.",
+    hero_lead: "Medical Laboratory Services is the official laboratory network of the Saint James Hospital Group, offering diagnostic testing and wellness screenings from two locations across Malta.",
+    hero_point1: "Physician-referred and self-referred testing welcome",
+    hero_point2: "Two branches — Sliema and Żejtun",
+    hero_point3: "Backed by the Saint James Hospital clinical laboratory team",
+    btn_book: "Book a Test",
+    panel_caption: "Illustrative example of a report layout — not an actual patient result.",
+    strip1: "laboratory locations", strip4a: "Part of", strip4b: "the Saint James Hospital Group",
+    trust1_h: "Part of a hospital group", trust1_p: "Samples are processed by the same clinical laboratory team used across the Saint James Hospital Group.",
+    trust2_h: "Two Malta locations", trust2_p: "Testing is available in Sliema, at St. James Capua Hospital, and in Żejtun on Triq Tal-Ħotba.",
+    trust3_h: "Referred or self-requested", trust3_p: "Come with a doctor's referral or request testing directly — both pathways are supported.",
+    services_kicker: "What we test", services_h2: "Diagnostic testing & wellness screening",
+    services_p: "From routine bloodwork to targeted wellness panels, samples are processed using the same clinical standards used across the Saint James Hospital Group.",
+    svc1_h: "Routine Diagnostics", svc1_p: "Full blood counts, metabolic panels, and general pathology testing to support diagnosis and ongoing care.",
+    svc2_h: "Wellness Screening", svc2_p: "Preventive health checks and screening packages designed to catch concerns early, for individuals and employers.",
+    svc3_h: "Specialist Panels", svc3_p: "Hormone, thyroid, lipid, vitamin, and allergy panels, referred by your physician or requested directly.",
+    svc4_h: "Corporate & Occupational Health", svc4_p: "Screening programmes for employers looking after workforce health, plus pre-employment medicals.",
+    chip_enquire: "On enquiry",
+    services_note: "The examples above illustrate the type of testing typically available. The full test menu and current pricing are confirmed on enquiry — call +356 2329 1604.",
+    cat_kicker: "Full test menu", cat_h2: "Search our test catalogue",
+    cat_p: "Browse commonly requested tests by category. Preparation requirements vary by test — always confirm when you book.",
+    cat_search_ph: "Search tests (e.g. thyroid, vitamin D)…",
+    cat_col_test: "Test", cat_col_category: "Category", cat_col_prep: "Preparation & turnaround",
+    cat_empty: "No tests match your search — call +356 2329 1604 to ask about a specific test.",
+    cat_row_prep_ph: "[Confirm prep & turnaround when booking]",
+    loc_kicker: "Where to find us", loc_h2: "Two locations, one standard of care",
+    loc_p: "Walk-in and appointment testing is available at both branches. Call ahead to confirm same-day availability.",
+    map_consent_text: "Maps require your consent to load Google Maps content.", map_enable: "Enable maps",
+    loc_main: "Main Branch", loc_branch: "Branch", loc_phone: "Phone", loc_testing: "Testing", loc_diag: "Diagnostics & screening",
+    loc_call_this: "Call this branch", loc_call_book: "Call Sliema to book", loc_call_confirm: "Call Sliema to confirm", loc_directions: "Get directions",
+    loc_note: "Opening hours and the Żejtun branch's direct line aren't confirmed here — call the Sliema branch on +356 2329 1604 to check hours or book at either location.",
+    accr_kicker: "Quality & accreditation", accr_h2: "Held to hospital-grade standards",
+    accr_p: "As part of the Saint James Hospital Group, our laboratory processes follow the group's clinical governance framework. Specific certifications are listed below.",
+    accr_ph1: "[Add accreditation, e.g. ISO 15189 — certificate number / issuing body]",
+    accr_ph2: "[Add quality assurance scheme membership, e.g. external EQA programme]",
+    accr_ph3: "[Add regulatory registration, e.g. Malta health authority licence number]",
+    team_kicker: "The people behind the results", team_h2: "Our clinical team",
+    team_p: "Add photos, names, and credentials for your pathologists and lab scientists here.",
+    team_name_ph: "[Name]", team_role_ph: "[Role / Credentials]",
+    ins_kicker: "Payment & insurance", ins_h2: "Insurance & health funds",
+    ins_p: "List the insurers and health funds you work with, or note that self-pay and direct billing are available.",
+    ins_ph: "[Insurer name]",
+    proc_kicker: "How it works", proc_h2: "From booking to results",
+    proc_p: "A straightforward path, whether you're self-referring or coming with a doctor's request.",
+    step1_h: "Book", step1_p: "Call or enquire online to choose a test, a branch, and a time.",
+    step2_h: "Sample", step2_p: "Visit the lab for sample collection — most visits take under 15 minutes.",
+    step3_h: "Process", step3_p: "Your sample is analysed by the Saint James Hospital laboratory team.",
+    step4_h: "Results", step4_p: "Results are issued to you and, where relevant, your referring physician.",
+    faq_kicker: "Good to know", faq_h2: "Frequently asked questions",
+    faq_p: "Answers to what patients commonly ask before their first visit. For anything specific to your test, call ahead.",
+    faq_q1: "Do I need a doctor's referral to get tested?",
+    faq_a1: "No — Medical Laboratory Services accepts both physician-referred and self-requested testing. If you have a referral, bring it with you; otherwise call ahead to discuss which tests are suitable.",
+    faq_q2: "Is walk-in testing available, or do I need an appointment?",
+    faq_a2: "Both branches accept bookings, and walk-ins may be seen depending on demand. Calling the Sliema branch ahead of time is the best way to confirm same-day availability at either location.",
+    faq_q3: "Will my results be shared with my doctor?",
+    faq_a3: "Yes. Results are issued to you directly, and where a referring physician is on file, they receive a copy as well.",
+    faq_q4: "Which branch should I visit — Sliema or Żejtun?",
+    faq_a4: "Both branches offer diagnostics and wellness screening. Sliema is the main branch, based at St. James Capua Hospital; Żejtun is the closer option for patients in the south of Malta. Call +356 2329 1604 if you're unsure which suits you best.",
+    faq_q5: "Do you accept health insurance?",
+    faq_a5: "See the Insurance & Health Funds section above — call the Sliema branch to confirm whether your specific plan is accepted.",
+    faq_q6: "Is this website accessible?",
+    faq_a6: "We aim to meet WCAG 2.1 AA. See our Accessibility Statement in the footer, or contact us if you hit a barrier.",
+    contact_h2: "Ready to book a test?", contact_p: "Speak to the Sliema branch to arrange testing at either location, ask about available panels, or check pricing.",
+    contact_call: "Call +356 2329 1604", contact_view: "View locations",
+    form_name: "Full name", form_phone: "Phone number", form_branch: "Preferred branch", form_date: "Preferred date", form_reason: "Test or reason for visit", form_submit: "Send request",
+    form_success_text: "Thanks — this form isn't yet connected to a booking inbox. For a guaranteed booking, please call +356 2329 1604 now.",
+    foot_tagline: "The official laboratory network of the Saint James Hospital Group, Malta.",
+    foot_locations: "Locations", foot_contact: "Contact", foot_book: "Book a test", foot_explore: "Explore", foot_legal: "Legal",
+    foot_privacy: "Privacy Policy", foot_terms: "Terms of Use", foot_accessibility: "Accessibility Statement", foot_cookies: "Cookie Preferences",
+    foot_copyright: "© 2026 Medical Laboratory Services — Saint James Hospital Group.",
+    privacy_body: "[Insert your Privacy Policy here, covering what data you collect (e.g. via the appointment form and cookies), how it's used, retention, and patient rights under the Maltese Data Protection Act and GDPR. Have this reviewed by a data protection professional before publishing.]",
+    terms_body: "[Insert your Terms of Use here, covering acceptable use of the site, liability limitations, and how information shown online relates to official lab reports. Have this reviewed by legal counsel before publishing.]",
+    access_body: "Medical Laboratory Services aims to make this website usable by everyone, including people using assistive technology. It is built with semantic HTML, full keyboard navigation, visible focus states, sufficient colour contrast, and support for reduced motion.",
+    access_contact_ph: "[Add an accessibility contact email or phone number here, so visitors can report barriers.]",
+    pref_necessary_h: "Necessary", pref_necessary_p: "Required for the site to function. Always on.",
+    pref_maps_h: "Maps", pref_maps_p: "Loads Google Maps to show branch locations.",
+    pref_save: "Save preferences"
+  },
+  mt: {
+    skip: "Aqbeż għall-kontenut",
+    cookie_title: "Nużaw il-cookies", cookie_text: "Nużaw cookies neċessarji biex jaħdem is-sit, u cookies opzjonali (bħal Google Maps) biex nuruk il-lokalitajiet tal-fergħat. Agħżel dak li tħossok komdu bih.",
+    cookie_accept: "Aċċetta kollox", cookie_necessary: "Neċessarji biss", cookie_prefs: "Preferenzi",
+    nav_services: "Servizzi", nav_catalogue: "Katalgu tat-Testijiet", nav_locations: "Fergħat", nav_process: "Kif Taħdem", nav_faq: "Mistoqsijiet", nav_contact: "Ikkuntattjana", nav_cta: "Ċempel il-Fergħa tas-Sliema",
+    eyebrow: "NETWORK TA' LABORATORJI · SAINT JAMES HOSPITAL GROUP",
+    hero_h1_1: "Riżultati preċiżi, ", hero_h1_2: "ta' min jorbot fuqhom minn dejjem.",
+    hero_lead: "Medical Laboratory Services huwa n-network uffiċjali tal-laboratorji tas-Saint James Hospital Group, li joffri testijiet dijanjostiċi u screening tas-saħħa minn żewġ fergħat madwar Malta.",
+    hero_point1: "Nilqgħu kemm testijiet riferuti mit-tabib kif ukoll dawk mitluba direttament",
+    hero_point2: "Żewġ fergħat — is-Sliema u ż-Żejtun",
+    hero_point3: "Sostnuti mit-tim tal-laboratorju kliniku ta' Saint James Hospital",
+    btn_book: "Ibbukkja Test",
+    panel_caption: "Eżempju illustrattiv tal-format ta' rapport — mhux riżultat reali ta' pazjent.",
+    strip1: "fergħat tal-laboratorju", strip4a: "Parti minn", strip4b: "is-Saint James Hospital Group",
+    trust1_h: "Parti minn grupp ta' sptar", trust1_p: "Il-kampjuni jiġu pproċessati mill-istess tim tal-laboratorju kliniku użat madwar is-Saint James Hospital Group.",
+    trust2_h: "Żewġ fergħat f'Malta", trust2_p: "It-testijiet huma disponibbli fis-Sliema, fi ħdan St. James Capua Hospital, u fiż-Żejtun fi Triq Tal-Ħotba.",
+    trust3_h: "Riferut jew mitlub direttament", trust3_p: "Ejja b'riferiment mit-tabib jew itlob test direttament — it-tnejn huma appoġġjati.",
+    services_kicker: "X'nittestjaw", services_h2: "Testijiet dijanjostiċi u screening tas-saħħa",
+    services_p: "Minn testijiet tad-demm ta' rutina sa panels ta' screening immirati, il-kampjuni jiġu pproċessati bl-istess standards kliniċi użati madwar is-Saint James Hospital Group.",
+    svc1_h: "Dijanjostika ta' Rutina", svc1_p: "Għadd sħiħ tad-demm, panels metaboliċi, u testijiet ġenerali ta' patoloġija biex jgħinu fid-dijanjożi u l-kura kontinwa.",
+    svc2_h: "Screening tas-Saħħa", svc2_p: "Kontrolli preventivi tas-saħħa u pakketti ta' screening iddisinjati biex jinqabdu problemi kmieni, għal individwi u għal min iħaddem.",
+    svc3_h: "Panels Speċjalizzati", svc3_p: "Panels tal-ormoni, tat-tirojde, tal-lipidi, tal-vitamini, u tal-allerġija, riferuti mit-tabib tiegħek jew mitluba direttament.",
+    svc4_h: "Saħħa Korporattiva u Okkupazzjonali", svc4_p: "Programmi ta' screening għal min iħaddem li jieħu ħsieb saħħet il-forza tax-xogħol, kif ukoll eżamijiet mediċi qabel l-impjieg.",
+    chip_enquire: "Fuq talba",
+    services_note: "L-eżempji hawn fuq juru t-tip ta' testijiet ġeneralment disponibbli. Il-lista sħiħa tat-testijiet u l-prezzijiet attwali jiġu kkonfermati fuq talba — ċempel +356 2329 1604.",
+    cat_kicker: "Lista sħiħa tat-testijiet", cat_h2: "Fittex fil-katalgu tat-testijiet tagħna",
+    cat_p: "Ara t-testijiet l-aktar mitluba skont il-kategorija. Ir-rekwiżiti ta' tħejjija jvarjaw skont it-test — dejjem ikkonferma meta tibbukkja.",
+    cat_search_ph: "Fittex test (eż. tirojde, vitamina D)…",
+    cat_col_test: "Test", cat_col_category: "Kategorija", cat_col_prep: "Tħejjija u ħin tar-riżultati",
+    cat_empty: "L-ebda test ma jaqbel mat-tfittxija tiegħek — ċempel +356 2329 1604 biex tistaqsi dwar test speċifiku.",
+    cat_row_prep_ph: "[Ikkonferma t-tħejjija u l-ħin tar-riżultati meta tibbukkja]",
+    loc_kicker: "Fejn issibna", loc_h2: "Żewġ fergħat, l-istess livell ta' kura",
+    loc_p: "It-testijiet bla appuntament u b'appuntament huma disponibbli fiż-żewġ fergħat. Ċempel qabel biex tikkonferma d-disponibbiltà fl-istess jum.",
+    map_consent_text: "Il-mapep jeħtieġu l-kunsens tiegħek biex jgħabbu kontenut minn Google Maps.", map_enable: "Attiva l-mapep",
+    loc_main: "Fergħa Prinċipali", loc_branch: "Fergħa", loc_phone: "Telefown", loc_testing: "Testijiet", loc_diag: "Dijanjostika u screening",
+    loc_call_this: "Ċempel din il-fergħa", loc_call_book: "Ċempel is-Sliema biex tibbukkja", loc_call_confirm: "Ċempel is-Sliema biex tikkonferma", loc_directions: "Ikseb id-direzzjonijiet",
+    loc_note: "Il-ħinijiet tal-ftuħ u n-numru dirett tal-fergħa taż-Żejtun mhumiex ikkonfermati hawn — ċempel il-fergħa tas-Sliema fuq +356 2329 1604 biex tara l-ħinijiet jew tibbukkja f'kull fergħa.",
+    accr_kicker: "Kwalità u Akkreditazzjoni", accr_h2: "Standards ta' livell ta' sptar",
+    accr_p: "Bħala parti mis-Saint James Hospital Group, il-proċessi tal-laboratorju tagħna jsegwu l-qafas ta' governanza klinika tal-grupp. Ċertifikazzjonijiet speċifiċi huma elenkati hawn taħt.",
+    accr_ph1: "[Żid akkreditazzjoni, eż. ISO 15189 — numru taċ-ċertifikat / korp emittenti]",
+    accr_ph2: "[Żid sħubija fi skema ta' kwalità, eż. programm estern ta' EQA]",
+    accr_ph3: "[Żid reġistrazzjoni regolatorja, eż. numru tal-liċenzja tal-awtorità tas-saħħa ta' Malta]",
+    team_kicker: "In-nies wara r-riżultati", team_h2: "It-tim kliniku tagħna",
+    team_p: "Żid ritratti, ismijiet, u kwalifiki tal-patoloġisti u x-xjentisti tal-laboratorju tiegħek hawn.",
+    team_name_ph: "[Isem]", team_role_ph: "[Rwol / Kwalifiki]",
+    ins_kicker: "Ħlas u Assigurazzjoni", ins_h2: "Assigurazzjoni u Fondi tas-Saħħa",
+    ins_p: "Elenka l-assiguraturi u l-fondi tas-saħħa li taħdem magħhom, jew innota li l-ħlas dirett huwa disponibbli.",
+    ins_ph: "[Isem tal-assiguratur]",
+    proc_kicker: "Kif taħdem", proc_h2: "Mill-booking sar-riżultati",
+    proc_p: "Proċess sempliċi, kemm jekk qed tiġi għal rasek kif ukoll b'talba tat-tabib.",
+    step1_h: "Ibbukkja", step1_p: "Ċempel jew staqsi online biex tagħżel test, fergħa, u ħin.",
+    step2_h: "Kampjun", step2_p: "Żur il-laboratorju għall-ġbir tal-kampjun — ħafna żjarat idumu inqas minn 15-il minuta.",
+    step3_h: "Ipproċessar", step3_p: "Il-kampjun tiegħek jiġi analizzat mit-tim tal-laboratorju ta' Saint James Hospital.",
+    step4_h: "Riżultati", step4_p: "Ir-riżultati jinħarġu lilek u, fejn rilevanti, lit-tabib li rrefierik.",
+    faq_kicker: "Tajjeb li tkun taf", faq_h2: "Mistoqsijiet frekwenti",
+    faq_p: "Tweġibiet għal dak li l-pazjenti ġeneralment jistaqsu qabel l-ewwel żjara tagħhom. Għal xi ħaġa speċifika għat-test tiegħek, ċempel qabel.",
+    faq_q1: "Għandi bżonn riferiment mit-tabib biex nagħmel test?",
+    faq_a1: "Le — Medical Laboratory Services jaċċetta kemm testijiet riferuti mit-tabib kif ukoll dawk mitluba direttament. Jekk għandek riferiment, ġibu miegħek; jekk le, ċempel qabel biex tiddiskuti liema testijiet huma adatti.",
+    faq_q2: "Hemm testijiet mingħajr appuntament, jew għandi bżonn nibbukkja?",
+    faq_a2: "Iż-żewġ fergħat jaċċettaw bookings, u każijiet mingħajr appuntament jistgħu jiġu segwiti skont id-domanda. L-aħjar mod biex tikkonferma d-disponibbiltà fl-istess jum huwa li ċċempel il-fergħa tas-Sliema minn qabel.",
+    faq_q3: "Ir-riżultati tiegħi jintbagħtu lit-tabib tiegħi?",
+    faq_a3: "Iva. Ir-riżultati jinħarġu lilek direttament, u fejn ikun irreġistrat tabib li rrefierik, huwa jew hija jirċievi kopja wkoll.",
+    faq_q4: "Liema fergħa għandi mmur — is-Sliema jew iż-Żejtun?",
+    faq_a4: "Iż-żewġ fergħat joffru dijanjostika u screening tas-saħħa. Is-Sliema hija l-fergħa prinċipali, ibbażata f'St. James Capua Hospital; iż-Żejtun hija l-għażla eqreb għal pazjenti fin-Nofsinhar ta' Malta. Ċempel +356 2329 1604 jekk ma tkunx ċert liema tgħodd l-aktar għalik.",
+    faq_q5: "Taċċettaw assigurazzjoni tas-saħħa?",
+    faq_a5: "Ara t-taqsima Assigurazzjoni u Fondi tas-Saħħa hawn fuq — ċempel il-fergħa tas-Sliema biex tikkonferma jekk il-pjan speċifiku tiegħek huwiex aċċettat.",
+    faq_q6: "Dan is-sit web huwa aċċessibbli?",
+    faq_a6: "Nimmiraw li nilħqu l-istandard WCAG 2.1 AA. Ara d-Dikjarazzjoni tal-Aċċessibbiltà fil-qiegħ tal-paġna, jew ikkuntattjana jekk tiltaqa' ma' xi ostaklu.",
+    contact_h2: "Lest biex tibbukkja test?", contact_p: "Kellem lill-fergħa tas-Sliema biex torganizza test f'kull fergħa, staqsi dwar il-panels disponibbli, jew iċċekkja l-prezzijiet.",
+    contact_call: "Ċempel +356 2329 1604", contact_view: "Ara l-fergħat",
+    form_name: "Isem sħiħ", form_phone: "Numru tat-telefown", form_branch: "Fergħa ppreferuta", form_date: "Data ppreferuta", form_reason: "Test jew raġuni għaż-żjara", form_submit: "Ibgħat talba",
+    form_success_text: "Grazzi — din il-formola għadha mhix konnessa ma' inbox tal-bookings. Għal booking garantit, jekk jogħġbok ċempel +356 2329 1604 issa.",
+    foot_tagline: "In-network uffiċjali tal-laboratorji tas-Saint James Hospital Group, Malta.",
+    foot_locations: "Fergħat", foot_contact: "Kuntatt", foot_book: "Ibbukkja test", foot_explore: "Esplora", foot_legal: "Legali",
+    foot_privacy: "Politika tal-Privatezza", foot_terms: "Termini tal-Użu", foot_accessibility: "Dikjarazzjoni tal-Aċċessibbiltà", foot_cookies: "Preferenzi tal-Cookies",
+    foot_copyright: "© 2026 Medical Laboratory Services — Saint James Hospital Group.",
+    privacy_body: "[Daħħal il-Politika tal-Privatezza tiegħek hawn, li tkopri liema data tiġbor (eż. permezz tal-formola tal-appuntamenti u l-cookies), kif tintuża, kemm iddum tinżamm, u d-drittijiet tal-pazjenti taħt il-liġi Maltija dwar il-Protezzjoni tad-Data u l-GDPR. Ara li din tiġi riveduta minn professjonist tal-protezzjoni tad-data qabel il-pubblikazzjoni.]",
+    terms_body: "[Daħħal it-Termini tal-Użu tiegħek hawn, li jkopru l-użu aċċettabbli tas-sit, il-limitazzjonijiet ta' responsabbiltà, u kif l-informazzjoni murija online tirrelata mar-rapporti uffiċjali tal-laboratorju. Ara li dawn jiġu riveduti minn avukat qabel il-pubblikazzjoni.]",
+    access_body: "Medical Laboratory Services jimmira li jagħmel dan is-sit web użabbli minn kulħadd, inkluż nies li jużaw teknoloġija ta' assistenza. Huwa mibni b'HTML semantiku, navigazzjoni sħiħa bit-tastiera, stati ta' fokus viżibbli, kuntrast tal-kulur biżżejjed, u appoġġ għal moviment imnaqqas.",
+    access_contact_ph: "[Żid email jew numru tat-telefown ta' kuntatt għall-aċċessibbiltà hawn, biex il-viżitaturi jkunu jistgħu jirrappurtaw ostakli.]",
+    pref_necessary_h: "Neċessarji", pref_necessary_p: "Meħtieġa biex jaħdem is-sit. Dejjem attivi.",
+    pref_maps_h: "Mapep", pref_maps_p: "Igħabbi Google Maps biex juri l-lokalitajiet tal-fergħat.",
+    pref_save: "Issejvja l-preferenzi"
   }
-  menuToggle.addEventListener('click', ()=>{
-    const isOpen = primaryNav.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-    menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-  });
-  primaryNav.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu(); });
+};
 
-  // Theme toggle
-  const themeToggle = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  const stored = localStorage.getItem('mls-theme');
-  if(stored) root.setAttribute('data-theme', stored);
-  themeToggle.addEventListener('click', ()=>{
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const current = root.getAttribute('data-theme') || (prefersDark ? 'dark' : 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('mls-theme', next);
-  });
+let currentLang = 'en', currentCategory = 'all', currentSearch = '';
 
-  // Back to top
-  const toTop = document.getElementById('toTop');
-  window.addEventListener('scroll', ()=>{
-    toTop.classList.toggle('show', window.scrollY > 500);
-  }, {passive:true});
-  toTop.addEventListener('click', ()=>{
-    window.scrollTo({top:0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
-  });
+const CATEGORIES = [
+  {key:'all', en:'All categories', mt:"Il-kategoriji kollha"},
+  {key:'routine', en:'Routine', mt:'Rutina'},
+  {key:'wellness', en:'Wellness', mt:'Saħħa Ġenerali'},
+  {key:'vitamins', en:'Vitamins & Minerals', mt:'Vitamini u Minerali'},
+  {key:'hormonal', en:'Hormonal', mt:'Ormonali'},
+  {key:'allergy', en:'Allergy', mt:'Allerġija'}
+];
+const TESTS = [
+  {category:'routine', en:'Full Blood Count', mt:'Għadd Sħiħ tad-Demm'},
+  {category:'routine', en:'Metabolic Panel', mt:'Panel Metaboliku'},
+  {category:'routine', en:'Liver Function Tests', mt:'Testijiet tal-Funzjoni tal-Fwied'},
+  {category:'routine', en:'Kidney Function Tests', mt:'Testijiet tal-Funzjoni tal-Kliewi'},
+  {category:'wellness', en:'Lipid Profile', mt:'Profil tal-Lipidi'},
+  {category:'wellness', en:'Fasting Glucose / HbA1c', mt:'Glukożju bis-Sawm / HbA1c'},
+  {category:'wellness', en:'Iron Studies', mt:'Studji tal-Ħadid'},
+  {category:'vitamins', en:'Vitamin D', mt:'Vitamina D'},
+  {category:'vitamins', en:'Vitamin B12 & Folate', mt:'Vitamina B12 u Folate'},
+  {category:'hormonal', en:'Thyroid Panel (TSH)', mt:'Panel tat-Tirojde (TSH)'},
+  {category:'hormonal', en:'Hormone Panel', mt:'Panel tal-Ormoni'},
+  {category:'allergy', en:'Allergy Panel', mt:'Panel tal-Allerġija'}
+];
 
-  // Active nav link on scroll
-  const sections = ['services','locations','process','faq','contact'].map(id=>document.getElementById(id)).filter(Boolean);
-  const navLinks = Array.from(primaryNav.querySelectorAll('a'));
-  const navIo = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      const link = navLinks.find(a=>a.getAttribute('href') === '#'+entry.target.id);
-      if(link) link.toggleAttribute('aria-current', entry.isIntersecting);
-    });
-  }, {rootMargin:'-45% 0px -50% 0px'});
-  sections.forEach(s=>navIo.observe(s));
+function renderCatalogFilters(){
+  const wrap = document.getElementById('catalogFilters');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  CATEGORIES.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'filter-chip'; btn.dataset.cat = cat.key;
+    btn.setAttribute('aria-pressed', String(cat.key === currentCategory));
+    btn.textContent = cat[currentLang];
+    btn.addEventListener('click', ()=>{ currentCategory = cat.key; renderCatalog(); });
+    wrap.appendChild(btn);
+  });
+}
+function renderCatalogRows(){
+  const body = document.getElementById('catalogBody');
+  const emptyEl = document.getElementById('catalogEmpty');
+  if(!body) return;
+  body.innerHTML = '';
+  const q = currentSearch.trim().toLowerCase();
+  const prepText = translations[currentLang].cat_row_prep_ph;
+  let shown = 0;
+  TESTS.forEach(t=>{
+    const name = t[currentLang];
+    const matchesCat = currentCategory === 'all' || t.category === currentCategory;
+    const matchesSearch = !q || name.toLowerCase().includes(q) || t.en.toLowerCase().includes(q);
+    if(matchesCat && matchesSearch){
+      shown++;
+      const catLabel = CATEGORIES.find(c=>c.key === t.category)[currentLang];
+      const tr = document.createElement('tr');
+      const tdName = document.createElement('td'); tdName.textContent = name;
+      const tdCat = document.createElement('td');
+      const chipSpan = document.createElement('span'); chipSpan.className = 'chip'; chipSpan.textContent = catLabel;
+      tdCat.appendChild(chipSpan);
+      const tdPrep = document.createElement('td'); tdPrep.className = 'placeholder'; tdPrep.textContent = prepText;
+      tr.appendChild(tdName); tr.appendChild(tdCat); tr.appendChild(tdPrep);
+      body.appendChild(tr);
+    }
+  });
+  if(emptyEl) emptyEl.classList.toggle('show', shown === 0);
+}
+function renderCatalog(){ renderCatalogFilters(); renderCatalogRows(); }
+
+function applyLanguage(lang){
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(translations[lang] && translations[lang][key] !== undefined) el.textContent = translations[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(translations[lang] && translations[lang][key] !== undefined) el.setAttribute('placeholder', translations[lang][key]);
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
+  });
+  localStorage.setItem('mls-lang', lang);
+  renderCatalog();
+}
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> applyLanguage(btn.dataset.lang));
+});
+document.getElementById('catalogSearch').addEventListener('input', (e)=>{
+  currentSearch = e.target.value; renderCatalogRows();
+});
+
+const COOKIE_KEY = 'mls-cookie-consent';
+function getConsent(){ try{ return JSON.parse(localStorage.getItem(COOKIE_KEY)); }catch(e){ return null; } }
+function applyConsent(consent){
+  document.getElementById('cookieBanner').classList.remove('show');
+  document.querySelectorAll('.map-wrap').forEach(wrap=>{
+    const iframe = wrap.querySelector('.loc-map');
+    const gate = wrap.querySelector('.map-consent-gate');
+    if(consent && consent.maps){
+      if(!iframe.getAttribute('src')) iframe.setAttribute('src', iframe.dataset.src);
+      if(gate) gate.style.display = 'none';
+    } else if(gate){
+      gate.style.display = 'flex';
+    }
+  });
+  const mapsToggle = document.getElementById('prefMapsToggle');
+  if(mapsToggle) mapsToggle.checked = !!(consent && consent.maps);
+}
+function setConsent(consent){ localStorage.setItem(COOKIE_KEY, JSON.stringify(consent)); applyConsent(consent); }
+const existingConsent = getConsent();
+if(existingConsent){ applyConsent(existingConsent); } else { document.getElementById('cookieBanner').classList.add('show'); }
+document.getElementById('cookieAcceptAll').addEventListener('click', ()=> setConsent({maps:true, ts:Date.now()}));
+document.getElementById('cookieNecessary').addEventListener('click', ()=> setConsent({maps:false, ts:Date.now()}));
+document.getElementById('cookiePrefsOpen').addEventListener('click', ()=>{ document.getElementById('cookieBanner').classList.remove('show'); openModal('modalCookiePrefs'); });
+document.querySelectorAll('.map-enable-btn').forEach(btn=> btn.addEventListener('click', ()=> setConsent({maps:true, ts:Date.now()})));
+document.getElementById('prefSave').addEventListener('click', ()=>{
+  const maps = document.getElementById('prefMapsToggle').checked;
+  setConsent({maps, ts:Date.now()});
+  closeModal('modalCookiePrefs');
+});
+
+function openModal(id){
+  const overlay = document.getElementById(id);
+  if(!overlay) return;
+  overlay.classList.add('show');
+  const closeBtn = overlay.querySelector('.modal-close');
+  if(closeBtn) closeBtn.focus();
+}
+function closeModal(id){
+  const overlay = document.getElementById(id);
+  if(overlay) overlay.classList.remove('show');
+}
+document.querySelectorAll('.modal-trigger').forEach(btn=>{
+  btn.addEventListener('click', ()=> openModal(btn.dataset.modal));
+});
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) overlay.classList.remove('show'); });
+  overlay.querySelectorAll('[data-close-modal]').forEach(btn=> btn.addEventListener('click', ()=> overlay.classList.remove('show')));
+});
+
+function closeMenu(){
+  primaryNav.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', 'Open menu');
+}
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.modal-overlay.show').forEach(o=>o.classList.remove('show'));
+    closeMenu();
+  }
+});
+
+const menuToggle = document.getElementById('menuToggle');
+const primaryNav = document.getElementById('primary-nav');
+menuToggle.addEventListener('click', ()=>{
+  const isOpen = primaryNav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+});
+primaryNav.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMenu));
+
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+const storedTheme = localStorage.getItem('mls-theme');
+if(storedTheme) root.setAttribute('data-theme', storedTheme);
+themeToggle.addEventListener('click', ()=>{
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const current = root.getAttribute('data-theme') || (prefersDark ? 'dark' : 'light');
+  const next = current === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('mls-theme', next);
+});
+
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.classList.toggle('show', window.scrollY > 500); }, {passive:true});
+toTop.addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+});
+
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('formSuccess').classList.add('show');
+  this.reset();
+});
+
+const storedLang = localStorage.getItem('mls-lang') || 'en';
+applyLanguage(storedLang);
+
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); } });
+}, {threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+
+const spySections = ['services','catalogue','locations','process','faq','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+const navLinks = Array.from(primaryNav.querySelectorAll('a'));
+const navIo = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const link = navLinks.find(a=>a.getAttribute('href') === '#'+entry.target.id);
+    if(link) link.toggleAttribute('aria-current', entry.isIntersecting);
+  });
+}, {rootMargin:'-45% 0px -50% 0px'});
+spySections.forEach(s=>navIo.observe(s));
 </script>
 
 </body>
